@@ -186,9 +186,8 @@ const Portfolio = () => {
                     {t.portfolio.modal.projectTags}
                   </h4>
                   <div
-                    className={`flex flex-wrap gap-2 ${
-                      isRTL ? "justify-end" : "justify-start"
-                    }`}
+                    className={`flex flex-wrap gap-2 ${isRTL ? "justify-end" : "justify-start"
+                      }`}
                   >
                     {t.portfolio.projects[selectedItem.id - 1].tags.map(
                       (tag, index) => (
@@ -204,9 +203,8 @@ const Portfolio = () => {
                 </div>
 
                 <div
-                  className={`flex gap-4 pt-4 ${
-                    isRTL ? "justify-start" : "justify-end"
-                  }`}
+                  className={`flex gap-4 pt-4 ${isRTL ? "justify-start" : "justify-end"
+                    }`}
                 >
                   <button
                     onClick={() => setSelectedItem(null)}
@@ -295,17 +293,16 @@ const Portfolio = () => {
               const IconComponent = category.icon;
               const categoryName =
                 t.portfolio.filters[
-                  category.id as keyof typeof t.portfolio.filters
+                category.id as keyof typeof t.portfolio.filters
                 ];
               return (
                 <button
                   key={category.id}
                   onClick={() => setActiveCategory(category.id)}
-                  className={`flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-all duration-300 ${
-                    activeCategory === category.id
-                      ? "bg-gradient-primary text-accent shadow-elegant"
-                      : "bg-card hover:bg-card/80 text-foreground hover:shadow-soft border border-border/50"
-                  }`}
+                  className={`flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-all duration-300 ${activeCategory === category.id
+                    ? "bg-gradient-primary text-accent shadow-elegant"
+                    : "bg-card hover:bg-card/80 text-foreground hover:shadow-soft border border-border/50"
+                    }`}
                 >
                   <IconComponent className="w-5 h-5" />
                   {categoryName}
@@ -325,7 +322,7 @@ const Portfolio = () => {
                   onClick={() => setSelectedItem(item)}
                 >
                   <div
-                    className="bg-card rounded-2xl overflow-hidden shadow-soft hover:shadow-elegant transition-all duration-500 transform hover:-translate-y-2 h-[480px] flex flex-col"
+                    className="bg-card rounded-2xl overflow-hidden shadow-soft hover:shadow-elegant transition-all duration-500 transform hover:-translate-y-2 h-[400px] flex flex-col"
                     style={{ flexDirection: "column" }}
                   >
                     <div className="relative overflow-hidden h-64 flex-shrink-0">
@@ -356,28 +353,56 @@ const Portfolio = () => {
                       <div className="flex-1">
                         {/* Project Title */}
                         <h3
-                          className={`text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors ${
-                            isRTL
-                              ? "leading-loose font-arabic whitespace-nowrap overflow-hidden text-ellipsis"
-                              : "leading-tight"
-                          }`}
+                          className={`text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors ${isRTL
+                            ? "leading-loose font-arabic whitespace-nowrap overflow-hidden text-ellipsis"
+                            : "leading-tight"
+                            }`}
                         >
                           {translatedProject.name}
                         </h3>
 
                         {/* Project Description */}
                         <p
-                          className={`text-sm text-muted-foreground mb-4 ${
-                            isRTL
-                              ? "whitespace-nowrap overflow-hidden text-ellipsis"
-                              : ""
-                          }`}
+                          className={`text-sm text-muted-foreground mb-4 ${isRTL
+                            ? "whitespace-nowrap overflow-hidden text-ellipsis"
+                            : ""
+                            }`}
                         >
                           {translatedProject.description}
                         </p>
                       </div>
 
                       {/* Client and Year - At the bottom */}
+
+
+
+                      {/* <div
+  className={`mt-auto pt-4 border-t border-accent/20`}
+>
+  <div className="flex items-center gap-6">
+    <div className="flex-1 text-left">
+      <p className="text-[10px] font-medium text-accent uppercase mb-1.5">
+        {t.portfolio.modal.client}
+      </p>
+      <p className="font-bold text-foreground text-sm leading-tight">
+        {translatedProject.client}
+      </p>
+    </div>
+
+    <div className="w-px h-10 bg-gradient-to-b from-transparent via-accent/30 to-transparent"></div>
+
+    <div className="flex-1 text-right">
+      <p className="text-[10px] font-medium text-accent uppercase mb-1.5">
+        {t.portfolio.modal.date}
+      </p>
+      <p className="font-bold text-foreground text-sm leading-tight">
+        {translatedProject.year}
+      </p>
+    </div>
+  </div>
+</div> */}
+
+
 
                     </div>
                   </div>
