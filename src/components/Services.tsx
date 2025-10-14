@@ -134,12 +134,12 @@ export const Services = () => {
                   </>
                 ) : (
                   <>
-                    <div className="p-4 rounded-xl bg-primary/10 text-primary shadow-soft">
-                      <Icon className="w-8 h-8" />
-                    </div>
+                <div className="p-4 rounded-xl bg-primary/10 text-primary shadow-soft">
+                  <Icon className="w-8 h-8" />
+                </div>
                     <h3 className={`text-3xl font-din font-semibold text-foreground`}>
-                      {activeService.title}
-                    </h3>
+                  {activeService.title}
+                </h3>
                   </>
                 )}
               </div>
@@ -171,8 +171,8 @@ export const Services = () => {
                         </>
                       ) : (
                         <>
-                          <ServiceIcon className="w-5 h-5" />
-                          <span className="font-medium">{service.title}</span>
+                      <ServiceIcon className="w-5 h-5" />
+                      <span className="font-medium">{service.title}</span>
                         </>
                       )}
                     </div>
