@@ -122,13 +122,26 @@ export const Services = () => {
           {/* Content Side */}
           <div className={`space-y-6 lg:space-y-8 order-1 lg:order-2 ${isRTL ? 'ml-2' : 'mr-2'}`}>
             <div className="animate-fade-in">
-              <div className={`flex items-center gap-4 mb-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                <div className="p-4 rounded-xl bg-primary/10 text-primary shadow-soft">
-                  <Icon className="w-8 h-8" />
-                </div>
-                <h3 className={`text-3xl font-din font-semibold text-foreground ${isRTL ? 'text-right' : 'text-left'}`}>
-                  {activeService.title}
-                </h3>
+              <div className={`flex items-center gap-4 mb-6 ${isRTL ? 'justify-end text-right' : 'justify-start text-left'}`}>
+                {isRTL ? (
+                  <>
+                    <h3 className={`text-3xl font-din font-semibold text-foreground`}>
+                      {activeService.title}
+                    </h3>
+                    <div className="p-4 rounded-xl bg-primary/10 text-primary shadow-soft">
+                      <Icon className="w-8 h-8" />
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="p-4 rounded-xl bg-primary/10 text-primary shadow-soft">
+                      <Icon className="w-8 h-8" />
+                    </div>
+                    <h3 className={`text-3xl font-din font-semibold text-foreground`}>
+                      {activeService.title}
+                    </h3>
+                  </>
+                )}
               </div>
 
               <p className={`text-lg text-muted-foreground leading-relaxed mb-8 ${isRTL ? 'text-right' : 'text-left'}`}>
@@ -144,20 +157,32 @@ export const Services = () => {
                   <button
                     key={service.title}
                     onClick={() => setActiveIndex(index)}
-                    className={`w-full ${isRTL ? 'text-right' : 'text-left'} p-4 rounded-lg transition-elegant ${
+                    className={`w-full p-4 rounded-lg transition-elegant ${
                       index === activeIndex
                         ? "bg-primary text-primary-foreground shadow-elegant"
                         : "bg-card hover:bg-accent/50 border border-border"
                     }`}
                   >
-                    <div className={`flex items-center gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                      <ServiceIcon className="w-5 h-5" />
-                      <span className="font-medium">{service.title}</span>
+                    <div className={`flex items-center gap-3 ${isRTL ? 'justify-end text-right' : 'justify-start text-left'}`}>
+                      {isRTL ? (
+                        <>
+                          <span className="font-medium">{service.title}</span>
+                          <ServiceIcon className="w-5 h-5" />
+                        </>
+                      ) : (
+                        <>
+                          <ServiceIcon className="w-5 h-5" />
+                          <span className="font-medium">{service.title}</span>
+                        </>
+                      )}
                     </div>
                   </button>
                 );
               })}
             </div>
+
+
+
           </div>
         </div>
       </div>

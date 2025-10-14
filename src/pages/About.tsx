@@ -192,6 +192,7 @@ const About = () => {
                     className={`text-4xl font-din font-bold text-foreground mb-6 ${
                       isRTL ? 'text-right' : 'text-left'
                     }`}
+                    style={{ textAlign: isRTL ? 'right' : 'left' }}
                   >
                     {t.about.story.title}
                   </h2>
@@ -199,6 +200,7 @@ const About = () => {
                     className={`text-lg text-muted-foreground leading-relaxed mb-6 ${
                       isRTL ? 'text-right' : 'text-left'
                     }`}
+                    style={{ textAlign: isRTL ? 'right' : 'left' }}
                   >
                     {t.about.story.paragraph1}
                   </p>
@@ -206,6 +208,7 @@ const About = () => {
                     className={`text-lg text-muted-foreground leading-relaxed ${
                       isRTL ? 'text-right' : 'text-left'
                     }`}
+                    style={{ textAlign: isRTL ? 'right' : 'left' }}
                   >
                     {t.about.story.paragraph2}
                   </p>
@@ -214,13 +217,26 @@ const About = () => {
 
               <div className={`space-y-8 ${isRTL ? 'lg:col-start-1' : ''}`}>
                 <div className="bg-card p-8 rounded-2xl shadow-soft">
-                  <div className={`flex items-center gap-4 mb-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                    <div className="w-12 h-12 bg-accent/20 rounded-full flex items-center justify-center">
-                      <Target className="w-6 h-6 text-accent" />
-                    </div>
-                    <h3 className={`text-2xl font-din font-bold text-foreground ${isRTL ? 'text-right' : 'text-left'}`}>
-                      {t.about.mission.title}
-                    </h3>
+                  <div className={`flex items-center gap-4 mb-4 ${isRTL ? 'justify-end' : 'justify-start'}`}>
+                    {isRTL ? (
+                      <>
+                        <h3 className="text-2xl font-din font-bold text-foreground text-right">
+                          {t.about.mission.title}
+                        </h3>
+                        <div className="w-12 h-12 bg-accent/20 rounded-full flex items-center justify-center">
+                          <Target className="w-6 h-6 text-accent" />
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="w-12 h-12 bg-accent/20 rounded-full flex items-center justify-center">
+                          <Target className="w-6 h-6 text-accent" />
+                        </div>
+                        <h3 className="text-2xl font-din font-bold text-foreground text-left">
+                          {t.about.mission.title}
+                        </h3>
+                      </>
+                    )}
                   </div>
                   <p className={`text-muted-foreground leading-relaxed ${isRTL ? 'text-right' : 'text-left'}`}>
                     {t.about.mission.description}
@@ -228,13 +244,26 @@ const About = () => {
                 </div>
 
                 <div className="bg-card p-8 rounded-2xl shadow-soft">
-                  <div className={`flex items-center gap-4 mb-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                    <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
-                      <Star className="w-6 h-6 text-primary" />
-                    </div>
-                    <h3 className={`text-2xl font-din font-bold text-foreground ${isRTL ? 'text-right' : 'text-left'}`}>
-                      {t.about.vision.title}
-                    </h3>
+                  <div className={`flex items-center gap-4 mb-4 ${isRTL ? 'justify-end' : 'justify-start'}`}>
+                    {isRTL ? (
+                      <>
+                        <h3 className="text-2xl font-din font-bold text-foreground text-right">
+                          {t.about.vision.title}
+                        </h3>
+                        <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
+                          <Star className="w-6 h-6 text-primary" />
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
+                          <Star className="w-6 h-6 text-primary" />
+                        </div>
+                        <h3 className="text-2xl font-din font-bold text-foreground text-left">
+                          {t.about.vision.title}
+                        </h3>
+                      </>
+                    )}
                   </div>
                   <p className={`text-muted-foreground leading-relaxed ${isRTL ? 'text-right' : 'text-left'}`}>
                     {t.about.vision.description}
@@ -346,18 +375,40 @@ const About = () => {
                         key={index}
                         className="bg-card p-6 rounded-2xl shadow-soft hover:shadow-elegant transition-all duration-300 transform hover:-translate-y-1"
                       >
-                        <div className={`flex items-start gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                          <div className="w-12 h-12 bg-accent/20 rounded-full flex items-center justify-center flex-shrink-0">
-                            <IconComponent className="w-6 h-6 text-accent" />
-                          </div>
-                          <div>
-                            <h3 className={`text-xl font-din font-bold text-foreground mb-2 ${isRTL ? 'text-right' : 'text-left'}`}>
-                              {value.title}
-                            </h3>
-                            <p className={`text-muted-foreground leading-relaxed ${isRTL ? 'text-right' : 'text-left'}`}>
-                              {value.description}
-                            </p>
-                          </div>
+                        <div className={`flex items-start gap-4 ${isRTL ? 'flex-row-reverse justify-end' : 'justify-start'}`}>
+                          {isRTL ? (
+                            <>
+                              <div className="flex-1 text-right">
+                                <div className="flex items-center gap-3 mb-2 justify-end">
+                                  <h3 className="text-xl font-din font-bold text-foreground text-right">
+                                    {value.title}
+                                  </h3>
+                                  <div className="w-12 h-12 bg-accent/20 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <IconComponent className="w-6 h-6 text-accent" />
+                                  </div>
+                                </div>
+                                <p className="text-muted-foreground leading-relaxed text-right" style={{ textAlign: 'right' }}>
+                                  {value.description}
+                                </p>
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div className="flex-1">
+                                <div className="flex items-center gap-3 mb-2">
+                                  <div className="w-12 h-12 bg-accent/20 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <IconComponent className="w-6 h-6 text-accent" />
+                                  </div>
+                                  <h3 className="text-xl font-din font-bold text-foreground text-left">
+                                    {value.title}
+                                  </h3>
+                                </div>
+                                <p className="text-muted-foreground leading-relaxed text-left">
+                                  {value.description}
+                                </p>
+                              </div>
+                            </>
+                          )}
                         </div>
                       </div>
                     );
@@ -366,30 +417,58 @@ const About = () => {
 
                 {/* Right Side Values */}
                 <div className={`space-y-8 ${isRTL ? 'lg:col-start-1' : ''}`}>
-                  {rightValues.map((value, index) => {
-                    const IconComponent = value.icon;
-                    return (
-                      <div
-                        key={index}
-                        className="bg-card p-6 rounded-2xl shadow-soft hover:shadow-elegant transition-all duration-300 transform hover:-translate-y-1"
-                      >
-                        <div className={`flex items-start gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                          <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
-                            <IconComponent className="w-6 h-6 text-primary" />
-                          </div>
-                          <div>
-                            <h3 className={`text-xl font-din font-bold text-foreground mb-2 ${isRTL ? 'text-right' : 'text-left'}`}>
-                              {value.title}
-                            </h3>
-                            <p className={`text-muted-foreground leading-relaxed ${isRTL ? 'text-right' : 'text-left'}`}>
-                              {value.description}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
+  {rightValues.map((value, index) => {
+    const IconComponent = value.icon;
+    return (
+      <div
+        key={index}
+        className={`bg-card p-6 rounded-2xl shadow-soft hover:shadow-elegant transition-all duration-300 transform hover:-translate-y-1
+          ${isRTL ? 'ml-auto text-right' : 'mr-auto text-left'}`}
+      >
+        <div
+          className={`flex items-start gap-4 ${
+            isRTL ? 'flex-row-reverse justify-end' : 'justify-start'
+          }`}
+        >
+          {isRTL ? (
+            <>
+              <div className="flex-1 text-right">
+                <div className="flex items-center gap-3 mb-2 justify-end">
+                  <h3 className="text-xl font-din font-bold text-foreground text-right">
+                    {value.title}
+                  </h3>
+                  <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <IconComponent className="w-6 h-6 text-primary" />
+                  </div>
                 </div>
+                <p className="text-muted-foreground leading-relaxed text-right" style={{ textAlign: 'right' }}>
+                  {value.description}
+                </p>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <IconComponent className="w-6 h-6 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-din font-bold text-foreground text-left">
+                    {value.title}
+                  </h3>
+                </div>
+                <p className="text-muted-foreground leading-relaxed text-left">
+                  {value.description}
+                </p>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    );
+  })}
+</div>
+
               </div>
             </div>
           </div>
