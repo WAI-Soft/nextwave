@@ -111,11 +111,11 @@ const Portfolio = () => {
 
   // ✅ Modal JSX extracted so it can be rendered via React Portal
   const modal = selectedItem ? (
-    <div 
+    <div
       className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-6"
       onClick={() => setSelectedItem(null)}
     >
-      <div 
+      <div
         className="bg-card rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
@@ -185,19 +185,29 @@ const Portfolio = () => {
                   <h4 className="text-sm font-semibold text-accent uppercase tracking-wider mb-3">
                     {t.portfolio.modal.projectTags}
                   </h4>
-                  <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : 'justify-start'}`}>
-                    {t.portfolio.projects[selectedItem.id - 1].tags.map((tag, index) => (
-                      <span
-                        key={index}
-                        className="px-4 py-2 bg-accent/20 text-accent rounded-full text-sm font-medium border border-accent/30"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                  <div
+                    className={`flex flex-wrap gap-2 ${
+                      isRTL ? "justify-end" : "justify-start"
+                    }`}
+                  >
+                    {t.portfolio.projects[selectedItem.id - 1].tags.map(
+                      (tag, index) => (
+                        <span
+                          key={index}
+                          className="px-4 py-2 bg-accent/20 text-accent rounded-full text-sm font-medium border border-accent/30"
+                        >
+                          {tag}
+                        </span>
+                      )
+                    )}
                   </div>
                 </div>
 
-                <div className={`flex gap-4 pt-4 ${isRTL ? 'justify-start' : 'justify-end'}`}>
+                <div
+                  className={`flex gap-4 pt-4 ${
+                    isRTL ? "justify-start" : "justify-end"
+                  }`}
+                >
                   <button
                     onClick={() => setSelectedItem(null)}
                     className="px-8 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-all duration-300 shadow-soft"
@@ -230,7 +240,10 @@ const Portfolio = () => {
               t.portfolio.hero.title
             ) : (
               <>
-                Our <span className="text-accent">{t.portfolio.hero.titleAccent}</span>
+                Our{" "}
+                <span className="text-accent">
+                  {t.portfolio.hero.titleAccent}
+                </span>
               </>
             )}
           </h1>
@@ -246,24 +259,30 @@ const Portfolio = () => {
       </VideoBackground>
 
       {/* Scrolling Ticker */}
-      <section className="bg-gradient-to-br from-white via-white/90 to-white/70 py-6 overflow-hidden border-y border-border/10" dir="ltr">
+      <section
+        className="bg-gradient-to-br from-white via-white/90 to-white/70 py-6 overflow-hidden border-y border-border/10"
+        dir="ltr"
+      >
         <div className="ticker-container">
           <div className="ticker-scroll items-center gap-8 animate-scroll-left">
-            {tickerItems.concat(tickerItems).concat(tickerItems).map((item, index) => (
-              <div
-                key={`ticker-${index}`}
-                className="flex items-center gap-8 whitespace-nowrap flex-shrink-0"
-              >
-                <div className="w-16 h-16 rounded-lg overflow-hidden border-2 border-accent/30 shadow-lg">
-                  <img
-                    src={item.image}
-                    alt={item.alt}
-                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-110 image-crisp"
-                  />
+            {tickerItems
+              .concat(tickerItems)
+              .concat(tickerItems)
+              .map((item, index) => (
+                <div
+                  key={`ticker-${index}`}
+                  className="flex items-center gap-8 whitespace-nowrap flex-shrink-0"
+                >
+                  <div className="w-16 h-16 rounded-lg overflow-hidden border-2 border-accent/30 shadow-lg">
+                    <img
+                      src={item.image}
+                      alt={item.alt}
+                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-110 image-crisp"
+                    />
+                  </div>
+                  <Zap className="w-5 h-5 text-primary/70 flex-shrink-0" />
                 </div>
-                <Zap className="w-5 h-5 text-primary/70 flex-shrink-0" />
-              </div>
-            ))}
+              ))}
           </div>
         </div>
       </section>
@@ -274,7 +293,10 @@ const Portfolio = () => {
           <div className="flex flex-wrap justify-center gap-4 mb-16">
             {categories.map((category) => {
               const IconComponent = category.icon;
-              const categoryName = t.portfolio.filters[category.id as keyof typeof t.portfolio.filters];
+              const categoryName =
+                t.portfolio.filters[
+                  category.id as keyof typeof t.portfolio.filters
+                ];
               return (
                 <button
                   key={category.id}
@@ -302,7 +324,10 @@ const Portfolio = () => {
                   style={{ animationDelay: `${index * 0.1}s` }}
                   onClick={() => setSelectedItem(item)}
                 >
-                  <div className="bg-card rounded-2xl overflow-hidden shadow-soft hover:shadow-elegant transition-all duration-500 transform hover:-translate-y-2 h-[480px] flex flex-col" style={{ flexDirection: 'column' }}>
+                  <div
+                    className="bg-card rounded-2xl overflow-hidden shadow-soft hover:shadow-elegant transition-all duration-500 transform hover:-translate-y-2 h-[480px] flex flex-col"
+                    style={{ flexDirection: "column" }}
+                  >
                     <div className="relative overflow-hidden h-64 flex-shrink-0">
                       <img
                         src={item.image}
@@ -310,8 +335,7 @@ const Portfolio = () => {
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      
-                      
+
                       <div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <div className="flex flex-wrap gap-2">
                           {translatedProject.tags.map((tag, tagIndex) => (
@@ -325,36 +349,36 @@ const Portfolio = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="p-6 flex-1 flex flex-col justify-between" dir="ltr">
+                    <div
+                      className="p-6 flex-1 flex flex-col justify-between"
+                      dir="ltr"
+                    >
                       <div className="flex-1">
                         {/* Project Title */}
-                        <h3 className={`text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors ${
-                          isRTL 
-                            ? 'leading-loose font-arabic' 
-                            : 'leading-tight'
-                        }`}>
+                        <h3
+                          className={`text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors ${
+                            isRTL
+                              ? "leading-loose font-arabic whitespace-nowrap overflow-hidden text-ellipsis"
+                              : "leading-tight"
+                          }`}
+                        >
                           {translatedProject.name}
                         </h3>
-                        
+
                         {/* Project Description */}
-                        <p className={`text-sm text-muted-foreground mb-4 ${
-                          isRTL 
-                            ? 'leading-loose font-arabic' 
-                            : 'leading-relaxed'
-                        }`}>
+                        <p
+                          className={`text-sm text-muted-foreground mb-4 ${
+                            isRTL
+                              ? "whitespace-nowrap overflow-hidden text-ellipsis"
+                              : ""
+                          }`}
+                        >
                           {translatedProject.description}
                         </p>
                       </div>
-                      
-                       {/* Client and Year - At the bottom */}
-                       <div className={`flex items-center justify-between text-sm text-muted-foreground ${isRTL ? 'pt-24' : 'pt-6'} border-t border-border/50 gap-4`}>
-                         <div className="w-42 h-20 bg-transparent rounded-full flex items-center justify-center shadow-lg">
-                           <span className="text-white text-sm font-bold text-center leading-tight px-1">
-                             {translatedProject.client}
-                           </span>
-                         </div>
-                         <span className="font-semibold text-accent">{translatedProject.year}</span>
-                       </div>
+
+                      {/* Client and Year - At the bottom */}
+
                     </div>
                   </div>
                 </div>
