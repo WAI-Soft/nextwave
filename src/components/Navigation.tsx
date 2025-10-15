@@ -13,12 +13,28 @@ import { useLanguage } from "@/contexts/LanguageContext";
 export const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
+  const [dropdownTimeout, setDropdownTimeout] = useState<NodeJS.Timeout | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
   const { language, setLanguage, isRTL, t } = useLanguage();
 
   const toggleLanguage = () => {
     setLanguage(language === 'en' ? 'ar' : 'en');
+  };
+
+  const handleDropdownMouseEnter = () => {
+    if (dropdownTimeout) {
+      clearTimeout(dropdownTimeout);
+      setDropdownTimeout(null);
+    }
+    setIsServicesDropdownOpen(true);
+  };
+
+  const handleDropdownMouseLeave = () => {
+    const timeout = setTimeout(() => {
+      setIsServicesDropdownOpen(false);
+    }, 150); // Small delay to allow moving to dropdown
+    setDropdownTimeout(timeout);
   };
 
   const services = [
@@ -74,7 +90,7 @@ export const Navigation = () => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border shadow-soft" dir={isRTL ? 'rtl' : 'ltr'}>
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
           {/* Left Section - Logo in EN, Language Toggle in AR */}
           <div className={`flex items-center ${isRTL ? 'order-1' : 'order-1'}`}>
@@ -105,9 +121,13 @@ export const Navigation = () => {
               // English: Logo on left
               <button
                 onClick={() => scrollToSection("hero")}
-                className="text-2xl font-din font-bold text-primary hover:opacity-80 transition-smooth"
+                className="hover:opacity-80 transition-smooth"
               >
-                NextWave
+                <img 
+                  src="/src/assets/nextwave logo.png" 
+                  alt="NextWave Logo" 
+                  className="h-20 w-auto"
+                />
               </button>
             )}
           </div>
@@ -120,8 +140,8 @@ export const Navigation = () => {
                   <div 
                     key={link.key}
                     className="relative"
-                    onMouseEnter={() => setIsServicesDropdownOpen(true)}
-                    onMouseLeave={() => setIsServicesDropdownOpen(false)}
+                    onMouseEnter={handleDropdownMouseEnter}
+                    onMouseLeave={handleDropdownMouseLeave}
                   >
                     <button
                       onClick={() => navigate('/services')}
@@ -135,7 +155,11 @@ export const Navigation = () => {
                       <ChevronDown className="w-4 h-4" />
                     </button>
                     {isServicesDropdownOpen && (
-                      <div className={`absolute top-full mt-2 w-56 bg-popover border border-border shadow-elegant rounded-md py-1 animate-fade-in z-50 ${isRTL ? 'right-0' : 'left-0'}`}>
+                      <div 
+                        className={`absolute top-full mt-2 w-56 bg-popover border border-border shadow-elegant rounded-md py-1 animate-fade-in z-50 ${isRTL ? 'right-0' : 'left-0'}`}
+                        onMouseEnter={handleDropdownMouseEnter}
+                        onMouseLeave={handleDropdownMouseLeave}
+                      >
                         {services.map((service) => (
                           <button
                             key={service.key}
@@ -176,9 +200,13 @@ export const Navigation = () => {
               // Arabic: Logo on right
               <button
                 onClick={() => scrollToSection("hero")}
-                className="text-2xl font-din font-bold text-primary hover:opacity-80 transition-smooth"
+                className="hover:opacity-80 transition-smooth"
               >
-                NextWave
+                <img 
+                  src="/src/assets/nextwave logo.png" 
+                  alt="NextWave Logo" 
+                  className="h-20 w-auto"
+                />
               </button>
             ) : (
               // English: Language Toggle on right

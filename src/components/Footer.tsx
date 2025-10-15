@@ -52,7 +52,11 @@ export const Footer = () => {
         <div className="grid md:grid-cols-3 gap-12 mb-12">
           {/* Logo & Info */}
           <div className="space-y-4 animate-fade-in">
-            <h3 className="text-3xl font-din font-bold">NextWave</h3>
+            <img 
+              src="/src/assets/nextwave logo.png" 
+              alt="NextWave Logo" 
+              className="h-24 w-auto"
+            />
             <p className="text-warm-ivory/80 leading-relaxed">
               {t.footer.description}
             </p>
