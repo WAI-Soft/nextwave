@@ -103,7 +103,7 @@ export const servicesEn = {
     logoDesign: {
       title: "Logo Design",
       description:
-        "Distinctive logos that embody your brand's essence and create memorable first impressions.",
+        "Distinctive logos that embody your brand's essence and create memorable first impressions, will gain your likeness.",
       features: [
         "Concept Development",
         "Multiple Variations",
