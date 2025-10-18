@@ -276,3 +276,49 @@ All colors MUST be HSL.
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
 }
+
+/* Image Upload Drag and Drop Styles */
+.drag-over {
+  border-color: hsl(38 61% 76%) !important;
+  background-color: hsl(38 61% 76% / 0.1) !important;
+  transform: scale(1.02);
+}
+
+.drag-over * {
+  pointer-events: none;
+}
+
+/* Smooth transitions for drag states */
+.drag-area {
+  transition: all 0.2s ease-in-out;
+}
+
+.drag-area:hover {
+  border-color: hsl(38 61% 76% / 0.8);
+  background-color: hsl(38 61% 76% / 0.15);
+  transform: scale(1.01);
+}
+
+/* Loading spinner animation */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Hide scrollbars */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}

@@ -19,6 +19,7 @@ import { BackToTop } from "./components/BackToTop";
 import Preloader from "./components/Preloader";
 import { useScrollRestoration } from "./hooks/use-scroll-restoration";
 import { LanguageProvider } from "./contexts/LanguageContext";
+import { ProjectProvider } from "./contexts/ProjectContext";
 import { preloadAllVideos } from "./lib/videoPreloader";
 import { useEffect, useState } from "react";
 
@@ -64,31 +65,33 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <LanguageProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          {isLoading && <Preloader onLoadComplete={handleLoadComplete} />}
-          <BrowserRouter>
-            <AppLayout>
-              <Routes>
-                {/* Public Routes */}
-                <Route path="/" element={<Index />} />
-                <Route path="/services" element={<ServicesOverview />} />
-                <Route path="/services/:slug" element={<ServicePage />} />
-                <Route path="/portfolio" element={<Portfolio />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
-                
-                {/* Admin Routes */}
-                <Route path="/admin" element={<Login />} />
-                <Route path="/admin/dashboard" element={<Dashboard />} />
-                
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </AppLayout>
-            <BackToTop />
-          </BrowserRouter>
-        </TooltipProvider>
+        <ProjectProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            {isLoading && <Preloader onLoadComplete={handleLoadComplete} />}
+            <BrowserRouter>
+              <AppLayout>
+                <Routes>
+                  {/* Public Routes */}
+                  <Route path="/" element={<Index />} />
+                  <Route path="/services" element={<ServicesOverview />} />
+                  <Route path="/services/:slug" element={<ServicePage />} />
+                  <Route path="/portfolio" element={<Portfolio />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/contact" element={<Contact />} />
+                  
+                  {/* Admin Routes */}
+                  <Route path="/admin" element={<Login />} />
+                  <Route path="/admin/dashboard" element={<Dashboard />} />
+                  
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </AppLayout>
+              <BackToTop />
+            </BrowserRouter>
+          </TooltipProvider>
+        </ProjectProvider>
       </LanguageProvider>
     </QueryClientProvider>
   );

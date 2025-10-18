@@ -15,6 +15,7 @@ import { Navigation } from "../components/Navigation";
 import { Footer } from "../components/Footer";
 import { VideoBackground } from "../components/VideoBackground";
 import { useLanguage } from "../contexts/LanguageContext";
+import { useProjects, Project } from "../contexts/ProjectContext";
 import portfolioHero from "@/assets/portfolio-hero.jpg";
 
 // Define a type for fallback portfolio items
@@ -30,8 +31,8 @@ interface FallbackPortfolioItem {
   purpose: string;
 }
 
-// Use fallback portfolio items as the main type
-type PortfolioItem = FallbackPortfolioItem;
+// Union type for portfolio items
+type PortfolioItem = Project | FallbackPortfolioItem;
 
 // Fallback portfolio data for when no projects exist
 const fallbackPortfolioItems: FallbackPortfolioItem[] = [
@@ -90,18 +91,32 @@ const tickerItems = [
 
 const Portfolio = () => {
   const { t, isRTL } = useLanguage();
+  const { projects, isLoading } = useProjects();
   const [activeCategory, setActiveCategory] = useState("all");
   const [selectedItem, setSelectedItem] = useState<PortfolioItem | null>(null);
 
-  // Use fallback portfolio data
-  const portfolioItems = fallbackPortfolioItems;
+  // Use projects from context, fallback to hardcoded data if none exist
+  const portfolioItems = projects.length > 0 
+    ? projects.filter(project => project.status === 'published')
+    : fallbackPortfolioItems;
 
   const filteredItems =
     activeCategory === "all"
       ? portfolioItems
       : portfolioItems.filter((item) => {
-          return item.category === activeCategory;
+          // Handle both fallback items (with category) and project context items (with projectType)
+          const itemCategory = 'category' in item ? item.category : item.projectType;
+          return itemCategory === activeCategory;
         });
+
+  // Debug logging to help track changes
+  console.log('Portfolio Debug:', {
+    totalProjects: projects.length,
+    publishedProjects: projects.filter(project => project.status === 'published').length,
+    portfolioItems: portfolioItems.length,
+    activeCategory,
+    filteredItemsCount: filteredItems.length
+  });
 
   // ✅ Modal JSX extracted so it can be rendered via React Portal
   const modal = selectedItem ? (
@@ -126,7 +141,7 @@ const Portfolio = () => {
             {/* Left Side - Large Project Image */}
             <div className="relative overflow-hidden">
               <img
-                src={selectedItem.image}
+                src={'coverImage' in selectedItem ? (selectedItem as Project).coverImage : (selectedItem as FallbackPortfolioItem).image}
                 alt={selectedItem.name}
                 className="w-full h-full object-cover"
               />
@@ -161,7 +176,7 @@ const Portfolio = () => {
                         {t.portfolio.modal.client}
                       </h4>
                       <p className="text-foreground font-medium">
-                        {selectedItem.client}
+                        {'clientName' in selectedItem ? (selectedItem as Project).clientName : (selectedItem as FallbackPortfolioItem).client}
                       </p>
                     </div>
                     <div>
@@ -295,7 +310,7 @@ const Portfolio = () => {
                   onClick={() => setActiveCategory(category.id)}
                   className={`flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-all duration-300 ${activeCategory === category.id
                     ? "bg-gradient-primary text-accent shadow-elegant"
-                    : "bg-card hover:bg-card/80 text-foreground hover:shadow-soft border border-border/50"
+                    : "bg-card hover:bg-champagne-gold/20 hover:text-champagne-gold text-foreground hover:shadow-soft border border-border/50 hover:border-champagne-gold/50"
                     }`}
                 >
                   <IconComponent className="w-5 h-5" />
@@ -305,8 +320,16 @@ const Portfolio = () => {
             })}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredItems.map((item, index) => {
+          {isLoading ? (
+            <div className="flex items-center justify-center py-12">
+              <div className="text-center">
+                <div className="w-12 h-12 border-4 border-champagne-gold/30 border-t-champagne-gold rounded-full animate-spin mx-auto mb-4"></div>
+                <p className="text-pure-white/70">Loading projects...</p>
+              </div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredItems.map((item, index) => {
               return (
                 <div
                   key={item.id}
@@ -315,12 +338,12 @@ const Portfolio = () => {
                   onClick={() => setSelectedItem(item)}
                 >
                   <div
-                    className="bg-card rounded-2xl overflow-hidden shadow-soft hover:shadow-elegant transition-all duration-500 transform hover:-translate-y-2 h-[400px] flex flex-col"
+                    className="bg-card rounded-2xl overflow-hidden shadow-soft hover:shadow-elegant transition-all duration-500 transform hover:-translate-y-2 hover:scale-[1.02] h-[400px] flex flex-col"
                     style={{ flexDirection: "column" }}
                   >
                     <div className="relative overflow-hidden h-64 flex-shrink-0">
                       <img
-                        src={item.image}
+                        src={'coverImage' in item ? (item as Project).coverImage : (item as FallbackPortfolioItem).image}
                         alt={item.name}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                       />
@@ -370,7 +393,8 @@ const Portfolio = () => {
                 </div>
               );
             })}
-          </div>
+            </div>
+          )}
         </div>
       </section>
 
