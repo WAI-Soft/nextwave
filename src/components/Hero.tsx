@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
 import heroImage from "@/assets/hero-bg.jpg";
+import nextwaveLogo from "@/assets/nextwave header.png";
 import VideoBackground from "./VideoBackground";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -31,17 +32,16 @@ export const Hero = () => {
         <div className="w-full px-4">
           <div className="animate-fade-in w-full flex justify-center">
             {/* Reduced width blur container with smaller top margin */}
-            <div className="bg-black/20 backdrop-blur-sm rounded-3xl p-8 md:p-12 border border-white/10 w-full max-w-4xl mx-auto text-center">
-              <h1 className="text-6xl md:text-8xl lg:text-9xl font-din font-bold mb-6 text-white drop-shadow-2xl text-center" dir="ltr">
-                <span className="inline-block transition-elegant hover:scale-110 cursor-default text-white drop-shadow-lg">
-                  Next
-                </span>
-                <span className="inline-block bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-scale-in transition-elegant hover:scale-110 cursor-default drop-shadow-lg">
-                  Wave
-                </span>
-              </h1>
+            <div className="bg-black/20 backdrop-blur-sm rounded-3xl px-8 pt-1 pb-3 md:px-12 md:pt-2 md:pb-4 border border-white/10 w-full max-w-4xl mx-auto text-center">
+              <div className="my-0 flex justify-center">
+                <img 
+                  src={nextwaveLogo} 
+                  alt="NextWave Logo" 
+                  className="h-32 md:h-48 lg:h-64 xl:h-72 w-auto max-w-full transition-elegant hover:scale-110 cursor-default drop-shadow-2xl"
+                />
+              </div>
 
-              <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl mx-auto font-light drop-shadow-lg text-center">
+              <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl mx-auto font-light drop-shadow-lg text-center -mt-2">
                 {t.home.hero.tagline}
               </p>
 
