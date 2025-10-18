@@ -101,7 +101,7 @@ const ServicesOverview = () => {
         <VideoBackground
           videoSrc="/videos/ServicesVideo.mp4"
           posterSrc={heroFallback}
-          className="min-h-screen flex items-center justify-center"
+          className="pt-20 pb-20 md:pt-24 md:pb-24 flex items-center justify-center"
           overlayOpacity={0.6}
         >
           <section className="container mx-auto px-4 text-center">

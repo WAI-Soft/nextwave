@@ -105,8 +105,11 @@ const Preloader: React.FC<PreloaderProps> = ({ onLoadComplete }) => {
           });
         }
 
-        // Then check all assets
-        await checkAllAssetsLoaded();
+        // Then check all assets, with a hard fallback timeout
+        const MAX_WAIT_MS = 3000; // ensure the app becomes interactive quickly
+        const assetCheckPromise = checkAllAssetsLoaded();
+        const timeoutPromise = new Promise<void>((resolve) => setTimeout(resolve, MAX_WAIT_MS));
+        await Promise.race([assetCheckPromise, timeoutPromise]);
 
         // Add a small delay to ensure everything is truly ready
         setTimeout(() => {

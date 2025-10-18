@@ -8,49 +8,49 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* NextWave Design System - Soft Minimal Dark Luxury */
-    --background: 0 0% 10%; /* Deep Charcoal #1A1A1A */
-    --foreground: 30 43% 97%; /* Warm Ivory #FBF8F5 */
+    /* NextWave Design System - Black/White/Gold Luxury */
+    --background: 0 0% 0%; /* Pure Black #000000 */
+    --foreground: 0 0% 100%; /* Pure White #FFFFFF */
 
-    --card: 0 0% 12%; /* Slightly lighter charcoal for cards */
-    --card-foreground: 30 43% 97%; /* Warm Ivory */
+    --card: 0 0% 5%; /* Very dark for cards */
+    --card-foreground: 0 0% 100%; /* Pure White */
 
-    --popover: 0 0% 8%; /* Darker for popovers */
-    --popover-foreground: 30 43% 97%; /* Warm Ivory */
+    --popover: 0 0% 3%; /* Darker for popovers */
+    --popover-foreground: 0 0% 100%; /* Pure White */
 
-    /* Primary - Dusty Mauve */
-    --primary: 330 26% 52%; /* Dusty Mauve #A06C83 */
-    --primary-foreground: 30 43% 97%; /* Warm Ivory */
+    /* Primary - Champagne Gold */
+    --primary: 38 61% 76%; /* Champagne Gold #E8C39E */
+    --primary-foreground: 0 0% 0%; /* Pure Black */
 
-    /* Secondary - Subtle variation */
-    --secondary: 0 0% 15%; /* Darker charcoal variation */
-    --secondary-foreground: 30 43% 97%; /* Warm Ivory */
+    /* Secondary - Dark variation */
+    --secondary: 0 0% 10%; /* Dark variation */
+    --secondary-foreground: 0 0% 100%; /* Pure White */
 
     /* Muted tones */
-    --muted: 0 0% 18%; /* Muted charcoal */
-    --muted-foreground: 30 20% 75%; /* Muted ivory */
+    --muted: 0 0% 15%; /* Muted dark */
+    --muted-foreground: 0 0% 70%; /* Muted white */
 
-    /* Accent - Champagne Gold */
+    /* Accent - Champagne Gold for consistency */
     --accent: 38 61% 76%; /* Champagne Gold #E8C39E */
-    --accent-foreground: 0 0% 10%; /* Deep Charcoal */
+    --accent-foreground: 0 0% 0%; /* Pure Black */
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 30 43% 97%;
+    --destructive-foreground: 0 0% 100%;
 
     --border: 0 0% 20%; /* Subtle border */
-    --input: 0 0% 15%; /* Input background */
-    --ring: 330 26% 52%; /* Dusty Mauve for focus rings */
+    --input: 0 0% 10%; /* Input background */
+    --ring: 38 61% 76%; /* Champagne Gold for focus rings */
 
     --radius: 0.75rem;
 
     /* Custom gradient for premium effects */
-    --gradient-primary: linear-gradient(135deg, hsl(330 26% 52%) 0%, hsl(38 61% 76%) 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 8%) 0%, hsl(0 0% 12%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(38 61% 76%) 0%, hsl(38 61% 86%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 0%) 0%, hsl(0 0% 5%) 100%);
     
     /* Elegant shadows with luxury feel */
-    --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.3);
-    --shadow-elegant: 0 10px 40px -10px hsl(0 0% 0% / 0.4);
-    --shadow-glow: 0 0 30px hsl(38 61% 76% / 0.2);
+    --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.5);
+    --shadow-elegant: 0 10px 40px -10px hsl(0 0% 0% / 0.6);
+    --shadow-glow: 0 0 30px hsl(38 61% 76% / 0.4);
     
     /* Smooth transitions */
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -58,41 +58,41 @@ All colors MUST be HSL.
   }
 
   .dark {
-    /* Dark mode uses the same luxury theme */
-    --background: 0 0% 10%; /* Deep Charcoal */
-    --foreground: 30 43% 97%; /* Warm Ivory */
+    /* Dark mode - Pure Black/White/Gold Theme */
+    --background: 0 0% 0%; /* Pure Black */
+    --foreground: 0 0% 100%; /* Pure White */
 
-    --card: 0 0% 12%;
-    --card-foreground: 30 43% 97%;
+    --card: 0 0% 5%;
+    --card-foreground: 0 0% 100%;
 
-    --popover: 0 0% 8%;
-    --popover-foreground: 30 43% 97%;
+    --popover: 0 0% 3%;
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 330 26% 52%; /* Dusty Mauve */
-    --primary-foreground: 30 43% 97%;
+    --primary: 38 61% 76%; /* Champagne Gold */
+    --primary-foreground: 0 0% 0%;
 
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 30 43% 97%;
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 0 0% 18%;
-    --muted-foreground: 30 20% 75%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 70%;
 
     --accent: 38 61% 76%; /* Champagne Gold */
-    --accent-foreground: 0 0% 10%;
+    --accent-foreground: 0 0% 0%;
 
     --destructive: 0 62.8% 50%;
-    --destructive-foreground: 30 43% 97%;
+    --destructive-foreground: 0 0% 100%;
 
     --border: 0 0% 20%;
-    --input: 0 0% 15%;
-    --ring: 330 26% 52%;
+    --input: 0 0% 10%;
+    --ring: 38 61% 76%;
 
-    --gradient-primary: linear-gradient(135deg, hsl(330 26% 52%) 0%, hsl(38 61% 76%) 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 8%) 0%, hsl(0 0% 12%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(38 61% 76%) 0%, hsl(38 61% 86%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 0%) 0%, hsl(0 0% 5%) 100%);
     
-    --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.4);
-    --shadow-elegant: 0 10px 40px -10px hsl(0 0% 0% / 0.5);
-    --shadow-glow: 0 0 40px hsl(38 61% 76% / 0.3);
+    --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.6);
+    --shadow-elegant: 0 10px 40px -10px hsl(0 0% 0% / 0.7);
+    --shadow-glow: 0 0 40px hsl(38 61% 76% / 0.5);
   }
 }
 

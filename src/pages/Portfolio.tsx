@@ -17,68 +17,57 @@ import { VideoBackground } from "../components/VideoBackground";
 import { useLanguage } from "../contexts/LanguageContext";
 import portfolioHero from "@/assets/portfolio-hero.jpg";
 
-// Portfolio data
-const portfolioItems = [
+// Define a type for fallback portfolio items
+interface FallbackPortfolioItem {
+  id: string;
+  category: string;
+  name: string;
+  description: string;
+  image: string;
+  tags: string[];
+  client: string;
+  year: number;
+  purpose: string;
+}
+
+// Use fallback portfolio items as the main type
+type PortfolioItem = FallbackPortfolioItem;
+
+// Fallback portfolio data for when no projects exist
+const fallbackPortfolioItems: FallbackPortfolioItem[] = [
   {
-    id: 1,
+    id: "fallback-1",
     category: "branding",
     name: "Luxury Brand Identity",
     description: "Complete brand identity design for premium lifestyle brand",
     image: "/src/assets/brand-identity.png",
     tags: ["Logo Design", "Brand Guidelines", "Color Palette"],
     client: "Luxe Living Co.",
-    year: "2024",
+    year: 2024,
+    purpose: "To create a sophisticated and memorable brand identity that reflects luxury and elegance"
   },
   {
-    id: 2,
+    id: "fallback-2",
     category: "websites",
     name: "E-commerce Platform",
     description: "Modern responsive website with seamless user experience",
     image: "/src/assets/e-commerce-platform.png",
     tags: ["Web Design", "UX/UI", "E-commerce"],
     client: "Fashion Forward",
-    year: "2024",
+    year: 2024,
+    purpose: "To develop a user-friendly e-commerce platform that drives sales and customer engagement"
   },
   {
-    id: 3,
+    id: "fallback-3",
     category: "advertising",
     name: "Digital Campaign",
     description: "Multi-platform advertising campaign with stunning visuals",
     image: "/src/assets/advertising-campaign.png",
     tags: ["Digital Ads", "Social Media", "Campaign"],
     client: "TechStart Inc.",
-    year: "2023",
-  },
-  {
-    id: 4,
-    category: "logos",
-    name: "Modern Logo Design",
-    description: "Minimalist logo design for tech startup",
-    image: "/src/assets/logo-design.png",
-    tags: ["Logo", "Branding", "Identity"],
-    client: "InnovateTech",
-    year: "2024",
-  },
-  {
-    id: 5,
-    category: "photography",
-    name: "Product Photography",
-    description: "Professional product photography for e-commerce",
-    image: "/src/assets/product-photography.png",
-    tags: ["Photography", "Product", "Commercial"],
-    client: "Artisan Goods",
-    year: "2023",
-  },
-  {
-    id: 6,
-    category: "websites",
-    name: "Mobile App Design",
-    description: "Intuitive mobile application interface design",
-    image: "/src/assets/mobile-app.png",
-    tags: ["Mobile", "App Design", "UX/UI"],
-    client: "HealthTech Solutions",
-    year: "2024",
-  },
+    year: 2023,
+    purpose: "To create an impactful digital advertising campaign that increases brand awareness"
+  }
 ];
 
 const categories = [
@@ -102,12 +91,17 @@ const tickerItems = [
 const Portfolio = () => {
   const { t, isRTL } = useLanguage();
   const [activeCategory, setActiveCategory] = useState("all");
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedItem, setSelectedItem] = useState<PortfolioItem | null>(null);
+
+  // Use fallback portfolio data
+  const portfolioItems = fallbackPortfolioItems;
 
   const filteredItems =
     activeCategory === "all"
       ? portfolioItems
-      : portfolioItems.filter((item) => item.category === activeCategory);
+      : portfolioItems.filter((item) => {
+          return item.category === activeCategory;
+        });
 
   // ✅ Modal JSX extracted so it can be rendered via React Portal
   const modal = selectedItem ? (
@@ -133,7 +127,7 @@ const Portfolio = () => {
             <div className="relative overflow-hidden">
               <img
                 src={selectedItem.image}
-                alt={t.portfolio.projects[selectedItem.id - 1].name}
+                alt={selectedItem.name}
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
@@ -144,10 +138,10 @@ const Portfolio = () => {
               <div className="space-y-6">
                 <div>
                   <h2 className="text-4xl font-din font-bold text-foreground mb-4">
-                    {t.portfolio.projects[selectedItem.id - 1].name}
+                    {selectedItem.name}
                   </h2>
                   <p className="text-lg text-muted-foreground leading-relaxed">
-                    {t.portfolio.projects[selectedItem.id - 1].description}
+                    {selectedItem.description}
                   </p>
                 </div>
 
@@ -157,7 +151,7 @@ const Portfolio = () => {
                       {t.portfolio.modal.purpose}
                     </h4>
                     <p className="text-foreground font-medium">
-                      {t.portfolio.modal.purposeText}
+                      {selectedItem.purpose}
                     </p>
                   </div>
 
@@ -167,7 +161,7 @@ const Portfolio = () => {
                         {t.portfolio.modal.client}
                       </h4>
                       <p className="text-foreground font-medium">
-                        {t.portfolio.projects[selectedItem.id - 1].client}
+                        {selectedItem.client}
                       </p>
                     </div>
                     <div>
@@ -175,7 +169,7 @@ const Portfolio = () => {
                         {t.portfolio.modal.date}
                       </h4>
                       <p className="text-foreground font-medium">
-                        {t.portfolio.projects[selectedItem.id - 1].year}
+                        {selectedItem.year}
                       </p>
                     </div>
                   </div>
@@ -189,7 +183,7 @@ const Portfolio = () => {
                     className={`flex flex-wrap gap-2 ${isRTL ? "justify-end" : "justify-start"
                       }`}
                   >
-                    {t.portfolio.projects[selectedItem.id - 1].tags.map(
+                    {selectedItem.tags.map(
                       (tag, index) => (
                         <span
                           key={index}
@@ -313,7 +307,6 @@ const Portfolio = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredItems.map((item, index) => {
-              const translatedProject = t.portfolio.projects[item.id - 1];
               return (
                 <div
                   key={item.id}
@@ -328,14 +321,14 @@ const Portfolio = () => {
                     <div className="relative overflow-hidden h-64 flex-shrink-0">
                       <img
                         src={item.image}
-                        alt={translatedProject.name}
+                        alt={item.name}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
                       <div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <div className="flex flex-wrap gap-2">
-                          {translatedProject.tags.map((tag, tagIndex) => (
+                          {item.tags.map((tag, tagIndex) => (
                             <span
                               key={tagIndex}
                               className="px-2 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs"
@@ -358,7 +351,7 @@ const Portfolio = () => {
                             : "leading-tight"
                             }`}
                         >
-                          {translatedProject.name}
+                          {item.name}
                         </h3>
 
                         {/* Project Description */}
@@ -368,41 +361,9 @@ const Portfolio = () => {
                             : ""
                             }`}
                         >
-                          {translatedProject.description}
+                          {item.description}
                         </p>
                       </div>
-
-                      {/* Client and Year - At the bottom */}
-
-
-
-                      {/* <div
-  className={`mt-auto pt-4 border-t border-accent/20`}
->
-  <div className="flex items-center gap-6">
-    <div className="flex-1 text-left">
-      <p className="text-[10px] font-medium text-accent uppercase mb-1.5">
-        {t.portfolio.modal.client}
-      </p>
-      <p className="font-bold text-foreground text-sm leading-tight">
-        {translatedProject.client}
-      </p>
-    </div>
-
-    <div className="w-px h-10 bg-gradient-to-b from-transparent via-accent/30 to-transparent"></div>
-
-    <div className="flex-1 text-right">
-      <p className="text-[10px] font-medium text-accent uppercase mb-1.5">
-        {t.portfolio.modal.date}
-      </p>
-      <p className="font-bold text-foreground text-sm leading-tight">
-        {translatedProject.year}
-      </p>
-    </div>
-  </div>
-</div> */}
-
-
 
                     </div>
                   </div>

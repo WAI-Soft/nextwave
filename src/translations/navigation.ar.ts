@@ -1,15 +1,15 @@
 export const navigationAr = {
   home: "الرئيسية",
   services: "الخدمات",
-  portfolio: "أعمالنا",
+  portfolio: "الأعمال",
   aboutUs: "من نحن",
-  contact: "اتصل بنا",
+  contact: "تواصل معنا",
   viewAllServices: "عرض جميع الخدمات",
   servicesList: {
-    advertising: "الإعلان",
-    branding: "العلامة التجارية",
+    advertising: "الحملات الإعلانية",
+    branding: "الهوية البصرية",
     websiteDesign: "تصميم المواقع",
-    logoDesign: "تصميم الشعارات",
-    photography: "التصوير الفوتوغرافي"
+    logoDesign: "تصميم الشعار",
+    photography: "التصوير"
   }
 };

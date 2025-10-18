@@ -10,6 +10,8 @@ import Portfolio from "./pages/Portfolio";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import Login from "./pages/admin/Login";
+import Dashboard from "./pages/admin/Dashboard";
 import RouteLoader from "./components/RouteLoader";
 import PageTransition from "./components/PageTransition";
 import RouteMetadata from "./components/RouteMetadata";
@@ -67,22 +69,28 @@ const App = () => {
           <Sonner />
           {isLoading && <Preloader onLoadComplete={handleLoadComplete} />}
           <BrowserRouter>
-          <AppLayout>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/services" element={<ServicesOverview />} />
-              <Route path="/services/:slug" element={<ServicePage />} />
-              <Route path="/portfolio" element={<Portfolio />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </AppLayout>
-          <BackToTop />
-        </BrowserRouter>
-      </TooltipProvider>
-    </LanguageProvider>
-  </QueryClientProvider>
+            <AppLayout>
+              <Routes>
+                {/* Public Routes */}
+                <Route path="/" element={<Index />} />
+                <Route path="/services" element={<ServicesOverview />} />
+                <Route path="/services/:slug" element={<ServicePage />} />
+                <Route path="/portfolio" element={<Portfolio />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                
+                {/* Admin Routes */}
+                <Route path="/admin" element={<Login />} />
+                <Route path="/admin/dashboard" element={<Dashboard />} />
+                
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </AppLayout>
+            <BackToTop />
+          </BrowserRouter>
+        </TooltipProvider>
+      </LanguageProvider>
+    </QueryClientProvider>
   );
 };
 

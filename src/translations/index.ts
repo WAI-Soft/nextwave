@@ -21,7 +21,7 @@ export const translations = {
     about: aboutEn,
     portfolio: portfolioEn,
     home: homeEn,
-    services: servicesEn
+    services: servicesEn,
   },
   ar: {
     navigation: navigationAr,
@@ -30,7 +30,7 @@ export const translations = {
     about: aboutAr,
     portfolio: portfolioAr,
     home: homeAr,
-    services: servicesAr
+    services: servicesAr,
   }
 };
 

@@ -18,13 +18,13 @@ const CameraMockup: React.FC<CameraMockupProps> = ({ image, alt, className = "" 
         <defs>
           <linearGradient id="cameraGradient" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#2a2a2a" />
-            <stop offset="50%" stopColor="#1a1a1a" />
+            <stop offset="50%" stopColor="#000000" />
             <stop offset="100%" stopColor="#0a0a0a" />
           </linearGradient>
           
           <linearGradient id="screenGradient" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#000000" />
-            <stop offset="100%" stopColor="#1a1a1a" />
+            <stop offset="100%" stopColor="#000000" />
           </linearGradient>
           
           <filter id="innerShadow">
@@ -72,7 +72,7 @@ const CameraMockup: React.FC<CameraMockupProps> = ({ image, alt, className = "" 
           height="190"
           rx="12"
           ry="12"
-          fill="#1a1a1a"
+          fill="#000000"
           stroke="#333"
           strokeWidth="1"
         />
@@ -148,9 +148,9 @@ const CameraMockup: React.FC<CameraMockupProps> = ({ image, alt, className = "" 
         <text x="330" y="250" textAnchor="middle" fontSize="8" fill="#888" fontFamily="Arial, sans-serif">NextWave</text>
 
         {/* Lens Mount (decorative) */}
-        <circle cx="200" cy="280" r="25" fill="#1a1a1a" stroke="#333" strokeWidth="2"/>
+        <circle cx="200" cy="280" r="25" fill="#000000" stroke="#333" strokeWidth="2"/>
         <circle cx="200" cy="280" r="20" fill="#2a2a2a"/>
-        <circle cx="200" cy="280" r="15" fill="#1a1a1a"/>
+        <circle cx="200" cy="280" r="15" fill="#000000"/>
         
         {/* Lens Mount Details */}
         <circle cx="200" cy="280" r="12" fill="none" stroke="#444" strokeWidth="1"/>

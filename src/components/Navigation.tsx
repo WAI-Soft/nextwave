@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Menu, X, Globe, ChevronDown } from "lucide-react";
+import { Menu, X, Globe, ChevronDown, Home, Briefcase, User, Phone, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -78,18 +78,18 @@ export const Navigation = () => {
 
   // Define navigation links in the order we want them to appear
   const navLinks = [
-    { key: "home", label: t.navigation.home, action: () => scrollToSection("hero") },
-    { key: "services", label: t.navigation.services, isDropdown: true },
-    { key: "portfolio", label: t.navigation.portfolio, action: () => navigate("/portfolio") },
-    { key: "aboutUs", label: t.navigation.aboutUs, action: () => navigate("/about") },
-    { key: "contact", label: t.navigation.contact, action: () => navigate("/contact") },
+    { key: "home", label: t.navigation.home, action: () => scrollToSection("hero"), icon: Home },
+    { key: "services", label: t.navigation.services, isDropdown: true, icon: Settings },
+    { key: "portfolio", label: t.navigation.portfolio, action: () => navigate("/portfolio"), icon: Briefcase },
+    { key: "aboutUs", label: t.navigation.aboutUs, action: () => navigate("/about"), icon: User },
+    { key: "contact", label: t.navigation.contact, action: () => navigate("/contact"), icon: Phone },
   ];
 
-  // For Arabic, reverse the order of the links
-  const displayLinks = isRTL ? [...navLinks].reverse() : navLinks;
+  // Use the same order for both languages
+  const displayLinks = navLinks;
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border shadow-soft" dir={isRTL ? 'rtl' : 'ltr'}>
+    <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border shadow-soft" dir={isRTL ? 'rtl' : 'ltr'}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
           {/* Left Section - Logo in EN, Language Toggle in AR */}
@@ -97,14 +97,14 @@ export const Navigation = () => {
             {isRTL ? (
               // Arabic: Language Toggle on left
               <div className="flex items-center gap-2">
-                <div className="hidden md:flex items-center rounded-lg border-2 border-champagne-gold/30 overflow-hidden shadow-soft bg-deep-charcoal/10">
+                <div className="hidden md:flex items-center rounded-lg border-2 border-champagne-gold/30 overflow-hidden shadow-soft bg-pure-black/10">
                   <button
                     onClick={toggleLanguage}
-                    className="flex items-center gap-2 px-4 py-2 bg-champagne-gold/10 hover:bg-champagne-gold/20 transition-smooth text-warm-ivory hover:text-champagne-gold"
+                    className="flex items-center gap-2 px-4 py-2 bg-champagne-gold/10 hover:bg-champagne-gold/20 transition-smooth text-pure-white hover:text-champagne-gold"
                   >
                     <Globe className="w-4 h-4 ml-2" />
                     <span className="font-din font-medium text-sm">
-                      {language.toUpperCase()}
+                      {language === 'en' ? 'EN' : 'AR'}
                     </span>
                   </button>
                 </div>
@@ -156,7 +156,8 @@ export const Navigation = () => {
                     </button>
                     {isServicesDropdownOpen && (
                       <div 
-                        className={`absolute top-full mt-2 w-56 bg-popover border border-border shadow-elegant rounded-md py-1 animate-fade-in z-50 ${isRTL ? 'right-0' : 'left-0'}`}
+                        dir={isRTL ? 'rtl' : 'ltr'}
+                        className={`absolute top-full mt-2 px-5 w-56 bg-popover border border-border shadow-elegant rounded-md py-1 animate-fade-in z-50 ${isRTL ? 'right-0' : 'left-0'} text-left`}
                         onMouseEnter={handleDropdownMouseEnter}
                         onMouseLeave={handleDropdownMouseLeave}
                       >
@@ -167,7 +168,7 @@ export const Navigation = () => {
                               navigate(toRoute(service.slug));
                               setIsServicesDropdownOpen(false);
                             }}
-                            className={`w-full px-4 py-2 cursor-pointer hover:bg-accent transition-smooth ${isRTL ? 'text-right' : 'text-left'}`}
+                            className={"w-full pl-4 py-2 cursor-pointer hover:bg-accent transition-smooth text-left"}
                           >
                             {service.name}
                           </button>
@@ -211,16 +212,18 @@ export const Navigation = () => {
             ) : (
               // English: Language Toggle on right
               <div className="flex items-center gap-2">
-                <div className="hidden md:flex items-center rounded-lg border-2 border-champagne-gold/30 overflow-hidden shadow-soft bg-deep-charcoal/10">
-                  <button
-                    onClick={toggleLanguage}
-                    className="flex items-center gap-2 px-4 py-2 bg-champagne-gold/10 hover:bg-champagne-gold/20 transition-smooth text-warm-ivory hover:text-champagne-gold"
-                  >
-                    <Globe className="w-4 h-4 mr-2" />
-                    <span className="font-din font-medium text-sm">
-                      {language.toUpperCase()}
-                    </span>
-                  </button>
+                <div className="hidden md:flex items-center gap-2">
+                  <div className="flex items-center rounded-lg border-2 border-champagne-gold/30 overflow-hidden shadow-soft bg-pure-black/10">
+                    <button
+                      onClick={toggleLanguage}
+                      className="flex items-center gap-2 px-4 py-2 bg-champagne-gold/10 hover:bg-champagne-gold/20 transition-smooth text-pure-white hover:text-champagne-gold"
+                    >
+                      <Globe className="w-4 h-4 mr-2" />
+                      <span className="font-din font-medium text-sm">
+                        {language === 'en' ? 'EN' : 'AR'}
+                      </span>
+                    </button>
+                  </div>
                 </div>
                 <Button
                   variant="ghost"
@@ -237,67 +240,58 @@ export const Navigation = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 animate-fade-in">
-            <div className="flex flex-col gap-4">
+          <div className="md:hidden mt-2 pb-1 animate-fade-in text-center" dir={isRTL ? "rtl" : "ltr"}>
+            <div className="block">
               {displayLinks.map((link) => {
                 if (link.isDropdown) {
+                  const IconComponent = link.icon;
                   return (
-                    <div key={link.key} className="flex flex-col gap-2">
-                      <button
-                        onClick={() => {
-                          navigate("/services");
-                          setIsMenuOpen(false);
-                        }}
-                        className={`${isRTL ? 'text-right' : 'text-left'} transition-smooth font-medium py-2 ${
-                          isLinkActive(link.key) 
-                            ? 'text-primary' 
-                            : 'text-foreground hover:text-primary'
-                        }`}
-                      >
-                        {link.label}
-                      </button>
-                      <div className={`${isRTL ? 'pr-4' : 'pl-4'} flex flex-col gap-2 border-l-2 border-champagne-gold/20`}>
-                        {services.map((service) => (
-                          <button
-                            key={service.key}
-                            onClick={() => {
-                              navigate(toRoute(service.slug));
-                              setIsMenuOpen(false);
-                            }}
-                            className={`${isRTL ? 'text-right' : 'text-left'} text-sm text-muted-foreground hover:text-primary transition-smooth py-1`}
-                          >
-                            {service.name}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
+                    <button
+                      key={link.key}
+                      onClick={() => {
+                        navigate("/services");
+                        setIsMenuOpen(false);
+                      }}
+                      className={`flex items-center justify-center gap-2 w-full text-center transition-smooth font-medium py-3 mb-3 ${
+                        isLinkActive(link.key) 
+                          ? 'text-primary' 
+                          : 'text-foreground hover:text-primary'
+                      }`}
+                    >
+                      {!isRTL && <IconComponent className="w-4 h-4" />}
+                      {link.label}
+                      {isRTL && <IconComponent className="w-4 h-4" />}
+                    </button>
                   );
                 }
                 
+                const IconComponent = link.icon;
                 return (
                   <button
                     key={link.key}
                     onClick={link.action}
-                    className={`${isRTL ? 'text-right' : 'text-left'} transition-smooth font-medium py-2 ${
+                    className={`flex items-center justify-center gap-2 w-full text-center transition-smooth font-medium py-3 mb-3 ${
                       isLinkActive(link.key) 
                         ? 'text-primary' 
                         : 'text-foreground hover:text-primary'
                     }`}
                   >
+                    {!isRTL && <IconComponent className="w-4 h-4" />}
                     {link.label}
+                    {isRTL && <IconComponent className="w-4 h-4" />}
                   </button>
                 );
               })}
 
-              <div className="flex items-center gap-2 pt-2 border-t border-champagne-gold/20">
+              <div className="block text-center pt-2 border-t border-champagne-gold/20">
                 <Button 
                   variant="elegant" 
                   size="sm" 
                   onClick={toggleLanguage}
-                  className="bg-champagne-gold/10 hover:bg-champagne-gold/20 text-warm-ivory hover:text-champagne-gold border-champagne-gold/30"
+                  className="bg-champagne-gold/10 hover:bg-champagne-gold/20 text-pure-white hover:text-champagne-gold border-champagne-gold/30"
                 >
                   <Globe className={`w-4 h-4 ${isRTL ? 'ml-2' : 'mr-2'}`} />
-                  {language.toUpperCase()}
+                  {language === 'en' ? 'EN' : 'AR'}
                 </Button>
               </div>
             </div>

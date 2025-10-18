@@ -112,7 +112,7 @@ const Contact = () => {
       <VideoBackground
         videoSrc="/videos/ContactVideo.mp4"
         posterSrc={heroFallback}
-        className="pt-32 pb-32 md:pt-40 md:pb-40"
+        className="pt-20 pb-32 md:pt-28 md:pb-40"
         overlayOpacity={0.6}
       >
         <section className="max-w-7xl mx-auto px-4 text-center">

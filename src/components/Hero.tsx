@@ -30,8 +30,8 @@ export const Hero = () => {
       <div className="relative z-10 w-full min-h-screen flex items-center justify-center">
         <div className="w-full px-4">
           <div className="animate-fade-in w-full flex justify-center">
-            {/* Reduced width blur container with margin top */}
-            <div className="bg-black/20 backdrop-blur-sm rounded-3xl p-8 md:p-12 border border-white/10 w-full max-w-4xl mx-auto mt-20 text-center">
+            {/* Reduced width blur container with smaller top margin */}
+            <div className="bg-black/20 backdrop-blur-sm rounded-3xl p-8 md:p-12 border border-white/10 w-full max-w-4xl mx-auto text-center">
               <h1 className="text-6xl md:text-8xl lg:text-9xl font-din font-bold mb-6 text-white drop-shadow-2xl text-center" dir="ltr">
                 <span className="inline-block transition-elegant hover:scale-110 cursor-default text-white drop-shadow-lg">
                   Next

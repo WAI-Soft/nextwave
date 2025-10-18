@@ -45,22 +45,22 @@ export const Footer = () => {
   return (
     <footer
       id="contact"
-      className="bg-gradient-to-br from-deep-charcoal via-deep-charcoal/95 to-deep-charcoal/90 dark:from-deep-charcoal dark:via-deep-charcoal/98 dark:to-deep-charcoal/95 text-warm-ivory py-16 border-t border-champagne-gold/20 shadow-luxury"
+      className="bg-gradient-to-br from-pure-black via-pure-black/95 to-pure-black/90 dark:from-pure-black dark:via-pure-black/98 dark:to-pure-black/95 text-pure-white py-16 border-t border-champagne-gold/20 shadow-luxury"
       dir={isRTL ? "rtl" : "ltr"}
     >
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-3 gap-12 mb-12">
           {/* Logo & Info */}
-          <div className="space-y-4 animate-fade-in">
+          <div className="space-y-4 animate-fade-in text-center md:text-left">
             <img 
               src="/src/assets/nextwave logo.png" 
               alt="NextWave Logo" 
-              className="h-24 w-auto"
+              className="h-24 w-auto mx-auto md:mx-0"
             />
-            <p className="text-warm-ivory/80 leading-relaxed">
+            <p className="text-pure-white/80 leading-relaxed">
               {t.footer.description}
             </p>
-<div className={`flex gap-4 ${isRTL ? 'ms-6' : 'me-6'}`}>
+<div className={`flex gap-4 justify-center md:justify-start ${isRTL ? 'ms-6' : 'me-6'}`}>
   <a
     href={t.footer.socialLinks.facebook}
     target="_blank"
@@ -103,7 +103,7 @@ export const Footer = () => {
           </div>
 
           {/* Quick Links */}
-          <div className="space-y-4 animate-fade-in">
+          <div className="space-y-4 animate-fade-in text-center md:text-left">
             <h4 className="text-xl font-din font-semibold mb-6 text-champagne-gold">
               {t.footer.quickLinks.title}
             </h4>
@@ -111,7 +111,7 @@ export const Footer = () => {
               <li>
                 <button
                   onClick={() => handleNavigation("/")}
-                  className="text-warm-ivory/80 hover:text-champagne-gold transition-colors duration-300"
+                  className="text-pure-white/80 hover:text-champagne-gold transition-colors duration-300"
                 >
                   {t.footer.quickLinks.home}
                 </button>
@@ -119,7 +119,7 @@ export const Footer = () => {
               <li>
                 <button
                   onClick={() => handleNavigation("/services")}
-                  className="text-warm-ivory/80 hover:text-champagne-gold transition-colors duration-300"
+                  className="text-pure-white/80 hover:text-champagne-gold transition-colors duration-300"
                 >
                   {t.footer.quickLinks.services}
                 </button>
@@ -127,7 +127,7 @@ export const Footer = () => {
               <li>
                 <button
                   onClick={() => handleNavigation("/portfolio")}
-                  className="text-warm-ivory/80 hover:text-champagne-gold transition-colors duration-300"
+                  className="text-pure-white/80 hover:text-champagne-gold transition-colors duration-300"
                 >
                   {t.footer.quickLinks.portfolio}
                 </button>
@@ -135,7 +135,7 @@ export const Footer = () => {
               <li>
                 <button
                   onClick={() => handleNavigation("/about")}
-                  className="text-warm-ivory/80 hover:text-champagne-gold transition-colors duration-300"
+                  className="text-pure-white/80 hover:text-champagne-gold transition-colors duration-300"
                 >
                   {t.footer.quickLinks.aboutUs}
                 </button>
@@ -143,7 +143,7 @@ export const Footer = () => {
               <li>
                 <button
                   onClick={() => handleNavigation("/contact")}
-                  className="text-warm-ivory/80 hover:text-champagne-gold transition-colors duration-300"
+                  className="text-pure-white/80 hover:text-champagne-gold transition-colors duration-300"
                 >
                   {t.footer.quickLinks.contact}
                 </button>
@@ -165,7 +165,7 @@ export const Footer = () => {
                   setFormData({ ...formData, name: e.target.value })
                 }
                 required
-                className="bg-warm-ivory/10 border-champagne-gold/30 text-warm-ivory placeholder:text-warm-ivory/60 focus:border-champagne-gold"
+                className="bg-pure-white/10 border-champagne-gold/30 text-pure-white placeholder:text-pure-white/60 focus:border-champagne-gold"
               />
               <Input
                 type="email"
@@ -175,7 +175,7 @@ export const Footer = () => {
                   setFormData({ ...formData, email: e.target.value })
                 }
                 required
-                className="bg-warm-ivory/10 border-champagne-gold/30 text-warm-ivory placeholder:text-warm-ivory/60 focus:border-champagne-gold"
+                className="bg-pure-white/10 border-champagne-gold/30 text-pure-white placeholder:text-pure-white/60 focus:border-champagne-gold"
               />
               <Textarea
                 placeholder={t.footer.contactForm.messagePlaceholder}
@@ -184,11 +184,11 @@ export const Footer = () => {
                   setFormData({ ...formData, message: e.target.value })
                 }
                 required
-                className="bg-warm-ivory/10 border-champagne-gold/30 text-warm-ivory placeholder:text-warm-ivory/60 focus:border-champagne-gold min-h-[100px]"
+                className="bg-pure-white/10 border-champagne-gold/30 text-pure-white placeholder:text-pure-white/60 focus:border-champagne-gold min-h-[100px]"
               />
               <Button
                 type="submit"
-                className="w-full bg-champagne-gold hover:bg-champagne-gold/90 text-deep-charcoal font-semibold transition-all duration-300 hover:shadow-luxury"
+                className="w-full bg-champagne-gold hover:bg-champagne-gold/90 text-pure-black font-semibold transition-all duration-300 hover:shadow-luxury"
               >
                 {t.footer.contactForm.sendButton}
               </Button>
@@ -197,7 +197,7 @@ export const Footer = () => {
         </div>
 
         {/* Copyright */}
-        <div className="pt-8 border-t border-champagne-gold/20 text-center text-warm-ivory/60">
+        <div className="pt-8 border-t border-champagne-gold/20 text-center text-pure-white/60">
           <p>{t.footer.copyright}</p>
         </div>
       </div>

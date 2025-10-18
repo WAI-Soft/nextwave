@@ -209,7 +209,7 @@ const ServicePage = () => {
     <div className="min-h-screen bg-gradient-subtle" dir={isRTL ? "rtl" : "ltr"}>
       <Navigation />
 
-      <section className="container mx-auto px-4 pt-28 pb-16">
+      <section className="container mx-auto px-4 pt-8 pb-16">
         <div className="mb-10 text-center">
           <h1 className="text-4xl md:text-5xl font-din font-bold text-foreground">
             {localizedServiceTitle}
