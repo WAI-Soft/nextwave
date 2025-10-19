@@ -55,7 +55,7 @@ export default {
         // Black/White/Gold Luxury Theme Colors
         'pure-black': '#000000',
         'pure-white': '#FFFFFF',
-        'champagne-gold': '#E8C39E',
+        'champagne-gold': '#e6ae4c',
         'dark-gray': '#0D0D0D',
       },
       borderRadius: {
@@ -64,15 +64,15 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       backgroundImage: {
-        'gradient-luxury': 'linear-gradient(135deg, #E8C39E 0%, #F0D4B3 100%)',
+        'gradient-luxury': 'linear-gradient(135deg, #e6ae4c 0%, #F0D4B3 100%)',
         'gradient-subtle': 'linear-gradient(180deg, #000000 0%, #0D0D0D 100%)',
         'gradient-dark': 'linear-gradient(135deg, #000000 0%, #1A1A1A 100%)',
       },
       boxShadow: {
         'soft': '0 4px 20px -4px rgba(0, 0, 0, 0.5)',
         'elegant': '0 10px 40px -10px rgba(0, 0, 0, 0.6)',
-        'glow': '0 0 30px rgba(232, 195, 158, 0.4)',
-        'luxury': '0 8px 32px -8px rgba(232, 195, 158, 0.3)',
+        'glow': '0 0 30px rgba(230, 174, 76, 0.4)',
+        'luxury': '0 8px 32px -8px rgba(230, 174, 76, 0.3)',
       },
       keyframes: {
         "accordion-down": {

@@ -9,49 +9,66 @@ All colors MUST be HSL.
 @layer base {
   :root {
     /* NextWave Design System - Black/White/Gold Luxury */
-    --background: 0 0% 0%; /* Pure Black #000000 */
-    --foreground: 0 0% 100%; /* Pure White #FFFFFF */
+    --background: 0 0% 0%;
+    /* Pure Black #000000 */
+    --foreground: 0 0% 100%;
+    /* Pure White #FFFFFF */
 
-    --card: 0 0% 5%; /* Very dark for cards */
-    --card-foreground: 0 0% 100%; /* Pure White */
+    --card: 0 0% 5%;
+    /* Very dark for cards */
+    --card-foreground: 0 0% 100%;
+    /* Pure White */
 
-    --popover: 0 0% 3%; /* Darker for popovers */
-    --popover-foreground: 0 0% 100%; /* Pure White */
+    --popover: 0 0% 3%;
+    /* Darker for popovers */
+    --popover-foreground: 0 0% 100%;
+    /* Pure White */
 
     /* Primary - Champagne Gold */
-    --primary: 38 61% 76%; /* Champagne Gold #E8C39E */
-    --primary-foreground: 0 0% 0%; /* Pure Black */
+    --primary: 38 76% 60%;
+    /* Champagne Gold #e6ae4c */
+    --primary-foreground: 0 0% 0%;
+    /* Pure Black */
 
     /* Secondary - Dark variation */
-    --secondary: 0 0% 10%; /* Dark variation */
-    --secondary-foreground: 0 0% 100%; /* Pure White */
+    --secondary: 0 0% 10%;
+    /* Dark variation */
+    --secondary-foreground: 0 0% 100%;
+    /* Pure White */
 
     /* Muted tones */
-    --muted: 0 0% 15%; /* Muted dark */
-    --muted-foreground: 0 0% 70%; /* Muted white */
+    --muted: 0 0% 15%;
+    /* Muted dark */
+    --muted-foreground: 0 0% 70%;
+    /* Muted white */
 
     /* Accent - Champagne Gold for consistency */
-    --accent: 38 61% 76%; /* Champagne Gold #E8C39E */
-    --accent-foreground: 0 0% 0%; /* Pure Black */
+    --accent: 38 76% 60%;
+    /* Champagne Gold #e6ae4c */
+    --accent-foreground: 0 0% 0%;
+    /* Pure Black */
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 20%; /* Subtle border */
-    --input: 0 0% 10%; /* Input background */
-    --ring: 38 61% 76%; /* Champagne Gold for focus rings */
+    --border: 0 0% 20%;
+    /* Subtle border */
+    --input: 0 0% 10%;
+    /* Input background */
+    --ring: 38 76% 60%;
+    /* Champagne Gold for focus rings */
 
     --radius: 0.75rem;
 
     /* Custom gradient for premium effects */
-    --gradient-primary: linear-gradient(135deg, hsl(38 61% 76%) 0%, hsl(38 61% 86%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(38 76% 60%) 0%, hsl(38 76% 70%) 100%);
     --gradient-subtle: linear-gradient(180deg, hsl(0 0% 0%) 0%, hsl(0 0% 5%) 100%);
-    
+
     /* Elegant shadows with luxury feel */
     --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.5);
     --shadow-elegant: 0 10px 40px -10px hsl(0 0% 0% / 0.6);
-    --shadow-glow: 0 0 30px hsl(38 61% 76% / 0.4);
-    
+    --shadow-glow: 0 0 30px hsl(38 76% 60% / 0.4);
+
     /* Smooth transitions */
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-elegant: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
@@ -59,8 +76,10 @@ All colors MUST be HSL.
 
   .dark {
     /* Dark mode - Pure Black/White/Gold Theme */
-    --background: 0 0% 0%; /* Pure Black */
-    --foreground: 0 0% 100%; /* Pure White */
+    --background: 0 0% 0%;
+    /* Pure Black */
+    --foreground: 0 0% 100%;
+    /* Pure White */
 
     --card: 0 0% 5%;
     --card-foreground: 0 0% 100%;
@@ -68,7 +87,8 @@ All colors MUST be HSL.
     --popover: 0 0% 3%;
     --popover-foreground: 0 0% 100%;
 
-    --primary: 38 61% 76%; /* Champagne Gold */
+    --primary: 38 76% 60%;
+    /* Champagne Gold */
     --primary-foreground: 0 0% 0%;
 
     --secondary: 0 0% 10%;
@@ -77,7 +97,8 @@ All colors MUST be HSL.
     --muted: 0 0% 15%;
     --muted-foreground: 0 0% 70%;
 
-    --accent: 38 61% 76%; /* Champagne Gold */
+    --accent: 38 76% 60%;
+    /* Champagne Gold */
     --accent-foreground: 0 0% 0%;
 
     --destructive: 0 62.8% 50%;
@@ -85,14 +106,14 @@ All colors MUST be HSL.
 
     --border: 0 0% 20%;
     --input: 0 0% 10%;
-    --ring: 38 61% 76%;
+    --ring: 38 76% 60%;
 
-    --gradient-primary: linear-gradient(135deg, hsl(38 61% 76%) 0%, hsl(38 61% 86%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(38 76% 60%) 0%, hsl(38 76% 70%) 100%);
     --gradient-subtle: linear-gradient(180deg, hsl(0 0% 0%) 0%, hsl(0 0% 5%) 100%);
-    
+
     --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.6);
     --shadow-elegant: 0 10px 40px -10px hsl(0 0% 0% / 0.7);
-    --shadow-glow: 0 0 40px hsl(38 61% 76% / 0.5);
+    --shadow-glow: 0 0 40px hsl(38 76% 60% / 0.5);
   }
 }
 
@@ -109,8 +130,24 @@ All colors MUST be HSL.
     scroll-behavior: smooth;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-din;
+  }
+
+  /* Smooth scroll performance optimization */
+  .will-change-transform {
+    will-change: transform;
+  }
+
+  /* Ensure smooth scrolling on all devices */
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   /* RTL Support for Arabic */
@@ -149,27 +186,27 @@ All colors MUST be HSL.
   .gradient-primary {
     background: var(--gradient-primary);
   }
-  
+
   .gradient-subtle {
     background: var(--gradient-subtle);
   }
-  
+
   .shadow-soft {
     box-shadow: var(--shadow-soft);
   }
-  
+
   .shadow-elegant {
     box-shadow: var(--shadow-elegant);
   }
-  
+
   .shadow-glow {
     box-shadow: var(--shadow-glow);
   }
-  
+
   .transition-smooth {
     transition: var(--transition-smooth);
   }
-  
+
   .transition-elegant {
     transition: var(--transition-elegant);
   }
@@ -192,6 +229,7 @@ All colors MUST be HSL.
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -203,6 +241,7 @@ All colors MUST be HSL.
     opacity: 0;
     transform: translateY(40px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -214,6 +253,7 @@ All colors MUST be HSL.
     opacity: 0;
     transform: scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -225,10 +265,12 @@ All colors MUST be HSL.
     opacity: 0;
     transform: scale(0.9) translateY(10px);
   }
+
   50% {
     opacity: 0.5;
     transform: scale(0.95) translateY(5px);
   }
+
   100% {
     opacity: 1;
     transform: scale(1) translateY(0);
@@ -241,11 +283,13 @@ All colors MUST be HSL.
     transform: scale(1.05);
     filter: blur(2px);
   }
+
   50% {
     opacity: 0.7;
     transform: scale(1.02);
     filter: blur(1px);
   }
+
   100% {
     opacity: 1;
     transform: scale(1);
@@ -279,8 +323,8 @@ All colors MUST be HSL.
 
 /* Image Upload Drag and Drop Styles */
 .drag-over {
-  border-color: hsl(38 61% 76%) !important;
-  background-color: hsl(38 61% 76% / 0.1) !important;
+  border-color: hsl(38 76% 60%) !important;
+  background-color: hsl(38 76% 60% / 0.1) !important;
   transform: scale(1.02);
 }
 
@@ -294,8 +338,8 @@ All colors MUST be HSL.
 }
 
 .drag-area:hover {
-  border-color: hsl(38 61% 76% / 0.8);
-  background-color: hsl(38 61% 76% / 0.15);
+  border-color: hsl(38 76% 60% / 0.8);
+  background-color: hsl(38 76% 60% / 0.15);
   transform: scale(1.01);
 }
 
@@ -304,6 +348,7 @@ All colors MUST be HSL.
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -315,10 +360,83 @@ All colors MUST be HSL.
 
 /* Hide scrollbars */
 .scrollbar-hide {
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  /* Internet Explorer 10+ */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 .scrollbar-hide::-webkit-scrollbar {
-  display: none;  /* Safari and Chrome */
+  display: none;
+  /* Safari and Chrome */
+}
+
+/* Sc
+roll-driven animation support for modern browsers */
+@supports (animation-timeline: scroll()) {
+  .hero-scroll-animation {
+    animation: hero-slide-up linear;
+    animation-timeline: scroll();
+    animation-range: 0vh 100vh;
+  }
+
+  @keyframes hero-slide-up {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+
+    to {
+      transform: translate3d(0, 100%, 0);
+    }
+  }
+
+  .hero-content-fade {
+    animation: hero-content-fade-out linear;
+    animation-timeline: scroll();
+    animation-range: 0vh 80vh;
+  }
+
+  @keyframes hero-content-fade-out {
+    from {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+
+    to {
+      opacity: 0;
+      transform: translate3d(0, -80px, 0);
+    }
+  }
+}
+
+/* Performance optimizations for scroll animations */
+@media (prefers-reduced-motion: no-preference) {
+  .smooth-scroll-transform {
+    transition: transform 0.05s ease-out;
+  }
+}
+
+/* Disable animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+
+  .hero-scroll-animation,
+  .hero-content-fade {
+    animation: none !important;
+  }
+
+  .smooth-scroll-transform {
+    transition: none !important;
+  }
+}
+
+/* Logo animation from hero to navigation */
+.hero-logo-animate {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Ensure smooth rendering during logo animation */
+.logo-fixed-position {
+  position: fixed;
+  z-index: 100;
+  pointer-events: none;
 }
