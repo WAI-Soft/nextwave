@@ -213,16 +213,16 @@ const About = () => {
               {/* Mission and Vision Cards */}
               <div className={`space-y-6 md:space-y-8 ${isRTL ? 'lg:col-start-2 lg:row-start-1' : 'lg:col-start-2 lg:row-start-1'}`}>
                 <div className="bg-card p-6 md:p-8 rounded-2xl shadow-soft">
-                  <div className={`flex items-center gap-3 md:gap-4 mb-3 md:mb-4 ${isRTL ? 'flex-row-reverse justify-end' : 'flex-row'}`}>
+                  <div className={`flex items-center gap-3 md:gap-4 mb-3 md:mb-4 ${isRTL ? 'flex-row justify-end' : 'flex-row'}`}>
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-accent/20 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Target className="w-5 h-5 md:w-6 md:h-6 text-accent" />
+                    </div>
                     <h3 
                       className={`text-xl md:text-2xl font-din font-bold text-foreground ${isRTL ? 'text-right' : 'text-left'}`}
                       style={{ textAlign: isRTL ? 'right' : 'left' }}
                     >
                       {t.about.mission.title}
                     </h3>
-                    <div className="w-10 h-10 md:w-12 md:h-12 bg-accent/20 rounded-full flex items-center justify-center flex-shrink-0">
-                      <Target className="w-5 h-5 md:w-6 md:h-6 text-accent" />
-                    </div>
                   </div>
                   <p 
                     className={`text-sm md:text-base text-muted-foreground leading-relaxed ${isRTL ? 'text-right' : 'text-left'}`}
@@ -233,16 +233,16 @@ const About = () => {
                 </div>
 
                 <div className="bg-card p-6 md:p-8 rounded-2xl shadow-soft">
-                  <div className={`flex items-center gap-3 md:gap-4 mb-3 md:mb-4 ${isRTL ? 'flex-row-reverse justify-end' : 'flex-row'}`}>
+                  <div className={`flex items-center gap-3 md:gap-4 mb-3 md:mb-4 ${isRTL ? 'flex-row justify-end' : 'flex-row'}`}>
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Star className="w-5 h-5 md:w-6 md:h-6 text-primary" />
+                    </div>
                     <h3 
                       className={`text-xl md:text-2xl font-din font-bold text-foreground ${isRTL ? 'text-right' : 'text-left'}`}
                       style={{ textAlign: isRTL ? 'right' : 'left' }}
                     >
                       {t.about.vision.title}
                     </h3>
-                    <div className="w-10 h-10 md:w-12 md:h-12 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
-                      <Star className="w-5 h-5 md:w-6 md:h-6 text-primary" />
-                    </div>
                   </div>
                   <p 
                     className={`text-sm md:text-base text-muted-foreground leading-relaxed ${isRTL ? 'text-right' : 'text-left'}`}
@@ -354,18 +354,31 @@ const About = () => {
                       key={index}
                       className="bg-card p-5 md:p-6 rounded-2xl shadow-soft hover:shadow-elegant transition-all duration-300 transform hover:-translate-y-1"
                     >
-                      <div className={`flex items-start gap-3 md:gap-4 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
-                        <div className={`w-10 h-10 md:w-12 md:h-12 ${isLeftValue ? 'bg-accent/20' : 'bg-primary/20'} rounded-full flex items-center justify-center flex-shrink-0`}>
-                          <IconComponent className={`w-5 h-5 md:w-6 md:h-6 ${isLeftValue ? 'text-accent' : 'text-primary'}`} />
-                        </div>
+                      <div className={`flex items-start gap-3 md:gap-4 ${isRTL ? 'flex-row' : 'flex-row'}`}>
+                        {!isRTL && (
+                          <div className={`w-10 h-10 md:w-12 md:h-12 ${isLeftValue ? 'bg-accent/20' : 'bg-primary/20'} rounded-full flex items-center justify-center flex-shrink-0`}>
+                            <IconComponent className={`w-5 h-5 md:w-6 md:h-6 ${isLeftValue ? 'text-accent' : 'text-primary'}`} />
+                          </div>
+                        )}
                         <div className="flex-1">
-                          <h3 className={`text-lg md:text-xl font-din font-bold text-foreground mb-2 ${isRTL ? 'text-right' : 'text-left'}`}>
+                          <h3 
+                            className={`text-lg md:text-xl font-din font-bold text-foreground mb-2 ${isRTL ? 'text-right' : 'text-left'}`}
+                            style={{ textAlign: isRTL ? 'right' : 'left' }}
+                          >
                             {value.title}
                           </h3>
-                          <p className={`text-sm md:text-base text-muted-foreground leading-relaxed ${isRTL ? 'text-right' : 'text-left'}`}>
+                          <p 
+                            className={`text-sm md:text-base text-muted-foreground leading-relaxed ${isRTL ? 'text-right' : 'text-left'}`}
+                            style={{ textAlign: isRTL ? 'right' : 'left' }}
+                          >
                             {value.description}
                           </p>
                         </div>
+                        {isRTL && (
+                          <div className={`w-10 h-10 md:w-12 md:h-12 ${isLeftValue ? 'bg-accent/20' : 'bg-primary/20'} rounded-full flex items-center justify-center flex-shrink-0`}>
+                            <IconComponent className={`w-5 h-5 md:w-6 md:h-6 ${isLeftValue ? 'text-accent' : 'text-primary'}`} />
+                          </div>
+                        )}
                       </div>
                     </div>
                   );
@@ -385,18 +398,31 @@ const About = () => {
                             key={index}
                             className="bg-card p-5 md:p-6 rounded-2xl shadow-soft hover:shadow-elegant transition-all duration-300 transform hover:-translate-y-1"
                           >
-                            <div className="flex items-start gap-3 md:gap-4">
-                              <div className="w-10 h-10 md:w-12 md:h-12 bg-accent/20 rounded-full flex items-center justify-center flex-shrink-0">
-                                <IconComponent className="w-5 h-5 md:w-6 md:h-6 text-accent" />
-                              </div>
+                            <div className={`flex items-start gap-3 md:gap-4 flex-row`}>
+                              {!isRTL && (
+                                <div className="w-10 h-10 md:w-12 md:h-12 bg-accent/20 rounded-full flex items-center justify-center flex-shrink-0">
+                                  <IconComponent className="w-5 h-5 md:w-6 md:h-6 text-accent" />
+                                </div>
+                              )}
                               <div className="flex-1">
-                                <h3 className="text-lg md:text-xl font-din font-bold text-foreground mb-2 text-left">
+                                <h3 
+                                  className={`text-lg md:text-xl font-din font-bold text-foreground mb-2 ${isRTL ? 'text-right' : 'text-left'}`}
+                                  style={{ textAlign: isRTL ? 'right' : 'left' }}
+                                >
                                   {value.title}
                                 </h3>
-                                <p className="text-sm md:text-base text-muted-foreground leading-relaxed text-left">
+                                <p 
+                                  className={`text-sm md:text-base text-muted-foreground leading-relaxed ${isRTL ? 'text-right' : 'text-left'}`}
+                                  style={{ textAlign: isRTL ? 'right' : 'left' }}
+                                >
                                   {value.description}
                                 </p>
                               </div>
+                              {isRTL && (
+                                <div className="w-10 h-10 md:w-12 md:h-12 bg-accent/20 rounded-full flex items-center justify-center flex-shrink-0">
+                                  <IconComponent className="w-5 h-5 md:w-6 md:h-6 text-accent" />
+                                </div>
+                              )}
                             </div>
                           </div>
                         );
@@ -411,18 +437,31 @@ const About = () => {
                             key={index}
                             className="bg-card p-5 md:p-6 rounded-2xl shadow-soft hover:shadow-elegant transition-all duration-300 transform hover:-translate-y-1"
                           >
-                            <div className="flex items-start gap-3 md:gap-4">
-                              <div className="w-10 h-10 md:w-12 md:h-12 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
-                                <IconComponent className="w-5 h-5 md:w-6 md:h-6 text-primary" />
-                              </div>
+                            <div className={`flex items-start gap-3 md:gap-4 flex-row`}>
+                              {!isRTL && (
+                                <div className="w-10 h-10 md:w-12 md:h-12 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                                  <IconComponent className="w-5 h-5 md:w-6 md:h-6 text-primary" />
+                                </div>
+                              )}
                               <div className="flex-1">
-                                <h3 className="text-lg md:text-xl font-din font-bold text-foreground mb-2 text-left">
+                                <h3 
+                                  className={`text-lg md:text-xl font-din font-bold text-foreground mb-2 ${isRTL ? 'text-right' : 'text-left'}`}
+                                  style={{ textAlign: isRTL ? 'right' : 'left' }}
+                                >
                                   {value.title}
                                 </h3>
-                                <p className="text-sm md:text-base text-muted-foreground leading-relaxed text-left">
+                                <p 
+                                  className={`text-sm md:text-base text-muted-foreground leading-relaxed ${isRTL ? 'text-right' : 'text-left'}`}
+                                  style={{ textAlign: isRTL ? 'right' : 'left' }}
+                                >
                                   {value.description}
                                 </p>
                               </div>
+                              {isRTL && (
+                                <div className="w-10 h-10 md:w-12 md:h-12 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                                  <IconComponent className="w-5 h-5 md:w-6 md:h-6 text-primary" />
+                                </div>
+                              )}
                             </div>
                           </div>
                         );
