@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Menu, X, Globe, ChevronDown, Home, Briefcase, User, Phone, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -9,14 +9,42 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useLanguage } from "@/contexts/LanguageContext";
+import nextwaveLogo from "@/assets/nextwave header.png";
 
 export const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
   const [dropdownTimeout, setDropdownTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [showNavLogo, setShowNavLogo] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const { language, setLanguage, isRTL, t } = useLanguage();
+  
+  const isHomePage = location.pathname === '/';
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const heroHeight = window.innerHeight;
+      const progress = Math.min(scrollY / heroHeight, 1);
+      
+      setScrollProgress(progress);
+      
+      // Show navigation logo when scrolled past 30% of hero section
+      setShowNavLogo(progress > 0.3);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Initial check
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Don't render navigation on home page when not scrolled
+  if (isHomePage && scrollProgress < 0.3) {
+    return null;
+  }
 
   const toggleLanguage = () => {
     setLanguage(language === 'en' ? 'ar' : 'en');
@@ -89,7 +117,14 @@ export const Navigation = () => {
   const displayLinks = navLinks;
 
   return (
-    <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border shadow-soft" dir={isRTL ? 'rtl' : 'ltr'}>
+    <nav 
+      className={`sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border shadow-soft transition-all duration-700 ease-out ${
+        isHomePage && scrollProgress < 0.4 
+          ? 'transform -translate-y-full opacity-0' 
+          : 'transform translate-y-0 opacity-100'
+      }`} 
+      dir={isRTL ? 'rtl' : 'ltr'}
+    >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
           {/* Left Section - Logo in EN, Language Toggle in AR */}
@@ -118,13 +153,15 @@ export const Navigation = () => {
                 </Button>
               </div>
             ) : (
-              // English: Logo on left
+              // English: Logo on left - Show when scrolled or not on home page
               <button
                 onClick={() => scrollToSection("hero")}
-                className="hover:opacity-80 transition-smooth"
+                className={`hover:opacity-80 transition-all duration-700 ease-out ${
+                  (showNavLogo || !isHomePage) ? 'opacity-100 scale-100' : 'opacity-0 scale-75 pointer-events-none'
+                }`}
               >
                 <img 
-                  src="/src/assets/nextwave logo.png" 
+                  src={nextwaveLogo} 
                   alt="NextWave Logo" 
                   className="h-20 w-auto"
                 />
@@ -145,10 +182,10 @@ export const Navigation = () => {
                   >
                     <button
                       onClick={() => navigate('/services')}
-                      className={`flex items-center gap-1 transition-smooth font-medium ${
+                      className={`flex items-center gap-1 transition-smooth font-medium px-4 py-2 rounded-md border-2 ${
                         isLinkActive(link.key) 
-                          ? 'text-primary' 
-                          : 'text-foreground hover:text-primary'
+                          ? 'text-primary border-primary' 
+                          : 'text-foreground border-border hover:text-primary hover:border-primary'
                       }`}
                     >
                       {link.label}
@@ -183,10 +220,10 @@ export const Navigation = () => {
                 <button
                   key={link.key}
                   onClick={link.action}
-                  className={`transition-smooth font-medium ${
+                  className={`transition-smooth font-medium px-4 py-2 rounded-md border-2 ${
                     isLinkActive(link.key) 
-                      ? 'text-primary' 
-                      : 'text-foreground hover:text-primary'
+                      ? 'text-primary border-primary' 
+                      : 'text-foreground border-border hover:text-primary hover:border-primary'
                   }`}
                 >
                   {link.label}
@@ -198,13 +235,15 @@ export const Navigation = () => {
           {/* Right Section - Language Toggle in EN, Logo in AR */}
           <div className={`flex items-center ${isRTL ? 'order-3' : 'order-3'}`}>
             {isRTL ? (
-              // Arabic: Logo on right
+              // Arabic: Logo on right - Show when scrolled or not on home page
               <button
                 onClick={() => scrollToSection("hero")}
-                className="hover:opacity-80 transition-smooth"
+                className={`hover:opacity-80 transition-all duration-700 ease-out ${
+                  (showNavLogo || !isHomePage) ? 'opacity-100 scale-100' : 'opacity-0 scale-75 pointer-events-none'
+                }`}
               >
                 <img 
-                  src="/src/assets/nextwave logo.png" 
+                  src={nextwaveLogo} 
                   alt="NextWave Logo" 
                   className="h-20 w-auto"
                 />
