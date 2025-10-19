@@ -149,23 +149,23 @@ const About = () => {
         <section className="container mx-auto px-4 text-center">
           <div className="animate-fade-in">
             {/* Text background for extra contrast */}
-            <div className="bg-black/30 backdrop-blur-md rounded-3xl p-12 md:p-16 lg:p-20 border border-white/20 shadow-2xl">
+            <div className="bg-black/30 backdrop-blur-md rounded-2xl md:rounded-3xl p-6 md:p-12 lg:p-16 xl:p-20 border border-white/20 shadow-2xl">
               <h1
-                className={`text-4xl md:text-6xl lg:text-7xl font-din font-bold text-white drop-shadow-2xl mb-6 [text-shadow:_2px_2px_4px_rgb(0_0_0_/_80%)] ${
+                className={`text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-din font-bold text-white drop-shadow-2xl mb-4 md:mb-6 [text-shadow:_2px_2px_4px_rgb(0_0_0_/_80%)] ${
                   isRTL ? 'text-right' : 'text-center'
                 }`}
               >
                 {t.about.hero.title}
               </h1>
               <p
-                className={`text-lg md:text-xl text-white mb-8 max-w-4xl mx-auto font-light drop-shadow-lg [text-shadow:_1px_1px_2px_rgb(0_0_0_/_70%)] text-center`}
+                className={`text-base md:text-lg lg:text-xl text-white mb-6 md:mb-8 max-w-4xl mx-auto font-light drop-shadow-lg [text-shadow:_1px_1px_2px_rgb(0_0_0_/_70%)] text-center leading-relaxed`}
               >
                 {t.about.hero.subtitle}
               </p>
 
               {/* Animated scroll indicator */}
-              <div className="flex justify-center mt-12 animate-bounce">
-                <ArrowDown className="w-6 h-6 text-white drop-shadow-2xl [filter:_drop-shadow(2px_2px_4px_rgb(0_0_0_/_80%))]" />
+              <div className="flex justify-center mt-8 md:mt-12 animate-bounce">
+                <ArrowDown className="w-5 h-5 md:w-6 md:h-6 text-white drop-shadow-2xl [filter:_drop-shadow(2px_2px_4px_rgb(0_0_0_/_80%))]" />
               </div>
             </div>
           </div>
@@ -173,99 +173,81 @@ const About = () => {
       </VideoBackground>
 
       {/* Introduction Section */}
-      <section className="py-20 mx-10">
-        <div className="max-w-7xl mx-auto px-4">
+      <section className="py-12 md:py-20 px-4 md:mx-10">
+        <div className="max-w-7xl mx-auto">
           <div
             ref={introRef}
             className={`transition-all duration-1000 ${
               introVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}
           >
-            <div
-              className={`grid grid-cols-1 lg:grid-cols-2 gap-16 items-center ${
-                isRTL ? 'lg:grid-flow-col-dense' : ''
-              }`}
-            >
-              <div className={`space-y-8 ${isRTL ? 'lg:col-start-2' : ''}`}>
-                <div>
-                  <h2
-                    className={`text-4xl font-din font-bold text-foreground mb-6 ${
-                      isRTL ? 'text-right' : 'text-left'
-                    }`}
-                    style={{ textAlign: isRTL ? 'right' : 'left' }}
-                  >
-                    {t.about.story.title}
-                  </h2>
-                  <p
-                    className={`text-lg text-muted-foreground leading-relaxed mb-6 ${
-                      isRTL ? 'text-right' : 'text-left'
-                    }`}
-                    style={{ textAlign: isRTL ? 'right' : 'left' }}
-                  >
-                    {t.about.story.paragraph1}
-                  </p>
-                  <p
-                    className={`text-lg text-muted-foreground leading-relaxed ${
-                      isRTL ? 'text-right' : 'text-left'
-                    }`}
-                    style={{ textAlign: isRTL ? 'right' : 'left' }}
-                  >
-                    {t.about.story.paragraph2}
-                  </p>
-                </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
+              {/* Our Story Section */}
+              <div className={`${isRTL ? 'lg:col-start-1 lg:row-start-1' : 'lg:col-start-1 lg:row-start-1'}`}>
+                <h2
+                  className={`text-3xl md:text-4xl font-din font-bold text-foreground mb-4 md:mb-6 ${
+                    isRTL ? 'text-right' : 'text-left'
+                  }`}
+                  style={{ textAlign: isRTL ? 'right' : 'left' }}
+                >
+                  {t.about.story.title}
+                </h2>
+                <p
+                  className={`text-base md:text-lg text-muted-foreground leading-relaxed mb-4 md:mb-6 ${
+                    isRTL ? 'text-right' : 'text-left'
+                  }`}
+                  style={{ textAlign: isRTL ? 'right' : 'left' }}
+                >
+                  {t.about.story.paragraph1}
+                </p>
+                <p
+                  className={`text-base md:text-lg text-muted-foreground leading-relaxed ${
+                    isRTL ? 'text-right' : 'text-left'
+                  }`}
+                  style={{ textAlign: isRTL ? 'right' : 'left' }}
+                >
+                  {t.about.story.paragraph2}
+                </p>
               </div>
 
-              <div className={`space-y-8 ${isRTL ? 'lg:col-start-1' : ''}`}>
-                <div className="bg-card p-8 rounded-2xl shadow-soft">
-                  <div className={`flex items-center gap-4 mb-4 ${isRTL ? 'justify-end' : 'justify-start'}`}>
-                    {isRTL ? (
-                      <>
-                        <h3 className="text-2xl font-din font-bold text-foreground text-right">
-                          {t.about.mission.title}
-                        </h3>
-                        <div className="w-12 h-12 bg-accent/20 rounded-full flex items-center justify-center">
-                          <Target className="w-6 h-6 text-accent" />
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <div className="w-12 h-12 bg-accent/20 rounded-full flex items-center justify-center">
-                          <Target className="w-6 h-6 text-accent" />
-                        </div>
-                        <h3 className="text-2xl font-din font-bold text-foreground text-left">
-                          {t.about.mission.title}
-                        </h3>
-                      </>
-                    )}
+              {/* Mission and Vision Cards */}
+              <div className={`space-y-6 md:space-y-8 ${isRTL ? 'lg:col-start-2 lg:row-start-1' : 'lg:col-start-2 lg:row-start-1'}`}>
+                <div className="bg-card p-6 md:p-8 rounded-2xl shadow-soft">
+                  <div className={`flex items-center gap-3 md:gap-4 mb-3 md:mb-4 ${isRTL ? 'flex-row-reverse justify-end' : 'flex-row'}`}>
+                    <h3 
+                      className={`text-xl md:text-2xl font-din font-bold text-foreground ${isRTL ? 'text-right' : 'text-left'}`}
+                      style={{ textAlign: isRTL ? 'right' : 'left' }}
+                    >
+                      {t.about.mission.title}
+                    </h3>
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-accent/20 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Target className="w-5 h-5 md:w-6 md:h-6 text-accent" />
+                    </div>
                   </div>
-                  <p className={`text-muted-foreground leading-relaxed ${isRTL ? 'text-right' : 'text-left'}`}>
+                  <p 
+                    className={`text-sm md:text-base text-muted-foreground leading-relaxed ${isRTL ? 'text-right' : 'text-left'}`}
+                    style={{ textAlign: isRTL ? 'right' : 'left' }}
+                  >
                     {t.about.mission.description}
                   </p>
                 </div>
 
-                <div className="bg-card p-8 rounded-2xl shadow-soft">
-                  <div className={`flex items-center gap-4 mb-4 ${isRTL ? 'justify-end' : 'justify-start'}`}>
-                    {isRTL ? (
-                      <>
-                        <h3 className="text-2xl font-din font-bold text-foreground text-right">
-                          {t.about.vision.title}
-                        </h3>
-                        <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
-                          <Star className="w-6 h-6 text-primary" />
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
-                          <Star className="w-6 h-6 text-primary" />
-                        </div>
-                        <h3 className="text-2xl font-din font-bold text-foreground text-left">
-                          {t.about.vision.title}
-                        </h3>
-                      </>
-                    )}
+                <div className="bg-card p-6 md:p-8 rounded-2xl shadow-soft">
+                  <div className={`flex items-center gap-3 md:gap-4 mb-3 md:mb-4 ${isRTL ? 'flex-row-reverse justify-end' : 'flex-row'}`}>
+                    <h3 
+                      className={`text-xl md:text-2xl font-din font-bold text-foreground ${isRTL ? 'text-right' : 'text-left'}`}
+                      style={{ textAlign: isRTL ? 'right' : 'left' }}
+                    >
+                      {t.about.vision.title}
+                    </h3>
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Star className="w-5 h-5 md:w-6 md:h-6 text-primary" />
+                    </div>
                   </div>
-                  <p className={`text-muted-foreground leading-relaxed ${isRTL ? 'text-right' : 'text-left'}`}>
+                  <p 
+                    className={`text-sm md:text-base text-muted-foreground leading-relaxed ${isRTL ? 'text-right' : 'text-left'}`}
+                    style={{ textAlign: isRTL ? 'right' : 'left' }}
+                  >
                     {t.about.vision.description}
                   </p>
                 </div>
@@ -276,7 +258,7 @@ const About = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5">
+      <section className="py-12 md:py-20 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5">
         <div className="max-w-7xl mx-auto px-4">
           <div
             ref={statsRef}
@@ -284,28 +266,28 @@ const About = () => {
               statsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}
           >
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-din font-bold text-foreground mb-4 text-center">
+            <div className="text-center mb-10 md:mb-16">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-din font-bold text-foreground mb-3 md:mb-4 text-center px-4">
                 {t.about.impact.title}
               </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-center">
+              <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto text-center px-4">
                 {t.about.impact.subtitle}
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
               {stats.map((stat, index) => {
                 const IconComponent = stat.icon;
                 return (
                   <div
                     key={index}
-                    className="text-center p-8 bg-card rounded-2xl shadow-soft hover:shadow-elegant transition-all duration-300"
+                    className="text-center p-6 md:p-8 bg-card rounded-2xl shadow-soft hover:shadow-elegant transition-all duration-300"
                   >
-                    <div className="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-accent/30">
-                      <IconComponent className="w-8 h-8 text-accent" />
+                    <div className="w-14 h-14 md:w-16 md:h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 border-2 border-accent/30">
+                      <IconComponent className="w-7 h-7 md:w-8 md:h-8 text-accent" />
                     </div>
                     <AnimatedCounter end={stat.value} suffix={stat.suffix} />
-                    <p className="text-lg font-medium text-foreground mt-2">{stat.label}</p>
+                    <p className="text-base md:text-lg font-medium text-foreground mt-2">{stat.label}</p>
                   </div>
                 );
               })}
@@ -315,7 +297,7 @@ const About = () => {
       </section>
 
       {/* Goals Section with Wavy Line */}
-      <section className="py-20 relative overflow-hidden">
+      <section className="py-12 md:py-20 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4">
           <div
             ref={goalsRef}
@@ -323,18 +305,18 @@ const About = () => {
               goalsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}
           >
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-din font-bold text-foreground mb-4 text-center">
+            <div className="text-center mb-10 md:mb-16">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-din font-bold text-foreground mb-3 md:mb-4 text-center px-4">
                 {t.about.values.title}
               </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-center">
+              <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto text-center px-4">
                 {t.about.values.subtitle}
               </p>
             </div>
 
             <div className="relative">
-              {/* Wavy Line SVG */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              {/* Wavy Line SVG - Hidden on mobile */}
+              <div className="hidden md:flex absolute inset-0 items-center justify-center pointer-events-none">
                 <svg
                   width="100%"
                   height="200"
@@ -346,9 +328,9 @@ const About = () => {
                 >
                   <defs>
                     <linearGradient id="waveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="hsl(38 61% 76%)" stopOpacity="0.3" />
+                      <stop offset="0%" stopColor="hsl(38 76% 60%)" stopOpacity="0.3" />
                       <stop offset="50%" stopColor="hsl(330 26% 52%)" stopOpacity="0.6" />
-                      <stop offset="100%" stopColor="hsl(38 61% 76%)" stopOpacity="0.3" />
+                      <stop offset="100%" stopColor="hsl(38 76% 60%)" stopOpacity="0.3" />
                     </linearGradient>
                   </defs>
                   <path
@@ -361,113 +343,92 @@ const About = () => {
                 </svg>
               </div>
 
-              <div
-                className={`grid grid-cols-1 lg:grid-cols-2 gap-16 relative z-10 ${
-                  isRTL ? 'lg:grid-flow-col-dense' : ''
-                }`}
-              >
-                {/* Left Side Values */}
-                <div className={`space-y-8 ${isRTL ? 'lg:col-start-2' : ''}`}>
-                  {leftValues.map((value, index) => {
-                    const IconComponent = value.icon;
-                    return (
-                      <div
-                        key={index}
-                        className="bg-card p-6 rounded-2xl shadow-soft hover:shadow-elegant transition-all duration-300 transform hover:-translate-y-1"
-                      >
-                        <div className={`flex items-start gap-4 ${isRTL ? 'flex-row-reverse justify-end' : 'justify-start'}`}>
-                          {isRTL ? (
-                            <>
-                              <div className="flex-1 text-right">
-                                <div className="flex items-center gap-3 mb-2 justify-end">
-                                  <h3 className="text-xl font-din font-bold text-foreground text-right">
-                                    {value.title}
-                                  </h3>
-                                  <div className="w-12 h-12 bg-accent/20 rounded-full flex items-center justify-center flex-shrink-0">
-                                    <IconComponent className="w-6 h-6 text-accent" />
-                                  </div>
-                                </div>
-                                <p className="text-muted-foreground leading-relaxed text-right" style={{ textAlign: 'right' }}>
-                                  {value.description}
-                                </p>
-                              </div>
-                            </>
-                          ) : (
-                            <>
-                              <div className="flex-1">
-                                <div className="flex items-center gap-3 mb-2">
-                                  <div className="w-12 h-12 bg-accent/20 rounded-full flex items-center justify-center flex-shrink-0">
-                                    <IconComponent className="w-6 h-6 text-accent" />
-                                  </div>
-                                  <h3 className="text-xl font-din font-bold text-foreground text-left">
-                                    {value.title}
-                                  </h3>
-                                </div>
-                                <p className="text-muted-foreground leading-relaxed text-left">
-                                  {value.description}
-                                </p>
-                              </div>
-                            </>
-                          )}
+              {/* Mobile: All cards in one column, Desktop: Two columns */}
+              <div className="block lg:hidden space-y-6 md:space-y-8 relative z-10">
+                {/* Mobile: All 6 cards stacked */}
+                {[...leftValues, ...rightValues].map((value, index) => {
+                  const IconComponent = value.icon;
+                  const isLeftValue = index < leftValues.length;
+                  return (
+                    <div
+                      key={index}
+                      className="bg-card p-5 md:p-6 rounded-2xl shadow-soft hover:shadow-elegant transition-all duration-300 transform hover:-translate-y-1"
+                    >
+                      <div className={`flex items-start gap-3 md:gap-4 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+                        <div className={`w-10 h-10 md:w-12 md:h-12 ${isLeftValue ? 'bg-accent/20' : 'bg-primary/20'} rounded-full flex items-center justify-center flex-shrink-0`}>
+                          <IconComponent className={`w-5 h-5 md:w-6 md:h-6 ${isLeftValue ? 'text-accent' : 'text-primary'}`} />
+                        </div>
+                        <div className="flex-1">
+                          <h3 className={`text-lg md:text-xl font-din font-bold text-foreground mb-2 ${isRTL ? 'text-right' : 'text-left'}`}>
+                            {value.title}
+                          </h3>
+                          <p className={`text-sm md:text-base text-muted-foreground leading-relaxed ${isRTL ? 'text-right' : 'text-left'}`}>
+                            {value.description}
+                          </p>
                         </div>
                       </div>
-                    );
-                  })}
-                </div>
+                    </div>
+                  );
+                })}
+              </div>
 
-                {/* Right Side Values */}
-                <div className={`space-y-8 ${isRTL ? 'lg:col-start-1' : ''}`}>
-  {rightValues.map((value, index) => {
-    const IconComponent = value.icon;
-    return (
-      <div
-        key={index}
-        className={`bg-card p-6 rounded-2xl shadow-soft hover:shadow-elegant transition-all duration-300 transform hover:-translate-y-1
-          ${isRTL ? 'ml-auto text-right' : 'mr-auto text-left'}`}
-      >
-        <div
-          className={`flex items-start gap-4 ${
-            isRTL ? 'flex-row-reverse justify-end' : 'justify-start'
-          }`}
-        >
-          {isRTL ? (
-            <>
-              <div className="flex-1 text-right">
-                <div className="flex items-center gap-3 mb-2 justify-end">
-                  <h3 className="text-xl font-din font-bold text-foreground text-right">
-                    {value.title}
-                  </h3>
-                  <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
-                    <IconComponent className="w-6 h-6 text-primary" />
-                  </div>
-                </div>
-                <p className="text-muted-foreground leading-relaxed text-right" style={{ textAlign: 'right' }}>
-                  {value.description}
-                </p>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="flex-1">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
-                    <IconComponent className="w-6 h-6 text-primary" />
-                  </div>
-                  <h3 className="text-xl font-din font-bold text-foreground text-left">
-                    {value.title}
-                  </h3>
-                </div>
-                <p className="text-muted-foreground leading-relaxed text-left">
-                  {value.description}
-                </p>
-              </div>
-            </>
-          )}
-        </div>
-      </div>
-    );
-  })}
-</div>
+              {/* Desktop: Two columns */}
+              <div
+                className={`hidden lg:flex gap-6 md:gap-16 relative z-10 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}
+              >
+                <>
+                    <div className="space-y-6 md:space-y-8 flex-1">
+                      {leftValues.map((value, index) => {
+                        const IconComponent = value.icon;
+                        return (
+                          <div
+                            key={index}
+                            className="bg-card p-5 md:p-6 rounded-2xl shadow-soft hover:shadow-elegant transition-all duration-300 transform hover:-translate-y-1"
+                          >
+                            <div className="flex items-start gap-3 md:gap-4">
+                              <div className="w-10 h-10 md:w-12 md:h-12 bg-accent/20 rounded-full flex items-center justify-center flex-shrink-0">
+                                <IconComponent className="w-5 h-5 md:w-6 md:h-6 text-accent" />
+                              </div>
+                              <div className="flex-1">
+                                <h3 className="text-lg md:text-xl font-din font-bold text-foreground mb-2 text-left">
+                                  {value.title}
+                                </h3>
+                                <p className="text-sm md:text-base text-muted-foreground leading-relaxed text-left">
+                                  {value.description}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    <div className="space-y-6 md:space-y-8 flex-1">
+                      {rightValues.map((value, index) => {
+                        const IconComponent = value.icon;
+                        return (
+                          <div
+                            key={index}
+                            className="bg-card p-5 md:p-6 rounded-2xl shadow-soft hover:shadow-elegant transition-all duration-300 transform hover:-translate-y-1"
+                          >
+                            <div className="flex items-start gap-3 md:gap-4">
+                              <div className="w-10 h-10 md:w-12 md:h-12 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                                <IconComponent className="w-5 h-5 md:w-6 md:h-6 text-primary" />
+                              </div>
+                              <div className="flex-1">
+                                <h3 className="text-lg md:text-xl font-din font-bold text-foreground mb-2 text-left">
+                                  {value.title}
+                                </h3>
+                                <p className="text-sm md:text-base text-muted-foreground leading-relaxed text-left">
+                                  {value.description}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </>
 
               </div>
             </div>

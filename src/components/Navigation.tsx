@@ -20,7 +20,7 @@ export const Navigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { language, setLanguage, isRTL, t } = useLanguage();
-  
+
   const isHomePage = location.pathname === '/';
 
   useEffect(() => {
@@ -28,16 +28,16 @@ export const Navigation = () => {
       const scrollY = window.scrollY;
       const heroHeight = window.innerHeight;
       const progress = Math.min(scrollY / heroHeight, 1);
-      
+
       setScrollProgress(progress);
-      
+
       // Show navigation logo when scrolled past 30% of hero section
       setShowNavLogo(progress > 0.3);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll(); // Initial check
-    
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -117,12 +117,11 @@ export const Navigation = () => {
   const displayLinks = navLinks;
 
   return (
-    <nav 
-      className={`sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border shadow-soft transition-all duration-700 ease-out ${
-        isHomePage && scrollProgress < 0.4 
-          ? 'transform -translate-y-full opacity-0' 
-          : 'transform translate-y-0 opacity-100'
-      }`} 
+    <nav
+      className={`sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border shadow-soft transition-all duration-700 ease-out ${isHomePage && scrollProgress < 0.4
+        ? 'transform -translate-y-full opacity-0'
+        : 'transform translate-y-0 opacity-100'
+        }`}
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       <div className="container mx-auto px-4">
@@ -156,13 +155,12 @@ export const Navigation = () => {
               // English: Logo on left - Show when scrolled or not on home page
               <button
                 onClick={() => scrollToSection("hero")}
-                className={`hover:opacity-80 transition-all duration-700 ease-out ${
-                  (showNavLogo || !isHomePage) ? 'opacity-100 scale-100' : 'opacity-0 scale-75 pointer-events-none'
-                }`}
+                className={`hover:opacity-80 transition-all duration-700 ease-out ${(showNavLogo || !isHomePage) ? 'opacity-100 scale-100' : 'opacity-0 scale-75 pointer-events-none'
+                  }`}
               >
-                <img 
-                  src={nextwaveLogo} 
-                  alt="NextWave Logo" 
+                <img
+                  src={nextwaveLogo}
+                  alt="NextWave Logo"
                   className="h-20 w-auto"
                 />
               </button>
@@ -174,7 +172,7 @@ export const Navigation = () => {
             {displayLinks.map((link) => {
               if (link.isDropdown) {
                 return (
-                  <div 
+                  <div
                     key={link.key}
                     className="relative"
                     onMouseEnter={handleDropdownMouseEnter}
@@ -182,17 +180,16 @@ export const Navigation = () => {
                   >
                     <button
                       onClick={() => navigate('/services')}
-                      className={`flex items-center gap-1 transition-smooth font-medium px-4 py-2 rounded-md border-2 ${
-                        isLinkActive(link.key) 
-                          ? 'text-primary border-primary' 
-                          : 'text-foreground border-border hover:text-primary hover:border-primary'
-                      }`}
+                      className={`flex items-center gap-1 transition-smooth font-medium px-4 py-2 rounded-md border-2 ${isLinkActive(link.key)
+                        ? 'text-primary border-primary'
+                        : 'text-foreground border-border hover:text-primary hover:border-primary'
+                        }`}
                     >
                       {link.label}
                       <ChevronDown className="w-4 h-4" />
                     </button>
                     {isServicesDropdownOpen && (
-                      <div 
+                      <div
                         dir={isRTL ? 'rtl' : 'ltr'}
                         className={`absolute top-full mt-2 px-5 w-56 bg-popover border border-border shadow-elegant rounded-md py-1 animate-fade-in z-50 ${isRTL ? 'right-0' : 'left-0'} text-left`}
                         onMouseEnter={handleDropdownMouseEnter}
@@ -215,16 +212,15 @@ export const Navigation = () => {
                   </div>
                 );
               }
-              
+
               return (
                 <button
                   key={link.key}
                   onClick={link.action}
-                  className={`transition-smooth font-medium px-4 py-2 rounded-md border-2 ${
-                    isLinkActive(link.key) 
-                      ? 'text-primary border-primary' 
-                      : 'text-foreground border-border hover:text-primary hover:border-primary'
-                  }`}
+                  className={`transition-smooth font-medium px-4 py-2 rounded-md border-2 ${isLinkActive(link.key)
+                    ? 'text-primary border-primary'
+                    : 'text-foreground border-border hover:text-primary hover:border-primary'
+                    }`}
                 >
                   {link.label}
                 </button>
@@ -238,13 +234,12 @@ export const Navigation = () => {
               // Arabic: Logo on right - Show when scrolled or not on home page
               <button
                 onClick={() => scrollToSection("hero")}
-                className={`hover:opacity-80 transition-all duration-700 ease-out ${
-                  (showNavLogo || !isHomePage) ? 'opacity-100 scale-100' : 'opacity-0 scale-75 pointer-events-none'
-                }`}
+                className={`hover:opacity-80 transition-all duration-700 ease-out ${(showNavLogo || !isHomePage) ? 'opacity-100 scale-100' : 'opacity-0 scale-75 pointer-events-none'
+                  }`}
               >
-                <img 
-                  src={nextwaveLogo} 
-                  alt="NextWave Logo" 
+                <img
+                  src={nextwaveLogo}
+                  alt="NextWave Logo"
                   className="h-20 w-auto"
                 />
               </button>
@@ -291,11 +286,10 @@ export const Navigation = () => {
                         navigate("/services");
                         setIsMenuOpen(false);
                       }}
-                      className={`flex items-center justify-center gap-2 w-full text-center transition-smooth font-medium py-3 mb-3 ${
-                        isLinkActive(link.key) 
-                          ? 'text-primary' 
-                          : 'text-foreground hover:text-primary'
-                      }`}
+                      className={`flex items-center justify-center gap-2 w-full text-center transition-smooth font-medium py-3 mb-3 ${isLinkActive(link.key)
+                        ? 'text-primary'
+                        : 'text-foreground hover:text-primary'
+                        }`}
                     >
                       {!isRTL && <IconComponent className="w-4 h-4" />}
                       {link.label}
@@ -303,17 +297,16 @@ export const Navigation = () => {
                     </button>
                   );
                 }
-                
+
                 const IconComponent = link.icon;
                 return (
                   <button
                     key={link.key}
                     onClick={link.action}
-                    className={`flex items-center justify-center gap-2 w-full text-center transition-smooth font-medium py-3 mb-3 ${
-                      isLinkActive(link.key) 
-                        ? 'text-primary' 
-                        : 'text-foreground hover:text-primary'
-                    }`}
+                    className={`flex items-center justify-center gap-2 w-full text-center transition-smooth font-medium py-3 mb-3 ${isLinkActive(link.key)
+                      ? 'text-primary'
+                      : 'text-foreground hover:text-primary'
+                      }`}
                   >
                     {!isRTL && <IconComponent className="w-4 h-4" />}
                     {link.label}
@@ -323,9 +316,9 @@ export const Navigation = () => {
               })}
 
               <div className="block text-center pt-2 border-t border-champagne-gold/20">
-                <Button 
-                  variant="elegant" 
-                  size="sm" 
+                <Button
+                  variant="elegant"
+                  size="sm"
                   onClick={toggleLanguage}
                   className="bg-champagne-gold/10 hover:bg-champagne-gold/20 text-pure-white hover:text-champagne-gold border-champagne-gold/30"
                 >

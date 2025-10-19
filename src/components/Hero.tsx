@@ -7,7 +7,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useEffect, useRef, useState } from "react";
 
 export const Hero = () => {
-  const { t } = useLanguage();
+  const { t, isRTL } = useLanguage();
   const heroRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLImageElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -36,8 +36,12 @@ export const Hero = () => {
           const logoCenter = logoRect.left + logoRect.width / 2;
           const logoCenterY = logoRect.top + logoRect.height / 2;
           
-          // Target position (top left of screen for nav logo)
-          const targetX = window.innerWidth < 768 ? window.innerWidth / 2 : 120;
+          // Target position - right side for RTL (Arabic), left side for LTR (English)
+          const targetX = window.innerWidth < 768 
+            ? window.innerWidth / 2 
+            : isRTL 
+              ? window.innerWidth - 120  // Right side for Arabic
+              : 120;                      // Left side for English
           const targetY = 40;
           
           // Calculate transform with movement starting from first scroll
@@ -61,7 +65,7 @@ export const Hero = () => {
     handleScroll(); // Initial call
     
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isRTL]);
   
   const scrollToServices = () => {
     const element = document.getElementById("services");
