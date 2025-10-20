@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import nextwaveLogo from '@/assets/nextwave header.png';
 
 interface PreloaderProps {
   onLoadComplete: () => void;
@@ -166,19 +167,16 @@ const Preloader: React.FC<PreloaderProps> = ({ onLoadComplete }) => {
             transition: opacity 0.6s ease;
           }
 
-          .preloader-text {
-            font-size: 2.5rem;
-            color: white;
+          .preloader-logo {
+            width: 300px;
+            height: auto;
             animation: pulse 1.5s infinite;
-            letter-spacing: 5px;
-            font-weight: bold;
-            font-family: Arial, sans-serif;
           }
 
           @keyframes pulse {
-            0% { opacity: 0.5; }
-            50% { opacity: 1; }
-            100% { opacity: 0.5; }
+            0% { opacity: 0.5; transform: scale(0.95); }
+            50% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0.5; transform: scale(0.95); }
           }
 
           .preloader.hidden {
@@ -193,24 +191,24 @@ const Preloader: React.FC<PreloaderProps> = ({ onLoadComplete }) => {
 
           /* Responsive adjustments */
           @media (max-width: 768px) {
-            .preloader-text {
-              font-size: 2rem;
-              letter-spacing: 3px;
+            .preloader-logo {
+              width: 250px;
             }
           }
 
           @media (max-width: 480px) {
-            .preloader-text {
-              font-size: 1.5rem;
-              letter-spacing: 2px;
+            .preloader-logo {
+              width: 200px;
             }
           }
         `}
       </style>
       <div className={`preloader ${isHidden ? 'hidden' : ''}`}>
-        <div className="preloader-text">
-          NEXTWAVE
-        </div>
+        <img 
+          src={nextwaveLogo} 
+          alt="NextWave Logo" 
+          className="preloader-logo"
+        />
       </div>
     </>
   );
