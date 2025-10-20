@@ -25,8 +25,8 @@ export const Navigation = () => {
 
       setScrollProgress(progress);
 
-      // Show navigation logo when scrolled past 30% of hero section
-      setShowNavLogo(progress > 0.3);
+      // Show navigation logo when it reaches 60% scroll
+      setShowNavLogo(progress >= 0.6);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -35,8 +35,8 @@ export const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Don't render navigation on home page when not scrolled
-  if (isHomePage && scrollProgress < 0.3) {
+  // Don't render navigation on home page until it starts fading in at 50%
+  if (isHomePage && scrollProgress < 0.5) {
     return null;
   }
 
@@ -100,9 +100,9 @@ export const Navigation = () => {
 
   // Define navigation links split into left and right sections
   const leftLinks = [
-    { key: "portfolio", label: t.navigation.portfolio, action: () => navigate("/portfolio"), icon: Briefcase },
-    { key: "services", label: t.navigation.services, isDropdown: true, icon: Settings },
     { key: "home", label: t.navigation.home, action: () => scrollToSection("hero"), icon: Home },
+    { key: "services", label: t.navigation.services, isDropdown: true, icon: Settings },
+    { key: "portfolio", label: t.navigation.portfolio, action: () => navigate("/portfolio"), icon: Briefcase },
   ];
 
   const rightLinks = [
@@ -115,10 +115,15 @@ export const Navigation = () => {
 
   return (
     <nav
-      className={`sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border shadow-soft transition-all duration-700 ease-out ${isHomePage && scrollProgress < 0.4
-        ? 'transform -translate-y-full opacity-0'
-        : 'transform translate-y-0 opacity-100'
-        }`}
+      className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border shadow-soft transition-all duration-700 ease-in-out"
+      style={{
+        transform: isHomePage && scrollProgress < 0.6
+          ? `translateY(-100%)`
+          : 'translateY(0)',
+        opacity: isHomePage
+          ? Math.min(Math.max((scrollProgress - 0.5) / 0.1, 0), 1)
+          : 1,
+      }}
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       <div className="container mx-auto px-4">
