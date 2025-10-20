@@ -1,13 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Menu, X, Globe, ChevronDown, Home, Briefcase, User, Phone, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { useLanguage } from "@/contexts/LanguageContext";
 import nextwaveLogo from "@/assets/nextwave header.png";
 
@@ -104,17 +98,20 @@ export const Navigation = () => {
     }
   };
 
-  // Define navigation links in the order we want them to appear
-  const navLinks = [
-    { key: "home", label: t.navigation.home, action: () => scrollToSection("hero"), icon: Home },
-    { key: "services", label: t.navigation.services, isDropdown: true, icon: Settings },
+  // Define navigation links split into left and right sections
+  const leftLinks = [
     { key: "portfolio", label: t.navigation.portfolio, action: () => navigate("/portfolio"), icon: Briefcase },
+    { key: "services", label: t.navigation.services, isDropdown: true, icon: Settings },
+    { key: "home", label: t.navigation.home, action: () => scrollToSection("hero"), icon: Home },
+  ];
+
+  const rightLinks = [
     { key: "aboutUs", label: t.navigation.aboutUs, action: () => navigate("/about"), icon: User },
     { key: "contact", label: t.navigation.contact, action: () => navigate("/contact"), icon: Phone },
   ];
 
-  // Use the same order for both languages
-  const displayLinks = navLinks;
+  // All links for mobile menu
+  const allLinks = [...leftLinks, ...rightLinks];
 
   return (
     <nav
@@ -126,51 +123,25 @@ export const Navigation = () => {
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
-          {/* Left Section - Logo in EN, Language Toggle in AR */}
-          <div className={`flex items-center ${isRTL ? 'order-1' : 'order-1'}`}>
-            {isRTL ? (
-              // Arabic: Language Toggle on left
-              <div className="flex items-center gap-2">
-                <div className="hidden md:flex items-center rounded-lg border-2 border-champagne-gold/30 overflow-hidden shadow-soft bg-pure-black/10">
-                  <button
-                    onClick={toggleLanguage}
-                    className="flex items-center gap-2 px-4 py-2 bg-champagne-gold/10 hover:bg-champagne-gold/20 transition-smooth text-pure-white hover:text-champagne-gold"
-                  >
-                    <Globe className="w-4 h-4 ml-2" />
-                    <span className="font-din font-medium text-sm">
-                      {language === 'en' ? 'EN' : 'AR'}
-                    </span>
-                  </button>
-                </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="md:hidden"
-                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+          {/* Left Section - Navigation Links */}
+          <div className={`hidden md:flex items-center gap-16 flex-1 ${isRTL ? 'flex-row-reverse justify-start pr-12' : 'justify-start pr-12'}`}>
+            {/* Language Toggle - show in Arabic on left side (first position) */}
+            {isRTL && (
+              <div className="flex items-center rounded-lg border-2 border-champagne-gold/30 overflow-hidden shadow-soft bg-pure-black/10">
+                <button
+                  onClick={toggleLanguage}
+                  className="flex items-center gap-2 px-4 py-2 bg-champagne-gold/10 hover:bg-champagne-gold/20 transition-smooth text-pure-white hover:text-champagne-gold"
                 >
-                  {isMenuOpen ? <X /> : <Menu />}
-                </Button>
+                  <Globe className="w-4 h-4 ml-2" />
+                  <span className="font-din font-medium text-sm">
+                    {language === 'en' ? 'EN' : 'AR'}
+                  </span>
+                </button>
               </div>
-            ) : (
-              // English: Logo on left - Show when scrolled or not on home page
-              <button
-                onClick={() => scrollToSection("hero")}
-                className={`hover:opacity-80 transition-all duration-700 ease-out ${(showNavLogo || !isHomePage) ? 'opacity-100 scale-100' : 'opacity-0 scale-75 pointer-events-none'
-                  }`}
-              >
-                <img
-                  src={nextwaveLogo}
-                  alt="NextWave Logo"
-                  className="h-20 w-auto"
-                />
-              </button>
             )}
-          </div>
 
-          {/* Center Section - Desktop Navigation */}
-          <div className={`hidden md:flex items-center gap-8 order-2 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
-            {displayLinks.map((link) => {
-              if (link.isDropdown) {
+            {(isRTL ? rightLinks : leftLinks).map((link) => {
+              if ('isDropdown' in link && link.isDropdown) {
                 return (
                   <div
                     key={link.key}
@@ -191,7 +162,7 @@ export const Navigation = () => {
                     {isServicesDropdownOpen && (
                       <div
                         dir={isRTL ? 'rtl' : 'ltr'}
-                        className={`absolute top-full mt-2 px-5 w-56 bg-popover border border-border shadow-elegant rounded-md py-1 animate-fade-in z-50 ${isRTL ? 'right-0' : 'left-0'} text-left`}
+                        className={`absolute top-full mt-2 w-56 bg-popover border border-border shadow-elegant rounded-md py-1 animate-fade-in z-50 ${isRTL ? 'right-0' : 'left-0'} text-left`}
                         onMouseEnter={handleDropdownMouseEnter}
                         onMouseLeave={handleDropdownMouseLeave}
                       >
@@ -202,7 +173,7 @@ export const Navigation = () => {
                               navigate(toRoute(service.slug));
                               setIsServicesDropdownOpen(false);
                             }}
-                            className={"w-full pl-4 py-2 cursor-pointer hover:bg-accent transition-smooth text-left"}
+                            className={"w-full px-5 py-2 cursor-pointer hover:bg-accent transition-smooth text-left rounded-md"}
                           >
                             {service.name}
                           </button>
@@ -228,57 +199,116 @@ export const Navigation = () => {
             })}
           </div>
 
-          {/* Right Section - Language Toggle in EN, Logo in AR */}
-          <div className={`flex items-center ${isRTL ? 'order-3' : 'order-3'}`}>
-            {isRTL ? (
-              // Arabic: Logo on right - Show when scrolled or not on home page
-              <button
-                onClick={() => scrollToSection("hero")}
-                className={`hover:opacity-80 transition-all duration-700 ease-out ${(showNavLogo || !isHomePage) ? 'opacity-100 scale-100' : 'opacity-0 scale-75 pointer-events-none'
-                  }`}
-              >
-                <img
-                  src={nextwaveLogo}
-                  alt="NextWave Logo"
-                  className="h-20 w-auto"
-                />
-              </button>
-            ) : (
-              // English: Language Toggle on right
-              <div className="flex items-center gap-2">
-                <div className="hidden md:flex items-center gap-2">
-                  <div className="flex items-center rounded-lg border-2 border-champagne-gold/30 overflow-hidden shadow-soft bg-pure-black/10">
+          {/* Center Section - Logo */}
+          <div className="flex items-center justify-center">
+            <button
+              onClick={() => scrollToSection("hero")}
+              className={`hover:opacity-80 transition-all duration-700 ease-out ${(showNavLogo || !isHomePage) ? 'opacity-100 scale-100' : 'opacity-0 scale-75 pointer-events-none'
+                }`}
+            >
+              <img
+                src={nextwaveLogo}
+                alt="NextWave Logo"
+                className="h-20 w-auto"
+              />
+            </button>
+          </div>
+
+          {/* Right Section - Navigation Links (About Us, Contact) + Language Toggle */}
+          <div className={`hidden md:flex items-center gap-16 flex-1 ${isRTL ? 'flex-row-reverse justify-end pl-12' : 'justify-end pl-12'}`}>
+            {(isRTL ? leftLinks : rightLinks).map((link) => {
+              if ('isDropdown' in link && link.isDropdown) {
+                return (
+                  <div
+                    key={link.key}
+                    className="relative"
+                    onMouseEnter={handleDropdownMouseEnter}
+                    onMouseLeave={handleDropdownMouseLeave}
+                  >
                     <button
-                      onClick={toggleLanguage}
-                      className="flex items-center gap-2 px-4 py-2 bg-champagne-gold/10 hover:bg-champagne-gold/20 transition-smooth text-pure-white hover:text-champagne-gold"
+                      onClick={() => navigate('/services')}
+                      className={`flex items-center gap-1 transition-smooth font-medium px-4 py-2 rounded-md border-2 ${isLinkActive(link.key)
+                        ? 'text-primary border-primary'
+                        : 'text-foreground border-border hover:text-primary hover:border-primary'
+                        }`}
                     >
-                      <Globe className="w-4 h-4 mr-2" />
-                      <span className="font-din font-medium text-sm">
-                        {language === 'en' ? 'EN' : 'AR'}
-                      </span>
+                      {link.label}
+                      <ChevronDown className="w-4 h-4" />
                     </button>
+                    {isServicesDropdownOpen && (
+                      <div
+                        dir={isRTL ? 'rtl' : 'ltr'}
+                        className={`absolute top-full mt-2 w-56 bg-popover border border-border shadow-elegant rounded-md py-1 animate-fade-in z-50 ${isRTL ? 'right-0' : 'left-0'} text-left`}
+                        onMouseEnter={handleDropdownMouseEnter}
+                        onMouseLeave={handleDropdownMouseLeave}
+                      >
+                        {services.map((service) => (
+                          <button
+                            key={service.key}
+                            onClick={() => {
+                              navigate(toRoute(service.slug));
+                              setIsServicesDropdownOpen(false);
+                            }}
+                            className={"w-full px-5 py-2 cursor-pointer hover:bg-accent transition-smooth text-left rounded-md"}
+                          >
+                            {service.name}
+                          </button>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="md:hidden"
-                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                );
+              }
+
+              return (
+                <button
+                  key={link.key}
+                  onClick={link.action}
+                  className={`transition-smooth font-medium px-4 py-2 rounded-md border-2 ${isLinkActive(link.key)
+                    ? 'text-primary border-primary'
+                    : 'text-foreground border-border hover:text-primary hover:border-primary'
+                    }`}
                 >
-                  {isMenuOpen ? <X /> : <Menu />}
-                </Button>
+                  {link.label}
+                </button>
+              );
+            })}
+
+            {/* Language Toggle - only show in English on right side */}
+            {!isRTL && (
+              <div className="flex items-center rounded-lg border-2 border-champagne-gold/30 overflow-hidden shadow-soft bg-pure-black/10">
+                <button
+                  onClick={toggleLanguage}
+                  className="flex items-center gap-2 px-4 py-2 bg-champagne-gold/10 hover:bg-champagne-gold/20 transition-smooth text-pure-white hover:text-champagne-gold"
+                >
+                  <Globe className="w-4 h-4 mr-2" />
+                  <span className="font-din font-medium text-sm">
+                    {language === 'en' ? 'EN' : 'AR'}
+                  </span>
+                </button>
               </div>
             )}
           </div>
+
+          {/* Mobile Menu Button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? <X /> : <Menu />}
+          </Button>
         </div>
 
         {/* Mobile Menu */}
         {isMenuOpen && (
           <div className="md:hidden mt-2 pb-1 animate-fade-in text-center" dir={isRTL ? "rtl" : "ltr"}>
             <div className="block">
-              {displayLinks.map((link) => {
-                if (link.isDropdown) {
-                  const IconComponent = link.icon;
+              {allLinks.map((link) => {
+                const IconComponent = link.icon;
+
+                if ('isDropdown' in link && link.isDropdown) {
                   return (
                     <button
                       key={link.key}
@@ -298,7 +328,6 @@ export const Navigation = () => {
                   );
                 }
 
-                const IconComponent = link.icon;
                 return (
                   <button
                     key={link.key}
@@ -333,3 +362,5 @@ export const Navigation = () => {
     </nav>
   );
 };
+
+

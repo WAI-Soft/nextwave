@@ -27,31 +27,31 @@ export const Hero = () => {
           
           setScrollProgress(progress);
           
-          // Calculate logo animation to navigation bar - starts immediately with scroll
-          const logoProgress = Math.min(progress / 0.5, 1); // Complete animation in 50% of hero height
-          const easeProgress = logoProgress * logoProgress * (3 - 2 * logoProgress); // Smooth ease
-            
-          // Get logo position in hero
-          const logoRect = logoRef.current.getBoundingClientRect();
-          const logoCenter = logoRect.left + logoRect.width / 2;
-          const logoCenterY = logoRect.top + logoRect.height / 2;
+          // Logo animation similar to the reference site
+          // Animation completes when reaching 30% of scroll
+          const animationThreshold = 0.3;
+          const logoProgress = Math.min(progress / animationThreshold, 1);
           
-          // Target position - right side for RTL (Arabic), left side for LTR (English)
-          const targetX = window.innerWidth < 768 
-            ? window.innerWidth / 2 
-            : isRTL 
-              ? window.innerWidth - 120  // Right side for Arabic
-              : 120;                      // Left side for English
-          const targetY = 40;
+          // Smooth easing function for natural movement
+          const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+          const easeProgress = easeOutCubic(logoProgress);
           
-          // Calculate transform with movement starting from first scroll
-          const deltaX = targetX - logoCenter;
-          const deltaY = targetY - logoCenterY;
+          // Calculate scale: from 1 to ~0.28 (to match nav logo size of h-20 = 80px)
+          // Assuming hero logo is around 288px (h-72), scale factor is 80/288 ≈ 0.28
+          const targetScale = 0.28;
+          const scale = 1 - ((1 - targetScale) * easeProgress);
+          
+          // Calculate vertical movement
+          // Move logo up to align with navigation bar (around 40px from top)
+          const viewportHeight = window.innerHeight;
+          const startY = 0;
+          const targetY = -(viewportHeight / 2 - 60); // Move to top of screen
+          const y = startY + (targetY * easeProgress);
           
           setLogoTransform({
-            x: deltaX * easeProgress,
-            y: deltaY * easeProgress,
-            scale: 1 - (0.8 * easeProgress) // Scale down more dramatically
+            x: 0,
+            y: y,
+            scale: scale
           });
           
           ticking = false;
@@ -122,12 +122,12 @@ export const Hero = () => {
                 {t.home.hero.tagline}
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <div className={`flex-col lg:flex-row justify-center items-stretch lg:items-center gap-3 lg:gap-4 w-full max-w-md lg:max-w-none mx-auto ${isRTL ? 'lg:flex-row-reverse' : ''}`}>
                 <Button
                   variant="gradient"
                   size="lg"
                   onClick={scrollToServices}
-                  className="group shadow-xl"
+                  className="group m-3 shadow-xl w-full lg:w-auto"
                 >
                   {t.home.hero.exploreServices}
                 </Button>
@@ -138,7 +138,7 @@ export const Hero = () => {
                     const element = document.getElementById("contact");
                     element?.scrollIntoView({ behavior: "smooth" });
                   }}
-                  className="shadow-xl"
+                  className="shadow-xl m-3 w-full lg:w-auto"
                 >
                   {t.home.hero.getInTouch}
                 </Button>
