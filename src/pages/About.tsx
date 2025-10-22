@@ -152,14 +152,12 @@ const About = () => {
             {/* Text background for extra contrast */}
             <div className="bg-black/30 backdrop-blur-md rounded-2xl md:rounded-3xl p-6 md:p-12 lg:p-16 xl:p-20 border border-white/20 shadow-2xl">
               <h1
-                className={`text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-din font-bold text-white drop-shadow-2xl mb-4 md:mb-6 [text-shadow:_2px_2px_4px_rgb(0_0_0_/_80%)] ${
-                  isRTL ? 'text-right' : 'text-center'
-                }`}
+                className="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-din font-bold text-white drop-shadow-2xl mb-4 md:mb-6 [text-shadow:_2px_2px_4px_rgb(0_0_0_/_80%)] text-center"
               >
                 {t.about.hero.title}
               </h1>
               <p
-                className={`text-base md:text-lg lg:text-xl text-white mb-6 md:mb-8 max-w-4xl mx-auto font-light drop-shadow-lg [text-shadow:_1px_1px_2px_rgb(0_0_0_/_70%)] text-center leading-relaxed`}
+                className="text-base md:text-lg lg:text-xl text-white mb-6 md:mb-8 max-w-4xl mx-auto font-light drop-shadow-lg [text-shadow:_1px_1px_2px_rgb(0_0_0_/_70%)] text-center leading-relaxed"
               >
                 {t.about.hero.subtitle}
               </p>
