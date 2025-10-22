@@ -16,7 +16,6 @@ import {
   User,
   TrendingUp,
   BarChart3,
-  Sparkles,
   Settings,
   Bell,
   Search,
@@ -36,6 +35,7 @@ import { useNavigate } from 'react-router-dom';
 import AddProject from './AddProject';
 import EditProject from './EditProject';
 import ConfirmDialog from '../../components/ConfirmDialog';
+import nextwaveLogo from '@/assets/nextwave header.png';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -167,8 +167,12 @@ const Dashboard = () => {
           {/* Header */}
           <div className="p-6 border-b border-champagne-gold/20">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-champagne-gold rounded-xl flex items-center justify-center shadow-lg">
-                <Sparkles className="w-6 h-6 text-pure-black" />
+              <div className="w-10 h-10 bg-champagne-gold rounded-xl flex items-center justify-center shadow-lg p-1.5">
+                <img 
+                  src={nextwaveLogo} 
+                  alt="NextWave Logo" 
+                  className="w-full h-full object-contain"
+                />
               </div>
               <div>
                 <h2 className="text-xl font-bold text-champagne-gold">

@@ -6,6 +6,7 @@ interface LanguageContextType {
   setLanguage: (lang: Language) => void;
   isRTL: boolean;
   t: typeof translations.en;
+  isAdminRoute: boolean;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -22,6 +23,11 @@ interface LanguageProviderProps {
   children: React.ReactNode;
 }
 
+// Helper function to check if current route is admin
+const checkIsAdminRoute = (): boolean => {
+  return window.location.pathname.startsWith('/admin');
+};
+
 export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) => {
   const [language, setLanguageState] = useState<Language>(() => {
     // Get language from localStorage or default to 'en'
@@ -29,28 +35,74 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
     return savedLanguage || 'en';
   });
 
-  const isRTL = language === 'ar';
+  const [isAdminRoute, setIsAdminRoute] = useState<boolean>(checkIsAdminRoute());
+
+  // Admin routes are always LTR and English, public routes follow language setting
+  const effectiveLanguage = isAdminRoute ? 'en' : language;
+  const isRTL = !isAdminRoute && language === 'ar';
 
   const setLanguage = (newLanguage: Language) => {
     setLanguageState(newLanguage);
     localStorage.setItem('language', newLanguage);
     
-    // Update document direction and lang attribute
-    document.documentElement.dir = newLanguage === 'ar' ? 'rtl' : 'ltr';
-    document.documentElement.lang = newLanguage;
+    // Only update document direction if not on admin route
+    if (!checkIsAdminRoute()) {
+      document.documentElement.dir = newLanguage === 'ar' ? 'rtl' : 'ltr';
+      document.documentElement.lang = newLanguage;
+    }
   };
 
+  // Listen for route changes
   useEffect(() => {
-    // Set initial document direction and lang
-    document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
-    document.documentElement.lang = language;
-  }, [language, isRTL]);
+    const handleRouteChange = () => {
+      setIsAdminRoute(checkIsAdminRoute());
+    };
+
+    // Check on mount and when pathname changes
+    handleRouteChange();
+
+    // Listen to popstate (back/forward navigation)
+    window.addEventListener('popstate', handleRouteChange);
+    
+    // Listen to pushState and replaceState (programmatic navigation)
+    const originalPushState = window.history.pushState;
+    const originalReplaceState = window.history.replaceState;
+
+    window.history.pushState = function(...args) {
+      originalPushState.apply(window.history, args);
+      handleRouteChange();
+    };
+
+    window.history.replaceState = function(...args) {
+      originalReplaceState.apply(window.history, args);
+      handleRouteChange();
+    };
+
+    return () => {
+      window.removeEventListener('popstate', handleRouteChange);
+      window.history.pushState = originalPushState;
+      window.history.replaceState = originalReplaceState;
+    };
+  }, []);
+
+  useEffect(() => {
+    // Admin routes always stay LTR and English
+    if (isAdminRoute) {
+      document.documentElement.dir = 'ltr';
+      document.documentElement.lang = 'en';
+    } else {
+      // Public routes follow language setting
+      document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
+      document.documentElement.lang = language;
+    }
+  }, [language, isAdminRoute]);
 
   const value = {
     language,
     setLanguage,
     isRTL,
-    t: translations[language],
+    t: translations[effectiveLanguage],
+    isAdminRoute,
   };
 
   return (

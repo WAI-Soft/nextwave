@@ -12,6 +12,8 @@ import { homeEn } from './home.en';
 import { homeAr } from './home.ar';
 import { servicesEn } from './services.en';
 import { servicesAr } from './services.ar';
+import { adminEn } from './admin.en';
+import { adminAr } from './admin.ar';
 
 export const translations = {
   en: {
@@ -22,6 +24,7 @@ export const translations = {
     portfolio: portfolioEn,
     home: homeEn,
     services: servicesEn,
+    admin: adminEn,
   },
   ar: {
     navigation: navigationAr,
@@ -31,6 +34,7 @@ export const translations = {
     portfolio: portfolioAr,
     home: homeAr,
     services: servicesAr,
+    admin: adminAr,
   }
 };
 

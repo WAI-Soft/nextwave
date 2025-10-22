@@ -77,7 +77,7 @@ const AddProject: React.FC<AddProjectProps> = ({ onSuccess }) => {
   };
 
   return (
-    <Card className="bg-pure-black/40 border-champagne-gold/20">
+    <Card className="bg-pure-black/40 border-champagne-gold/20" dir="ltr">
       <CardHeader>
         <CardTitle className="text-champagne-gold">Add New Project</CardTitle>
         <CardDescription className="text-pure-white/70">

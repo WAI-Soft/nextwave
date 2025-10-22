@@ -5,16 +5,20 @@ import { Input } from '../../components/ui/input';
 import { Label } from '../../components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
 import { Alert, AlertDescription } from '../../components/ui/alert';
-import { Loader2, Eye, EyeOff, Shield, Sparkles, Zap } from 'lucide-react';
+import { Loader2, Eye, EyeOff, Shield, Zap } from 'lucide-react';
 import { toast } from 'sonner';
+import { translations } from '../../translations';
+import nextwaveLogo from '@/assets/nextwave header.png';
 
 const Login = () => {
+  // Always use English for admin
+  const t = translations.en;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -25,18 +29,18 @@ const Login = () => {
     try {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
+
       // Simple authentication check
       if (email === 'admin@nextwave.com' && password === 'admin123') {
-        toast.success('Login successful! Welcome to the admin dashboard.');
+        toast.success(t.admin.login.loginSuccess);
         navigate('/admin/dashboard');
       } else {
-        setError('Invalid email or password');
-        toast.error('Invalid credentials');
+        setError(t.admin.login.invalidCredentials);
+        toast.error(t.admin.login.invalidCredentials);
       }
     } catch (error) {
-      setError('An error occurred during login');
-      toast.error('Login failed');
+      setError(t.admin.login.invalidCredentials);
+      toast.error(t.admin.login.loginFailed);
     } finally {
       setIsLoading(false);
     }
@@ -70,28 +74,36 @@ const Login = () => {
       <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
         <div className="w-full max-w-md">
           {/* Logo/Brand Section */}
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-champagne-gold rounded-2xl mb-4 shadow-2xl">
-              <Sparkles className="w-10 h-10 text-pure-black animate-pulse" />
-            </div>
+          <div className="text-center mb-8 mt-8">
+           {/* <div className="inline-flex items-center justify-center w-32 h-32 bg-champagne-gold rounded-2xl mb-4 shadow-2xl p-4">
+              <img
+                src={nextwaveLogo}
+                alt="NextWave Logo"
+                className="w-full h-full object-contain"
+              />
+            </div> */}
             <h1 className="text-4xl font-bold text-pure-white mb-2">
               NextWave
             </h1>
             <p className="text-pure-white/70 text-lg">Admin Dashboard</p>
-          </div>
+          </div> 
 
           <Card className="bg-pure-black/40 backdrop-blur-xl border-champagne-gold/20 shadow-2xl rounded-2xl overflow-hidden">
             <CardHeader className="text-center pb-6">
               <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 bg-champagne-gold rounded-full flex items-center justify-center shadow-lg">
-                  <Shield className="w-8 h-8 text-pure-black" />
+                <div className="w-20 h-20 bg-champagne-gold rounded-full flex items-center justify-center shadow-lg p-3">
+                  <img
+                    src={nextwaveLogo}
+                    alt="NextWave Logo"
+                    className="w-full h-full object-contain"
+                  />
                 </div>
               </div>
               <CardTitle className="text-2xl font-bold text-pure-white">
-                Welcome Back
+                {t.admin.login.welcomeBack}
               </CardTitle>
               <CardDescription className="text-pure-white/70">
-                Sign in to access your admin dashboard
+                {t.admin.login.subtitle}
               </CardDescription>
             </CardHeader>
             <CardContent className="px-8 pb-8">
@@ -101,7 +113,7 @@ const Login = () => {
                     <AlertDescription>{error}</AlertDescription>
                   </Alert>
                 )}
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="email" className="text-pure-white/90 font-medium">
                     Email Address
@@ -121,10 +133,10 @@ const Login = () => {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="password" className="text-pure-white/90 font-medium">
-                    Password
+                    {t.admin.login.passwordLabel}
                   </Label>
                   <div className="relative">
                     <Input
@@ -132,7 +144,7 @@ const Login = () => {
                       type={showPassword ? 'text' : 'password'}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Enter your password"
+                      placeholder={t.admin.login.passwordPlaceholder}
                       className="bg-pure-black/20 border-champagne-gold/30 text-pure-white placeholder:text-pure-white/50 focus:border-champagne-gold focus:ring-2 focus:ring-champagne-gold/20 rounded-xl h-12 pr-12 transition-all duration-300"
                       required
                     />
@@ -140,12 +152,13 @@ const Login = () => {
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
                       className="absolute right-3 top-1/2 transform -translate-y-1/2 text-pure-white/50 hover:text-pure-white/80 transition-colors"
+                      title={showPassword ? t.admin.login.hidePassword : t.admin.login.showPassword}
                     >
                       {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                     </button>
                   </div>
                 </div>
-                
+
                 <Button
                   type="submit"
                   disabled={isLoading}
@@ -154,17 +167,17 @@ const Login = () => {
                   {isLoading ? (
                     <>
                       <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                      Signing in...
+                      {t.admin.login.loggingIn}
                     </>
                   ) : (
                     <>
                       <Shield className="w-5 h-5 mr-2" />
-                      Sign In
+                      {t.admin.login.loginButton}
                     </>
                   )}
                 </Button>
               </form>
-              
+
               <div className="mt-8 p-4 bg-pure-black/20 rounded-xl border border-champagne-gold/20 backdrop-blur-sm">
                 <p className="text-sm text-pure-white/70 text-center">
                   <strong className="text-pure-white/90">Demo Credentials:</strong><br />
@@ -178,7 +191,7 @@ const Login = () => {
       </div>
 
       {/* Custom Animations */}
-      <style jsx>{`
+      <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0px) rotate(0deg); }
           50% { transform: translateY(-20px) rotate(180deg); }

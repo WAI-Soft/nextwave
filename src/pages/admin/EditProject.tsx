@@ -96,7 +96,7 @@ const EditProject: React.FC<EditProjectProps> = ({ projectId, onSuccess, onCance
   };
 
   return (
-    <Card className="bg-pure-black/40 border-champagne-gold/20">
+    <Card className="bg-pure-black/40 border-champagne-gold/20" dir="ltr">
       <CardHeader>
         <CardTitle className="text-champagne-gold">Edit Project</CardTitle>
         <CardDescription className="text-pure-white/70">
