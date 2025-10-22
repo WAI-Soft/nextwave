@@ -19,6 +19,14 @@ import { useProjects, Project } from "../contexts/ProjectContext";
 import portfolioHero from "@/assets/portfolio-hero.jpg";
 import portfolioVideo from "@/assets/videos/PortfolioVideo.mp4";
 
+// Import project images
+import brandIdentityImg from "@/assets/brand-identity.png";
+import ecommercePlatformImg from "@/assets/e-commerce-platform.png";
+import advertisingCampaignImg from "@/assets/advertising-campaign.png";
+import logoDesignImg from "@/assets/logo-design.png";
+import productPhotographyImg from "@/assets/product-photography.png";
+import mobileAppImg from "@/assets/mobile-app.png";
+
 // Define a type for fallback portfolio items
 interface FallbackPortfolioItem {
   id: string;
@@ -35,42 +43,7 @@ interface FallbackPortfolioItem {
 // Union type for portfolio items
 type PortfolioItem = Project | FallbackPortfolioItem;
 
-// Fallback portfolio data for when no projects exist
-const fallbackPortfolioItems: FallbackPortfolioItem[] = [
-  {
-    id: "fallback-1",
-    category: "branding",
-    name: "Luxury Brand Identity",
-    description: "Complete brand identity design for premium lifestyle brand",
-    image: "/src/assets/brand-identity.png",
-    tags: ["Logo Design", "Brand Guidelines", "Color Palette"],
-    client: "Luxe Living Co.",
-    year: 2024,
-    purpose: "To create a sophisticated and memorable brand identity that reflects luxury and elegance"
-  },
-  {
-    id: "fallback-2",
-    category: "websites",
-    name: "E-commerce Platform",
-    description: "Modern responsive website with seamless user experience",
-    image: "/src/assets/e-commerce-platform.png",
-    tags: ["Web Design", "UX/UI", "E-commerce"],
-    client: "Fashion Forward",
-    year: 2024,
-    purpose: "To develop a user-friendly e-commerce platform that drives sales and customer engagement"
-  },
-  {
-    id: "fallback-3",
-    category: "advertising",
-    name: "Digital Campaign",
-    description: "Multi-platform advertising campaign with stunning visuals",
-    image: "/src/assets/advertising-campaign.png",
-    tags: ["Digital Ads", "Social Media", "Campaign"],
-    client: "TechStart Inc.",
-    year: 2023,
-    purpose: "To create an impactful digital advertising campaign that increases brand awareness"
-  }
-];
+
 
 const categories = [
   { id: "all", icon: Star },
@@ -96,10 +69,41 @@ const Portfolio = () => {
   const [activeCategory, setActiveCategory] = useState("all");
   const [selectedItem, setSelectedItem] = useState<PortfolioItem | null>(null);
 
-  // Use projects from context, fallback to hardcoded data if none exist
-  const portfolioItems = projects.length > 0 
-    ? projects.filter(project => project.status === 'published')
-    : fallbackPortfolioItems;
+  // Map project IDs to images
+  const projectImages: { [key: number]: string } = {
+    1: brandIdentityImg,
+    2: ecommercePlatformImg,
+    3: advertisingCampaignImg,
+    4: logoDesignImg,
+    5: productPhotographyImg,
+    6: mobileAppImg
+  };
+
+  // Map project IDs to categories
+  const projectCategories: { [key: number]: string } = {
+    1: "branding",
+    2: "websites",
+    3: "advertising",
+    4: "logos",
+    5: "photography",
+    6: "websites"
+  };
+
+  // Fallback portfolio data using translations
+  const fallbackPortfolioItems: FallbackPortfolioItem[] = t.portfolio.projects.map((project: any) => ({
+    id: `fallback-${project.id}`,
+    category: projectCategories[project.id] || "branding",
+    name: project.name,
+    description: project.description,
+    image: projectImages[project.id] || brandIdentityImg,
+    tags: project.tags,
+    client: project.client,
+    year: parseInt(project.year),
+    purpose: project.purpose
+  }));
+
+  // Always use translated fallback data for proper language support
+  const portfolioItems = fallbackPortfolioItems;
 
   const filteredItems =
     activeCategory === "all"
@@ -132,7 +136,7 @@ const Portfolio = () => {
         <div className="relative">
           <button
             onClick={() => setSelectedItem(null)}
-            className="absolute top-6 right-6 z-10 w-12 h-12 bg-black/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/40 transition-colors text-xl font-light"
+            className="absolute top-6 right-6 z-10 w-14 h-14 bg-black/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/40 transition-colors text-4xl font-light"
           >
             ×
           </button>
@@ -299,7 +303,7 @@ const Portfolio = () => {
       <section className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-wrap justify-center gap-4 mb-16">
-            {categories.map((category) => {
+            {(isRTL ? [...categories].reverse() : categories).map((category) => {
               const IconComponent = category.icon;
               const categoryName =
                 t.portfolio.filters[

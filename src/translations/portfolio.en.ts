@@ -20,7 +20,8 @@ export const portfolioEn = {
       description: "Complete brand identity design for premium lifestyle brand",
       client: "Luxe Living Co.",
       year: "2024",
-      tags: ["Logo Design", "Brand Guidelines", "Color Palette"]
+      tags: ["Logo Design", "Brand Guidelines", "Color Palette"],
+      purpose: "To create a sophisticated and memorable brand identity that reflects luxury and elegance"
     },
     {
       id: 2,
@@ -28,7 +29,8 @@ export const portfolioEn = {
       description: "Modern responsive website with seamless user experience",
       client: "Fashion Forward",
       year: "2024",
-      tags: ["Web Design", "UX/UI", "E-commerce"]
+      tags: ["Web Design", "UX/UI", "E-commerce"],
+      purpose: "To develop a user-friendly e-commerce platform that drives sales and customer engagement"
     },
     {
       id: 3,
@@ -36,7 +38,8 @@ export const portfolioEn = {
       description: "Multi-platform advertising campaign with stunning visuals",
       client: "TechStart Inc.",
       year: "2023",
-      tags: ["Digital Ads", "Social Media", "Campaign"]
+      tags: ["Digital Ads", "Social Media", "Campaign"],
+      purpose: "To create an impactful digital advertising campaign that increases brand awareness"
     },
     {
       id: 4,
@@ -44,7 +47,8 @@ export const portfolioEn = {
       description: "Minimalist logo design for tech startup",
       client: "InnovateTech",
       year: "2024",
-      tags: ["Logo", "Branding", "Identity"]
+      tags: ["Logo", "Branding", "Identity"],
+      purpose: "To design a modern and memorable logo that represents innovation and technology"
     },
     {
       id: 5,
@@ -52,7 +56,8 @@ export const portfolioEn = {
       description: "Professional product photography for e-commerce",
       client: "Artisan Goods",
       year: "2023",
-      tags: ["Photography", "Product", "Commercial"]
+      tags: ["Photography", "Product", "Commercial"],
+      purpose: "To showcase products with high-quality photography that drives online sales"
     },
     {
       id: 6,
@@ -60,7 +65,8 @@ export const portfolioEn = {
       description: "Intuitive mobile application interface design",
       client: "HealthTech Solutions",
       year: "2024",
-      tags: ["Mobile", "App Design", "UX/UI"]
+      tags: ["Mobile", "App Design", "UX/UI"],
+      purpose: "To create an intuitive and user-friendly mobile app interface for healthcare services"
     }
   ],
   modal: {
