@@ -25,8 +25,8 @@ export const Navigation = () => {
 
       setScrollProgress(progress);
 
-      // Show navigation logo when it reaches 60% scroll
-      setShowNavLogo(progress >= 0.6);
+      // Show navigation logo when it reaches 15% scroll
+      setShowNavLogo(progress >= 0.15);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -35,8 +35,8 @@ export const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Don't render navigation on home page until it starts fading in at 50%
-  if (isHomePage && scrollProgress < 0.5) {
+  // Don't render navigation on home page until it starts fading in at 5%
+  if (isHomePage && scrollProgress < 0.05) {
     return null;
   }
 
@@ -117,11 +117,11 @@ export const Navigation = () => {
     <nav
       className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border shadow-soft transition-all duration-700 ease-in-out"
       style={{
-        transform: isHomePage && scrollProgress < 0.6
+        transform: isHomePage && scrollProgress < 0.2
           ? `translateY(-100%)`
           : 'translateY(0)',
         opacity: isHomePage
-          ? Math.min(Math.max((scrollProgress - 0.5) / 0.1, 0), 1)
+          ? Math.min(Math.max((scrollProgress - 0.05) / 0.15, 0), 1)
           : 1,
       }}
       dir={isRTL ? 'rtl' : 'ltr'}

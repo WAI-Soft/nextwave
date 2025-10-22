@@ -17,6 +17,7 @@ import { VideoBackground } from "../components/VideoBackground";
 import { useLanguage } from "../contexts/LanguageContext";
 import { useProjects, Project } from "../contexts/ProjectContext";
 import portfolioHero from "@/assets/portfolio-hero.jpg";
+import portfolioVideo from "@/assets/videos/PortfolioVideo.mp4";
 
 // Define a type for fallback portfolio items
 interface FallbackPortfolioItem {
@@ -236,7 +237,7 @@ const Portfolio = () => {
 
       {/* Hero Section */}
       <VideoBackground
-        videoSrc="/videos/PortfolioVideo.mp4"
+        videoSrc={portfolioVideo}
         posterSrc={portfolioHero}
         overlayOpacity={0.6}
         className="h-screen flex items-center justify-center"

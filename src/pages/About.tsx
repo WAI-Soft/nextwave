@@ -16,6 +16,7 @@ import { Navigation } from '../components/Navigation';
 import { Footer } from '../components/Footer';
 import VideoBackground from '../components/VideoBackground';
 import heroFallback from '../assets/hero-bg.jpg';
+import aboutVideo from '../assets/videos/AboutVideo.mp4';
 import { useLanguage } from '../contexts/LanguageContext';
 
 // Custom hook for intersection observer
@@ -141,7 +142,7 @@ const About = () => {
 
       {/* Hero Section */}
       <VideoBackground
-        videoSrc="/videos/AboutVideo.mp4"
+        videoSrc={aboutVideo}
         posterSrc={heroFallback}
         className="h-screen flex items-center justify-center"
         overlayOpacity={0.6}

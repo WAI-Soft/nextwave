@@ -14,6 +14,7 @@ import { Navigation } from '../components/Navigation';
 import { Footer } from '../components/Footer';
 import VideoBackground from '../components/VideoBackground';
 import heroFallback from '../assets/hero-bg.jpg';
+import contactVideo from '../assets/videos/ContactVideo.mp4';
 
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
@@ -110,7 +111,7 @@ const Contact = () => {
       
       {/* Hero Section */}
       <VideoBackground
-        videoSrc="/videos/ContactVideo.mp4"
+        videoSrc={contactVideo}
         posterSrc={heroFallback}
         className="pt-20 pb-32 md:pt-28 md:pb-40"
         overlayOpacity={0.6}

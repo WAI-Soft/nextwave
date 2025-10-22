@@ -44,7 +44,7 @@ export const About = () => {
               {t.home.about.description2}
             </p>
 
-            <div className={`flex flex-wrap gap-20 pt-4 mr-24 ${isRTL ? 'justify-end' : ''}`}>
+            <div className={`flex flex-wrap md:flex-nowrap gap-8 md:gap-12 lg:gap-20 pt-4 md:mr-0 lg:mr-24 ${isRTL ? 'justify-end' : ''}`}>
               <div className="text-center">
                 <div className={`text-4xl font-din font-bold text-primary mb-1 ${isRTL ? 'mr-2' : ''}`}>
                   150+

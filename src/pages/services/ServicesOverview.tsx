@@ -23,8 +23,9 @@ import serviceWeb from "@/assets/service-web.jpg";
 import serviceLogoDesign from "@/assets/service-branding.jpg"; // Using branding photo for logo design
 import servicePhotography from "@/assets/service-photography.jpg";
 
-// Import fallback image
+// Import fallback image and video
 import heroFallback from "@/assets/hero-bg.jpg";
+import servicesVideo from "@/assets/videos/ServicesVideo.mp4";
 
 const ServicesOverview = () => {
   const navigate = useNavigate();
@@ -99,7 +100,7 @@ const ServicesOverview = () => {
       {/* Hero Section */}
       {
         <VideoBackground
-          videoSrc="/videos/ServicesVideo.mp4"
+          videoSrc={servicesVideo}
           posterSrc={heroFallback}
           className="pt-20 pb-20 md:pt-24 md:pb-24 flex items-center justify-center"
           overlayOpacity={0.6}
