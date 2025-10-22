@@ -102,101 +102,94 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 
   return (
     <div className={`space-y-3 ${className}`}>
-      {/* URL Input */}
-      <div className="flex gap-2">
-        <input
-          type="url"
-          value={value}
-          onChange={handleInputChange}
-          placeholder={placeholder}
-          className="flex-1 bg-pure-black/20 border-champagne-gold/30 text-pure-white placeholder:text-pure-white/50 focus:border-champagne-gold rounded-md px-3 py-2 text-sm"
-        />
-        <Button
-          type="button"
-          onClick={handleUploadClick}
-          variant="outline"
-          size="icon"
-          className="border-champagne-gold/30 text-champagne-gold hover:bg-champagne-gold/20 hover:border-champagne-gold/60 transition-all duration-200"
-          disabled={isUploading}
-        >
-          {isUploading ? (
-            <div className="w-4 h-4 border-2 border-champagne-gold/30 border-t-champagne-gold rounded-full animate-spin" />
-          ) : (
-            <Upload className="w-4 h-4" />
-          )}
-        </Button>
-        {value && (
-        <Button
-          type="button"
-          onClick={handleClearImage}
-          variant="outline"
-          size="icon"
-          className="border-red-400/30 text-red-400 hover:bg-red-400/20 hover:border-red-400/60 transition-all duration-200"
-        >
-            <X className="w-4 h-4" />
-          </Button>
-        )}
-      </div>
-
-      {/* Drag and Drop Area */}
-      <div
-        className={`relative border-2 border-dashed rounded-lg p-6 text-center drag-area ${
-          isDragOver
-            ? 'drag-over'
-            : 'border-champagne-gold/30'
-        }`}
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
-      >
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          onChange={handleFileInputChange}
-          className="hidden"
-        />
-        
-        <div className="space-y-3">
-          <div className="flex justify-center">
-            {isUploading ? (
-              <div className="w-12 h-12 border-4 border-champagne-gold/30 border-t-champagne-gold rounded-full animate-spin" />
-            ) : (
-              <div className="w-12 h-12 bg-champagne-gold/20 rounded-full flex items-center justify-center">
-                <FileImage className="w-6 h-6 text-champagne-gold" />
-              </div>
-            )}
-          </div>
-          
-          <div>
-            <p className="text-pure-white font-medium">
-              {isUploading ? 'Uploading...' : 'Drag & drop an image here'}
-            </p>
-            <p className="text-pure-white/60 text-sm mt-1">
-              or click to browse files
-            </p>
-            <p className="text-pure-white/40 text-xs mt-2">
-              Supports: JPG, PNG, GIF, WebP (max 5MB)
-            </p>
-          </div>
-          
+      {/* URL Input - Only show when no image */}
+      {!value && (
+        <div className="flex gap-2">
+          <input
+            type="url"
+            value={value}
+            onChange={handleInputChange}
+            placeholder={placeholder}
+            className="flex-1 bg-pure-black/20 border-champagne-gold/30 text-pure-white placeholder:text-pure-white/50 focus:border-champagne-gold rounded-md px-3 py-2 text-sm"
+          />
           <Button
             type="button"
             onClick={handleUploadClick}
             variant="outline"
+            size="icon"
             className="border-champagne-gold/30 text-champagne-gold hover:bg-champagne-gold/20 hover:border-champagne-gold/60 transition-all duration-200"
             disabled={isUploading}
           >
-            <Upload className="w-4 h-4 mr-2" />
-            Choose File
+            {isUploading ? (
+              <div className="w-4 h-4 border-2 border-champagne-gold/30 border-t-champagne-gold rounded-full animate-spin" />
+            ) : (
+              <Upload className="w-4 h-4" />
+            )}
           </Button>
         </div>
-      </div>
+      )}
 
-      {/* Image Preview */}
+      {/* Drag and Drop Area - Only show when no image */}
+      {!value && (
+        <div
+          className={`relative border-2 border-dashed rounded-lg p-6 text-center drag-area ${
+            isDragOver
+              ? 'drag-over'
+              : 'border-champagne-gold/30'
+          }`}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+        >
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleFileInputChange}
+            className="hidden"
+          />
+          
+          <div className="space-y-3">
+            <div className="flex justify-center">
+              {isUploading ? (
+                <div className="w-12 h-12 border-4 border-champagne-gold/30 border-t-champagne-gold rounded-full animate-spin" />
+              ) : (
+                <div className="w-12 h-12 bg-champagne-gold/20 rounded-full flex items-center justify-center">
+                  <FileImage className="w-6 h-6 text-champagne-gold" />
+                </div>
+              )}
+            </div>
+            
+            <div>
+              <p className="text-pure-white font-medium">
+                {isUploading ? 'Uploading...' : 'Drag & drop an image here'}
+              </p>
+              <p className="text-pure-white/60 text-sm mt-1">
+                or click to browse files
+              </p>
+              <p className="text-pure-white/40 text-xs mt-2">
+                Supports: JPG, PNG, GIF, WebP (max 5MB)
+              </p>
+            </div>
+            
+            <Button
+              type="button"
+              onClick={handleUploadClick}
+              variant="outline"
+              className="border-champagne-gold/30 text-champagne-gold hover:bg-champagne-gold/20 hover:border-champagne-gold/60 transition-all duration-200"
+              disabled={isUploading}
+            >
+              <Upload className="w-4 h-4 mr-2" />
+              Choose File
+            </Button>
+          </div>
+        </div>
+      )}
+
+      {/* Image Preview - Only show when image exists */}
       {value && (
         <div className="relative">
-          <div className="relative w-full h-48 bg-pure-black/20 rounded-lg overflow-hidden border border-champagne-gold/30">
+          <div className="relative w-full h-64 bg-pure-black/20 rounded-lg overflow-hidden border border-champagne-gold/30">
             <img
               src={value}
               alt="Preview"
@@ -208,6 +201,17 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
               }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+            <div className="absolute top-2 right-2">
+              <Button
+                type="button"
+                onClick={handleClearImage}
+                variant="outline"
+                size="icon"
+                className="bg-pure-black/60 backdrop-blur-sm border-red-400/30 text-red-400 hover:bg-red-400/20 hover:border-red-400/60 transition-all duration-200"
+              >
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
             <div className="absolute bottom-2 left-2 right-2">
               <p className="text-white text-sm font-medium truncate">
                 {value.startsWith('data:') ? 'Uploaded Image' : 'Image Preview'}

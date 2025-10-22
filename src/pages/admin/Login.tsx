@@ -75,7 +75,7 @@ const Login = () => {
         <div className="w-full max-w-md">
           {/* Logo/Brand Section */}
           <div className="text-center mb-8 mt-8">
-           {/* <div className="inline-flex items-center justify-center w-32 h-32 bg-champagne-gold rounded-2xl mb-4 shadow-2xl p-4">
+            {/* <div className="inline-flex items-center justify-center w-32 h-32 bg-champagne-gold rounded-2xl mb-4 shadow-2xl p-4">
               <img
                 src={nextwaveLogo}
                 alt="NextWave Logo"
@@ -86,7 +86,7 @@ const Login = () => {
               NextWave
             </h1>
             <p className="text-pure-white/70 text-lg">Admin Dashboard</p>
-          </div> 
+          </div>
 
           <Card className="bg-pure-black/40 backdrop-blur-xl border-champagne-gold/20 shadow-2xl rounded-2xl overflow-hidden">
             <CardHeader className="text-center pb-6">

@@ -82,6 +82,11 @@ const EditProject: React.FC<EditProjectProps> = ({ projectId, onSuccess, onCance
       return;
     }
 
+    if (!formData.coverImage) {
+      toast.error('Please upload a cover image for the project');
+      return;
+    }
+
     setIsLoading(true);
     try {
       await updateProject(projectId, formData);
@@ -199,12 +204,15 @@ const EditProject: React.FC<EditProjectProps> = ({ projectId, onSuccess, onCance
 
           <div className="space-y-2">
             <Label className="text-pure-white/90">
-              Cover Image
+              Cover Image *
             </Label>
+            <p className="text-pure-white/60 text-sm">
+              Upload a single cover image for this project
+            </p>
             <ImageUpload
               value={formData.coverImage}
               onChange={(value) => handleInputChange('coverImage', value)}
-              placeholder="Enter image URL or upload from device"
+              placeholder="Enter cover image URL or upload from device"
             />
           </div>
 

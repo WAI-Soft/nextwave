@@ -171,7 +171,7 @@ const Dashboard = () => {
                 <img 
                   src={nextwaveLogo} 
                   alt="NextWave Logo" 
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-contain brightness-0"
                 />
               </div>
               <div>
