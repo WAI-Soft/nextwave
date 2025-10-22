@@ -99,13 +99,22 @@ export const Navigation = () => {
   };
 
   // Define navigation links split into left and right sections
-  const leftLinks = [
+  // In Arabic, swap Home and Portfolio positions
+  const leftLinks = isRTL ? [
+    { key: "portfolio", label: t.navigation.portfolio, action: () => navigate("/portfolio"), icon: Briefcase },
+    { key: "services", label: t.navigation.services, isDropdown: true, icon: Settings },
+    { key: "home", label: t.navigation.home, action: () => scrollToSection("hero"), icon: Home },
+  ] : [
     { key: "home", label: t.navigation.home, action: () => scrollToSection("hero"), icon: Home },
     { key: "services", label: t.navigation.services, isDropdown: true, icon: Settings },
     { key: "portfolio", label: t.navigation.portfolio, action: () => navigate("/portfolio"), icon: Briefcase },
   ];
 
-  const rightLinks = [
+  // In Arabic, swap Contact and About Us positions
+  const rightLinks = isRTL ? [
+    { key: "contact", label: t.navigation.contact, action: () => navigate("/contact"), icon: Phone },
+    { key: "aboutUs", label: t.navigation.aboutUs, action: () => navigate("/about"), icon: User },
+  ] : [
     { key: "aboutUs", label: t.navigation.aboutUs, action: () => navigate("/about"), icon: User },
     { key: "contact", label: t.navigation.contact, action: () => navigate("/contact"), icon: Phone },
   ];
