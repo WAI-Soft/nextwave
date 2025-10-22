@@ -44,21 +44,21 @@ export const About = () => {
               {t.home.about.description2}
             </p>
 
-            <div className={`flex flex-wrap md:flex-nowrap gap-8 md:gap-12 lg:gap-20 pt-4 md:mr-0 lg:mr-24 ${isRTL ? 'justify-end' : ''}`}>
+            <div className="flex flex-wrap md:flex-nowrap gap-8 md:gap-12 lg:gap-20 pt-4 justify-center">
               <div className="text-center">
-                <div className={`text-4xl font-din font-bold text-primary mb-1 ${isRTL ? 'mr-2' : ''}`}>
+                <div className="text-4xl font-din font-bold text-primary mb-1">
                   150+
                 </div>
                 <div className="text-sm text-muted-foreground">{t.home.about.stats.projectsCompleted}</div>
               </div>
               <div className="text-center">
-                <div className={`text-4xl font-din font-bold text-primary mb-1 ${isRTL ? 'mr-2' : ''}`}>
+                <div className="text-4xl font-din font-bold text-primary mb-1">
                   50+
                 </div>
                 <div className="text-sm text-muted-foreground">{t.home.about.stats.happyClients}</div>
               </div>
               <div className="text-center">
-                <div className={`text-4xl font-din font-bold text-primary mb-1 ${isRTL ? 'mr-2' : ''}`}>
+                <div className="text-4xl font-din font-bold text-primary mb-1">
                   12
                 </div>
                 <div className="text-sm text-muted-foreground">{t.home.about.stats.teamMembers}</div>
