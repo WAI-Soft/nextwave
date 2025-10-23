@@ -257,17 +257,17 @@ const Dashboard = () => {
                 <div className="mb-8">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h1 className="text-4xl font-bold text-champagne-gold">
+                      <h1 className="text-4xl font-bold text-pure-white">
                         Dashboard Overview
                       </h1>
-                      <p className="text-pure-white/70 mt-2 text-lg">Welcome to your admin dashboard</p>
+                      <p className="text-pure-white mt-2 text-lg">Welcome to your admin dashboard</p>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <Button variant="outline" size="sm" className="rounded-xl border-champagne-gold/30 text-champagne-gold hover:bg-champagne-gold/10">
+                      <Button variant="outline" size="sm" className="rounded-xl border-champagne-gold/30 text-champagne-gold hover:bg-champagne-gold/10 hover:text-white">
                         <Bell className="w-4 h-4 mr-2" />
                         Notifications
                       </Button>
-                      <Button variant="outline" size="sm" className="rounded-xl border-champagne-gold/30 text-champagne-gold hover:bg-champagne-gold/10">
+                      <Button variant="outline" size="sm" className="rounded-xl border-champagne-gold/30 text-champagne-gold hover:bg-champagne-gold/10 hover:text-white">
                         <Settings className="w-4 h-4 mr-2" />
                         Settings
                       </Button>
@@ -279,14 +279,14 @@ const Dashboard = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                   <Card className="bg-pure-black/40 border-champagne-gold/30 hover:shadow-lg hover:border-champagne-gold/50 hover:scale-[1.02] transition-all duration-300">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                      <CardTitle className="text-sm font-medium text-champagne-gold">Total Projects</CardTitle>
+                      <CardTitle className="text-sm font-medium text-pure-white">Total Projects</CardTitle>
                       <div className="p-2 bg-champagne-gold rounded-lg">
                         <FolderOpen className="h-4 w-4 text-pure-black" />
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <div className="text-3xl font-bold text-champagne-gold">{stats.totalProjects}</div>
-                      <p className="text-xs text-champagne-gold/80 mt-1">
+                      <div className="text-3xl font-bold text-pure-white">{stats.totalProjects}</div>
+                      <p className="text-xs text-pure-white/80 mt-1">
                         {stats.publishedProjects} published, {stats.draftProjects} drafts
                       </p>
                     </CardContent>
@@ -294,14 +294,14 @@ const Dashboard = () => {
 
                   <Card className="bg-pure-black/40 border-champagne-gold/30 hover:shadow-lg hover:border-champagne-gold/50 hover:scale-[1.02] transition-all duration-300">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                      <CardTitle className="text-sm font-medium text-champagne-gold">Published</CardTitle>
+                      <CardTitle className="text-sm font-medium text-pure-white">Published</CardTitle>
                       <div className="p-2 bg-champagne-gold rounded-lg">
                         <Eye className="h-4 w-4 text-pure-black" />
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <div className="text-3xl font-bold text-champagne-gold">{stats.publishedProjects}</div>
-                      <p className="text-xs text-champagne-gold/80 mt-1">
+                      <div className="text-3xl font-bold text-pure-white">{stats.publishedProjects}</div>
+                      <p className="text-xs text-pure-white/80 mt-1">
                         Visible on portfolio
                       </p>
                     </CardContent>
@@ -309,14 +309,14 @@ const Dashboard = () => {
 
                   <Card className="bg-pure-black/40 border-champagne-gold/30 hover:shadow-lg hover:border-champagne-gold/50 hover:scale-[1.02] transition-all duration-300">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                      <CardTitle className="text-sm font-medium text-champagne-gold">Categories</CardTitle>
+                      <CardTitle className="text-sm font-medium text-pure-white">Categories</CardTitle>
                       <div className="p-2 bg-champagne-gold rounded-lg">
                         <Tag className="h-4 w-4 text-pure-black" />
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <div className="text-3xl font-bold text-champagne-gold">{stats.categories}</div>
-                      <p className="text-xs text-champagne-gold/80 mt-1">
+                      <div className="text-3xl font-bold text-pure-white">{stats.categories}</div>
+                      <p className="text-xs text-pure-white/80 mt-1">
                         Different types
                       </p>
                     </CardContent>
@@ -324,14 +324,14 @@ const Dashboard = () => {
 
                   <Card className="bg-pure-black/40 border-champagne-gold/30 hover:shadow-lg hover:border-champagne-gold/50 hover:scale-[1.02] transition-all duration-300">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                      <CardTitle className="text-sm font-medium text-champagne-gold">Total Views</CardTitle>
+                      <CardTitle className="text-sm font-medium text-pure-white">Total Views</CardTitle>
                       <div className="p-2 bg-champagne-gold rounded-lg">
                         <TrendingUp className="h-4 w-4 text-pure-black" />
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <div className="text-3xl font-bold text-champagne-gold">{stats.totalViews.toLocaleString()}</div>
-                      <p className="text-xs text-champagne-gold/80 mt-1">
+                      <div className="text-3xl font-bold text-pure-white">{stats.totalViews.toLocaleString()}</div>
+                      <p className="text-xs text-pure-white/80 mt-1">
                         Portfolio views
                       </p>
                     </CardContent>
@@ -341,8 +341,8 @@ const Dashboard = () => {
                 {/* Recent Projects */}
                 <Card className="bg-pure-black/40 border-champagne-gold/20">
                   <CardHeader>
-                    <CardTitle className="text-champagne-gold">Recent Projects</CardTitle>
-                    <CardDescription className="text-pure-white/70">Your latest project additions</CardDescription>
+                    <CardTitle className="text-pure-white">Recent Projects</CardTitle>
+                    <CardDescription className="text-pure-white">Your latest project additions</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
@@ -380,14 +380,14 @@ const Dashboard = () => {
               <>
                 <div className="mb-8 flex justify-between items-center">
                   <div>
-                    <h1 className="text-3xl font-bold text-champagne-gold">Manage Projects ({projects.length})</h1>
+                    <h1 className="text-3xl font-bold text-white">Manage Projects ({projects.length})</h1>
                     <p className="text-pure-white/70 mt-2">View and manage your portfolio projects</p>
                   </div>
                   <div className="flex gap-3">
                     <Button
                       onClick={() => window.open('/portfolio', '_blank')}
                       variant="outline"
-                      className="border-champagne-gold/30 text-champagne-gold hover:bg-champagne-gold/20 hover:border-champagne-gold/60 transition-all duration-200"
+                      className="border-champagne-gold/30 text-champagne-gold hover:bg-champagne-gold/20 hover:border-champagne-gold/60 hover:text-white transition-all duration-200"
                     >
                       <Eye className="w-4 h-4 mr-2" />
                       View Portfolio
