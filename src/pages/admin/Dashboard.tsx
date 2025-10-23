@@ -536,7 +536,7 @@ const Dashboard = () => {
             {activeTab === 'analytics' && (
               <>
                 <div className="mb-8">
-                  <h1 className="text-3xl font-bold text-champagne-gold">Analytics</h1>
+                  <h1 className="text-3xl font-bold text-white">Analytics</h1>
                   <p className="text-pure-white/70 mt-2">Track your portfolio performance</p>
                 </div>
 
@@ -590,7 +590,7 @@ const Dashboard = () => {
             {activeTab === 'settings' && (
               <>
                 <div className="mb-8">
-                  <h1 className="text-3xl font-bold text-champagne-gold">Settings</h1>
+                  <h1 className="text-3xl font-bold text-white">Settings</h1>
                   <p className="text-pure-white/70 mt-2">Manage your dashboard preferences</p>
                 </div>
 
