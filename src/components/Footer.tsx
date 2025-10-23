@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Facebook, Twitter, Instagram, Linkedin, Mail } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import nextwaveLogo from "@/assets/nextwave header.png";
+import nextwaveLogo from "@/assets/nextwave-header.png";
 
 export const Footer = () => {
   const navigate = useNavigate();

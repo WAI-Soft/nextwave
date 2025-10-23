@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
 import heroImage from "@/assets/hero-bg.jpg";
-import nextwaveLogo from "@/assets/nextwave header.png";
+import nextwaveLogo from "@/assets/nextwave-header.png";
 import homeVideo from "@/assets/videos/HomeVideo.mp4";
 import VideoBackground from "./VideoBackground";
 import { useLanguage } from "@/contexts/LanguageContext";

@@ -8,7 +8,7 @@ import { Alert, AlertDescription } from '../../components/ui/alert';
 import { Loader2, Eye, EyeOff, Shield, Zap } from 'lucide-react';
 import { toast } from 'sonner';
 import { translations } from '../../translations';
-import nextwaveLogo from '@/assets/nextwave header.png';
+import nextwaveLogo from '@/assets/nextwave-header.png';
 
 const Login = () => {
   // Always use English for admin

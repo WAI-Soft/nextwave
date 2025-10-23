@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Menu, X, Globe, ChevronDown, Home, Briefcase, User, Phone, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
-import nextwaveLogo from "@/assets/nextwave header.png";
+import nextwaveLogo from "@/assets/nextwave-header.png";
 
 export const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import nextwaveLogo from '@/assets/nextwave header.png';
+import nextwaveLogo from '@/assets/nextwave-header.png';
 
 interface PreloaderProps {
   onLoadComplete: () => void;

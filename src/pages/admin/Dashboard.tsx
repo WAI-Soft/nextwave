@@ -35,7 +35,7 @@ import { useNavigate } from 'react-router-dom';
 import AddProject from './AddProject';
 import EditProject from './EditProject';
 import ConfirmDialog from '../../components/ConfirmDialog';
-import nextwaveLogo from '@/assets/nextwave header.png';
+import nextwaveLogo from '@/assets/nextwave-header.png';
 
 const Dashboard = () => {
   const navigate = useNavigate();
