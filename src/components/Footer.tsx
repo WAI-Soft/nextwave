@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Facebook, Twitter, Instagram, Linkedin, Mail } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import nextwaveLogo from "@/assets/nextwave header.png";
 
 export const Footer = () => {
   const navigate = useNavigate();
@@ -53,7 +54,7 @@ export const Footer = () => {
           {/* Logo & Info */}
           <div className="space-y-4 animate-fade-in text-center md:text-left">
             <img 
-              src="/src/assets/nextwave logo.png" 
+              src={nextwaveLogo} 
               alt="NextWave Logo" 
               className="h-24 w-auto mx-auto md:mx-0"
             />
