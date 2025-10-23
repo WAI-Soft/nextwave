@@ -53,6 +53,7 @@ export const Footer = () => {
         <div className="grid md:grid-cols-3 gap-12 mb-12">
           {/* Logo & Info */}
           <div className="space-y-4 animate-fade-in text-center md:text-left">
+            {/* NextWave Logo - Updated */}
             <img 
               src={nextwaveLogo} 
               alt="NextWave Logo" 
