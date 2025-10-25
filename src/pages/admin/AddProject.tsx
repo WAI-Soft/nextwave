@@ -31,7 +31,7 @@ const AddProject: React.FC<AddProjectProps> = ({ onSuccess }) => {
   });
   const [newTag, setNewTag] = useState('');
 
-  const handleInputChange = (field: string, value: any) => {
+  const handleInputChange = (field: string, value: string | number | string[]) => {
     setFormData(prev => ({
       ...prev,
       [field]: value

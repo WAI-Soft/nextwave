@@ -196,7 +196,7 @@ const Dashboard = () => {
               return (
                 <button
                   key={item.id}
-                  onClick={() => setActiveTab(item.id as any)}
+                  onClick={() => setActiveTab(item.id as 'overview' | 'projects' | 'analytics' | 'settings')}
                   className={`w-full flex items-center px-4 py-3 text-left rounded-xl transition-all duration-300 group ${
                     isActive 
                       ? 'bg-champagne-gold text-pure-black shadow-lg' 

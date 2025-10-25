@@ -57,7 +57,7 @@ export const Services = () => {
     }, 4000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [services.length]);
 
   const activeService = services[activeIndex];
   const Icon = activeService.icon;

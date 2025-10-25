@@ -90,7 +90,7 @@ const Portfolio = () => {
   };
 
   // Fallback portfolio data using translations
-  const fallbackPortfolioItems: FallbackPortfolioItem[] = t.portfolio.projects.map((project: any) => ({
+  const fallbackPortfolioItems: FallbackPortfolioItem[] = t.portfolio.projects.map((project: { id: number; name: string; description: string; tags: string[]; client: string; year: string; purpose: string }) => ({
     id: `fallback-${project.id}`,
     category: projectCategories[project.id] || "branding",
     name: project.name,
@@ -102,8 +102,8 @@ const Portfolio = () => {
     purpose: project.purpose
   }));
 
-  // Always use translated fallback data for proper language support
-  const portfolioItems = fallbackPortfolioItems;
+  // Use API data if available, otherwise fallback to translated data
+  const portfolioItems = projects.length > 0 ? projects : fallbackPortfolioItems;
 
   const filteredItems =
     activeCategory === "all"

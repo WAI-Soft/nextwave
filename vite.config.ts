@@ -26,8 +26,8 @@ export default defineConfig(({ mode }) => ({
     // Custom plugin to handle URL decoding errors
     {
       name: 'url-decode-handler',
-      configureServer(server: any) {
-        server.middlewares.use((req: any, res: any, next: any) => {
+      configureServer(server: { middlewares: { use: (middleware: (req: { url?: string }, res: unknown, next: () => void) => void) => void } }) {
+        server.middlewares.use((req: { url?: string }, res: unknown, next: () => void) => {
           try {
             if (req.url) {
               // Normalize the URL to prevent malformed URI errors

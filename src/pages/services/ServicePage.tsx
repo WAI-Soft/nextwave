@@ -262,7 +262,7 @@ const ServicePage = () => {
                 photography: "photography",
               };
               const groupKey = groupKeyBySlug[slug];
-              const localized = (t.services.detailPage.projectNames as any)?.[groupKey]?.[key];
+              const localized = (t.services.detailPage.projectNames as Record<string, Record<string, string>>)?.[groupKey]?.[key];
               return localized ?? title;
             };
             const localizedTitle = getProjectTitle(p.title);
@@ -323,7 +323,7 @@ const ServicePage = () => {
                             };
                             const key = slug ? projectKeyMap[slug]?.[p.title] : undefined;
                             const groupKey = slug ? groupKeyBySlug[slug] : undefined;
-                            const localizedDesc = key && groupKey ? (t.services.detailPage.projectDescriptions as any)?.[groupKey]?.[key] : undefined;
+                            const localizedDesc = key && groupKey ? (t.services.detailPage.projectDescriptions as Record<string, Record<string, string>>)?.[groupKey]?.[key] : undefined;
                             return localizedDesc ?? p.description;
                           })()}
                         </p>
@@ -346,7 +346,7 @@ const ServicePage = () => {
                             };
                             const key = slug ? projectKeyMap[slug]?.[p.title] : undefined;
                             const groupKey = slug ? groupKeyBySlug[slug] : undefined;
-                            const localizedPurpose = key && groupKey ? (t.services.detailPage.projectPurposes as any)?.[groupKey]?.[key] : undefined;
+                            const localizedPurpose = key && groupKey ? (t.services.detailPage.projectPurposes as Record<string, Record<string, string>>)?.[groupKey]?.[key] : undefined;
                             return localizedPurpose ?? p.purpose;
                           })()}
                         </p>

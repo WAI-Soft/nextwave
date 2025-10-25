@@ -50,7 +50,7 @@ const EditProject: React.FC<EditProjectProps> = ({ projectId, onSuccess, onCance
     }
   }, [projectId, getProject]);
 
-  const handleInputChange = (field: string, value: any) => {
+  const handleInputChange = (field: string, value: string | number | string[]) => {
     setFormData(prev => ({
       ...prev,
       [field]: value

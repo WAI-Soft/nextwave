@@ -1,4 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { projectService } from '@/services/projectService';
+import { authService } from '@/services/authService';
 
 export interface Project {
   id: string;
@@ -53,20 +55,39 @@ const generateSlug = (name: string): string => {
 export const ProjectProvider: React.FC<ProjectProviderProps> = ({ children }) => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [useBackend, setUseBackend] = useState(true);
 
-  // Load projects from localStorage on mount
+  // Load projects on mount - try backend first, fallback to localStorage
   useEffect(() => {
-    const savedProjects = localStorage.getItem('nextwave_projects');
-    if (savedProjects) {
+    const loadProjects = async () => {
+      setIsLoading(true);
+      
       try {
-        setProjects(JSON.parse(savedProjects));
+        // Try to fetch from backend
+        const isAuth = authService.isAuthenticated();
+        const backendProjects = isAuth 
+          ? await projectService.getAdminProjects()
+          : await projectService.getPublicProjects();
+        
+        setProjects(backendProjects);
+        setUseBackend(true);
+        console.log('✅ Projects loaded from backend');
       } catch (error) {
-        console.error('Error loading projects:', error);
-        setProjects([]);
-      }
-    } else {
-      // Initialize with some sample projects
-      const sampleProjects: Project[] = [
+        console.warn('⚠️ Backend unavailable, using localStorage fallback:', error);
+        setUseBackend(false);
+        
+        // Fallback to localStorage
+        const savedProjects = localStorage.getItem('nextwave_projects');
+        if (savedProjects) {
+          try {
+            setProjects(JSON.parse(savedProjects));
+          } catch (error) {
+            console.error('Error loading projects from localStorage:', error);
+            setProjects([]);
+          }
+        } else {
+          // Initialize with some sample projects
+          const sampleProjects: Project[] = [
         {
           id: '1',
           name: 'Luxury Brand Identity',
@@ -113,20 +134,40 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({ children }) =>
           updatedAt: new Date().toISOString()
         }
       ];
-      setProjects(sampleProjects);
-      localStorage.setItem('nextwave_projects', JSON.stringify(sampleProjects));
-    }
-    setIsLoading(false);
+          setProjects(sampleProjects);
+          localStorage.setItem('nextwave_projects', JSON.stringify(sampleProjects));
+        }
+      }
+      
+      setIsLoading(false);
+    };
+
+    loadProjects();
   }, []);
 
-  // Save projects to localStorage whenever projects change
+  // Save projects to localStorage whenever projects change (only if not using backend)
   useEffect(() => {
-    if (!isLoading) {
+    if (!isLoading && !useBackend) {
       localStorage.setItem('nextwave_projects', JSON.stringify(projects));
     }
-  }, [projects, isLoading]);
+  }, [projects, isLoading, useBackend]);
 
   const addProject = async (projectData: Omit<Project, 'id' | 'slug' | 'status' | 'createdAt' | 'updatedAt'>): Promise<Project> => {
+    if (useBackend) {
+      try {
+        const newProject = await projectService.createProject({
+          ...projectData,
+          status: 'published'
+        });
+        setProjects(prev => [...prev, newProject]);
+        return newProject;
+      } catch (error) {
+        console.error('Failed to create project via backend, falling back to localStorage:', error);
+        setUseBackend(false);
+      }
+    }
+    
+    // Fallback to localStorage
     const newProject: Project = {
       ...projectData,
       id: Date.now().toString(),
@@ -141,6 +182,18 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({ children }) =>
   };
 
   const updateProject = async (id: string, projectData: Partial<Project>): Promise<Project> => {
+    if (useBackend) {
+      try {
+        const updated = await projectService.updateProject(id, projectData);
+        setProjects(prev => prev.map(p => p.id === id ? updated : p));
+        return updated;
+      } catch (error) {
+        console.error('Failed to update project via backend, falling back to localStorage:', error);
+        setUseBackend(false);
+      }
+    }
+    
+    // Fallback to localStorage
     const updatedProject = projects.find(p => p.id === id);
     if (!updatedProject) {
       throw new Error('Project not found');
@@ -159,6 +212,18 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({ children }) =>
   };
 
   const deleteProject = async (id: string): Promise<void> => {
+    if (useBackend) {
+      try {
+        await projectService.deleteProject(id);
+        setProjects(prev => prev.filter(p => p.id !== id));
+        return;
+      } catch (error) {
+        console.error('Failed to delete project via backend, falling back to localStorage:', error);
+        setUseBackend(false);
+      }
+    }
+    
+    // Fallback to localStorage
     setProjects(prev => prev.filter(p => p.id !== id));
   };
 
