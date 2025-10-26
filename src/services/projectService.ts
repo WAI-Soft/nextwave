@@ -62,7 +62,9 @@ function mapBackendProjectToFrontend(backendProject: BackendProject): Project {
   return {
     id: backendProject.id.toString(),
     name: backendProject.title_en,
+    nameAr: backendProject.title_ar,
     description: backendProject.description_en,
+    descriptionAr: backendProject.description_ar,
     purpose: backendProject.description_en,
     clientName: backendProject.client || 'Client',
     year: backendProject.year || new Date().getFullYear(),

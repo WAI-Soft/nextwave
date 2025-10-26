@@ -158,10 +158,14 @@ const Portfolio = () => {
               <div className="space-y-6">
                 <div>
                   <h2 className="text-4xl font-din font-bold text-foreground mb-4">
-                    {selectedItem.name}
+                    {isRTL && 'nameAr' in selectedItem && selectedItem.nameAr 
+                      ? selectedItem.nameAr 
+                      : selectedItem.name}
                   </h2>
                   <p className="text-lg text-muted-foreground leading-relaxed">
-                    {selectedItem.description}
+                    {isRTL && 'descriptionAr' in selectedItem && selectedItem.descriptionAr 
+                      ? selectedItem.descriptionAr 
+                      : selectedItem.description}
                   </p>
                 </div>
 
@@ -379,7 +383,9 @@ const Portfolio = () => {
                             : "leading-tight"
                             }`}
                         >
-                          {item.name}
+                          {isRTL && 'nameAr' in item && (item as Project).nameAr 
+                            ? (item as Project).nameAr 
+                            : item.name}
                         </h3>
 
                         {/* Project Description */}
@@ -389,7 +395,9 @@ const Portfolio = () => {
                             : ""
                             }`}
                         >
-                          {item.description}
+                          {isRTL && 'descriptionAr' in item && (item as Project).descriptionAr 
+                            ? (item as Project).descriptionAr 
+                            : item.description}
                         </p>
                       </div>
 

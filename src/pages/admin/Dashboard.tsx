@@ -34,13 +34,364 @@ import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 import AddProject from './AddProject';
 import EditProject from './EditProject';
+import AddTestimonial from './AddTestimonial';
+import EditTestimonial from './EditTestimonial';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import nextwaveLogo from '@/assets/nextwave-header.png';
+import { Testimonial, testimonialService } from '../../services/testimonialService';
+
+// Testimonials Tab Component
+const TestimonialsTab = () => {
+  const [testimonials, setTestimonials] = React.useState<Testimonial[]>([]);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [showAddForm, setShowAddForm] = React.useState(false);
+  const [editingTestimonial, setEditingTestimonial] = React.useState<Testimonial | null>(null);
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [itemsPerPage] = React.useState(6);
+  const [deleteConfirm, setDeleteConfirm] = React.useState<{
+    isOpen: boolean;
+    testimonialId: number | null;
+    testimonialName: string;
+    isLoading: boolean;
+  }>({
+    isOpen: false,
+    testimonialId: null,
+    testimonialName: '',
+    isLoading: false
+  });
+
+  // Calculate pagination
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentTestimonials = testimonials.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(testimonials.length / itemsPerPage);
+
+  const loadTestimonials = async () => {
+    setIsLoading(true);
+    try {
+      const data = await testimonialService.getAdminTestimonials();
+      setTestimonials(data);
+    } catch (error) {
+      toast.error('Failed to load testimonials');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    loadTestimonials();
+  }, []);
+
+  const handleAddSuccess = () => {
+    setShowAddForm(false);
+    setCurrentPage(1); // Reset to first page
+    loadTestimonials();
+  };
+
+  const handleEditSuccess = () => {
+    setEditingTestimonial(null);
+    loadTestimonials();
+  };
+
+  const handleDelete = (testimonial: Testimonial) => {
+    setDeleteConfirm({
+      isOpen: true,
+      testimonialId: testimonial.id,
+      testimonialName: testimonial.name,
+      isLoading: false
+    });
+  };
+
+  const confirmDelete = async () => {
+    if (!deleteConfirm.testimonialId) return;
+
+    setDeleteConfirm(prev => ({ ...prev, isLoading: true }));
+
+    try {
+      await testimonialService.deleteTestimonial(deleteConfirm.testimonialId);
+      toast.success('Testimonial deleted successfully! Home page will update automatically.');
+      setDeleteConfirm({
+        isOpen: false,
+        testimonialId: null,
+        testimonialName: '',
+        isLoading: false
+      });
+      // Reset to first page if current page becomes empty
+      if (currentTestimonials.length === 1 && currentPage > 1) {
+        setCurrentPage(currentPage - 1);
+      }
+      loadTestimonials();
+    } catch (error) {
+      toast.error('Failed to delete testimonial');
+      setDeleteConfirm(prev => ({ ...prev, isLoading: false }));
+    }
+  };
+
+  const cancelDelete = () => {
+    setDeleteConfirm({
+      isOpen: false,
+      testimonialId: null,
+      testimonialName: '',
+      isLoading: false
+    });
+  };
+
+  return (
+    <>
+      <div className="mb-8 flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-bold text-white">Manage Testimonials ({testimonials.length})</h1>
+          <p className="text-pure-white/70 mt-2">Control testimonials displayed on the home page</p>
+        </div>
+        <div className="flex gap-3">
+          <Button
+            onClick={() => window.open('/', '_blank')}
+            variant="outline"
+            className="border-champagne-gold/30 text-champagne-gold hover:bg-champagne-gold/20 hover:border-champagne-gold/60 hover:text-white transition-all duration-200"
+          >
+            <Eye className="w-4 h-4 mr-2" />
+            View Home Page
+          </Button>
+          <Button
+            onClick={() => setShowAddForm(true)}
+            className="bg-champagne-gold hover:bg-champagne-gold/90 text-pure-black font-semibold"
+          >
+            <Plus className="w-4 h-4 mr-2" />
+            Add Testimonial
+          </Button>
+        </div>
+      </div>
+
+      {showAddForm && (
+        <div className="mb-8">
+          <AddTestimonial 
+            onSuccess={handleAddSuccess}
+            onCancel={() => setShowAddForm(false)}
+          />
+        </div>
+      )}
+
+      {editingTestimonial && (
+        <div className="mb-8">
+          <EditTestimonial 
+            testimonial={editingTestimonial}
+            onSuccess={handleEditSuccess}
+            onCancel={() => setEditingTestimonial(null)}
+          />
+        </div>
+      )}
+
+      {isLoading ? (
+        <div className="flex items-center justify-center py-12">
+          <div className="text-center">
+            <div className="w-12 h-12 border-4 border-champagne-gold/30 border-t-champagne-gold rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-pure-white/70">Loading testimonials...</p>
+          </div>
+        </div>
+      ) : testimonials.length > 0 ? (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            {currentTestimonials.map((testimonial) => (
+            <Card key={testimonial.id} className="bg-pure-black/40 border-champagne-gold/20 hover:border-champagne-gold/40 hover:shadow-lg transition-all duration-300 group">
+              <CardContent className="p-6">
+                {/* Header with Avatar and Actions */}
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-champagne-gold to-amber-600 flex items-center justify-center shadow-lg ring-2 ring-champagne-gold/20">
+                      <span className="text-pure-black font-bold text-lg">
+                        {testimonial.name.charAt(0)}
+                      </span>
+                    </div>
+                    <div>
+                      <h3 className="text-pure-white font-semibold text-base">
+                        {testimonial.name}
+                      </h3>
+                      {testimonial.name_ar && (
+                        <p className="text-pure-white/60 text-xs" dir="rtl">
+                          {testimonial.name_ar}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  
+                  {/* Status Badge */}
+                  <Badge 
+                    variant={testimonial.is_published ? 'default' : 'secondary'}
+                    className={testimonial.is_published ? 'bg-champagne-gold text-pure-black text-xs' : 'bg-pure-white/20 text-pure-white/70 text-xs'}
+                  >
+                    {testimonial.is_published ? 'Published' : 'Draft'}
+                  </Badge>
+                </div>
+
+                {/* Role */}
+                <div className="mb-3">
+                  <p className="text-champagne-gold/80 text-sm font-medium">
+                    {testimonial.role}
+                  </p>
+                  {testimonial.role_ar && (
+                    <p className="text-champagne-gold/60 text-xs" dir="rtl">
+                      {testimonial.role_ar}
+                    </p>
+                  )}
+                </div>
+
+                {/* Testimonial Text */}
+                <div className="mb-4 min-h-[80px]">
+                  <p className="text-pure-white/70 text-sm leading-relaxed line-clamp-3">
+                    "{testimonial.text}"
+                  </p>
+                </div>
+
+                {/* Rating */}
+                <div className="flex items-center gap-1 mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star 
+                      key={i} 
+                      className={`w-4 h-4 ${i < testimonial.rating ? 'fill-champagne-gold text-champagne-gold' : 'text-pure-white/20'}`}
+                    />
+                  ))}
+                  <span className="text-pure-white/60 text-xs ml-2">
+                    ({testimonial.rating}/5)
+                  </span>
+                </div>
+
+                {/* Order Badge */}
+                <div className="mb-4">
+                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-champagne-gold/10 rounded-full text-xs text-champagne-gold/80">
+                    <span className="font-semibold">Order:</span> {testimonial.order}
+                  </span>
+                </div>
+
+                {/* Actions */}
+                <div className="flex gap-2 pt-4 border-t border-champagne-gold/10">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => setEditingTestimonial(testimonial)}
+                    className="flex-1 border-champagne-gold/30 text-champagne-gold hover:bg-champagne-gold/20 hover:border-champagne-gold/60 transition-all duration-200"
+                  >
+                    <Edit className="w-4 h-4 mr-1" />
+                    Edit
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => handleDelete(testimonial)}
+                    className="flex-1 text-red-400 border-red-400/30 hover:bg-red-400/20 hover:border-red-400/60 transition-all duration-200"
+                  >
+                    <Trash2 className="w-4 h-4 mr-1" />
+                    Delete
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        {/* Pagination Controls */}
+        {totalPages > 1 && (
+          <div className="flex items-center justify-between mt-8 px-4">
+            <div className="text-pure-white/70 text-sm">
+              Showing {indexOfFirstItem + 1} to {Math.min(indexOfLastItem, testimonials.length)} of {testimonials.length} testimonials
+            </div>
+            
+            <div className="flex items-center gap-2">
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+                className="border-champagne-gold/30 text-champagne-gold hover:bg-champagne-gold/20 hover:border-champagne-gold/60 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+              >
+                Previous
+              </Button>
+              
+              <div className="flex items-center gap-1">
+                {[...Array(totalPages)].map((_, index) => {
+                  const pageNumber = index + 1;
+                  // Show first page, last page, current page, and pages around current
+                  if (
+                    pageNumber === 1 ||
+                    pageNumber === totalPages ||
+                    (pageNumber >= currentPage - 1 && pageNumber <= currentPage + 1)
+                  ) {
+                    return (
+                      <Button
+                        key={pageNumber}
+                        size="sm"
+                        variant={currentPage === pageNumber ? "default" : "outline"}
+                        onClick={() => setCurrentPage(pageNumber)}
+                        className={
+                          currentPage === pageNumber
+                            ? "bg-champagne-gold text-pure-black hover:bg-champagne-gold/90 min-w-[40px]"
+                            : "border-champagne-gold/30 text-champagne-gold hover:bg-champagne-gold/20 hover:border-champagne-gold/60 min-w-[40px] transition-all duration-200"
+                        }
+                      >
+                        {pageNumber}
+                      </Button>
+                    );
+                  } else if (
+                    pageNumber === currentPage - 2 ||
+                    pageNumber === currentPage + 2
+                  ) {
+                    return (
+                      <span key={pageNumber} className="text-pure-white/50 px-2">
+                        ...
+                      </span>
+                    );
+                  }
+                  return null;
+                })}
+              </div>
+              
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                disabled={currentPage === totalPages}
+                className="border-champagne-gold/30 text-champagne-gold hover:bg-champagne-gold/20 hover:border-champagne-gold/60 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+              >
+                Next
+              </Button>
+            </div>
+          </div>
+        )}
+        </>
+      ) : (
+        <Card className="bg-pure-black/40 border-champagne-gold/20">
+          <CardContent className="flex flex-col items-center justify-center py-12">
+            <Star className="w-16 h-16 text-pure-white/40 mb-4" />
+            <h3 className="text-xl font-semibold text-pure-white mb-2">No Testimonials Yet</h3>
+            <p className="text-pure-white/60 text-center mb-6">
+              Get started by adding your first client testimonial.
+            </p>
+            <Button 
+              onClick={() => setShowAddForm(true)}
+              className="bg-champagne-gold hover:bg-champagne-gold/90 text-pure-black font-semibold"
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Add Your First Testimonial
+            </Button>
+          </CardContent>
+        </Card>
+      )}
+
+      <ConfirmDialog
+        isOpen={deleteConfirm.isOpen}
+        onClose={cancelDelete}
+        onConfirm={confirmDelete}
+        title="Delete Testimonial"
+        description={`Are you sure you want to delete the testimonial from "${deleteConfirm.testimonialName}"? This action cannot be undone.`}
+        isLoading={deleteConfirm.isLoading}
+      />
+    </>
+  );
+};
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const { projects, deleteProject } = useProjects();
-  const [activeTab, setActiveTab] = useState<'overview' | 'projects' | 'analytics' | 'settings'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'projects' | 'testimonials' | 'analytics' | 'settings'>('overview');
   const [showAddProject, setShowAddProject] = useState(false);
   const [editingProject, setEditingProject] = useState<string | null>(null);
   const [deleteConfirm, setDeleteConfirm] = useState<{
@@ -116,6 +467,7 @@ const Dashboard = () => {
   const sidebarItems = [
     { id: 'overview', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'projects', label: 'Projects', icon: FolderOpen },
+    { id: 'testimonials', label: 'Testimonials', icon: Star },
     { id: 'analytics', label: 'Analytics', icon: BarChart3 },
     { id: 'settings', label: 'Settings', icon: Settings },
   ];
@@ -125,6 +477,7 @@ const Dashboard = () => {
     totalProjects: 24,
     publishedProjects: 18,
     draftProjects: 6,
+    totalTestimonials: 6,
     totalViews: 12543,
     categories: 5
   };
@@ -309,15 +662,15 @@ const Dashboard = () => {
 
                   <Card className="bg-pure-black/40 border-champagne-gold/30 hover:shadow-lg hover:border-champagne-gold/50 hover:scale-[1.02] transition-all duration-300">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                      <CardTitle className="text-sm font-medium text-pure-white">Categories</CardTitle>
+                      <CardTitle className="text-sm font-medium text-pure-white">Testimonials</CardTitle>
                       <div className="p-2 bg-champagne-gold rounded-lg">
-                        <Tag className="h-4 w-4 text-pure-black" />
+                        <Star className="h-4 w-4 text-pure-black" />
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <div className="text-3xl font-bold text-pure-white">{stats.categories}</div>
+                      <div className="text-3xl font-bold text-pure-white">{stats.totalTestimonials}</div>
                       <p className="text-xs text-pure-white/80 mt-1">
-                        Different types
+                        Client reviews
                       </p>
                     </CardContent>
                   </Card>
@@ -531,6 +884,10 @@ const Dashboard = () => {
                   </Card>
                 )}
               </>
+            )}
+
+            {activeTab === 'testimonials' && (
+              <TestimonialsTab />
             )}
 
             {activeTab === 'analytics' && (

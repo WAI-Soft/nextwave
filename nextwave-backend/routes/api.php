@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\TestimonialController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,10 @@ Route::prefix('v1')->group(function () {
     // Public project routes
     Route::get('/projects', [ProjectController::class, 'index']);
     Route::get('/projects/{project}', [ProjectController::class, 'show']);
+    
+    // Public testimonial routes
+    Route::get('/testimonials', [TestimonialController::class, 'index']);
+    Route::get('/testimonials/{testimonial}', [TestimonialController::class, 'show']);
     
     // Contact form submission
     Route::post('/contact', [ContactController::class, 'submit']);
@@ -42,6 +47,12 @@ Route::prefix('v1/admin')->group(function () {
         Route::post('/projects', [ProjectController::class, 'store']);
         Route::put('/projects/{project}', [ProjectController::class, 'update']);
         Route::delete('/projects/{project}', [ProjectController::class, 'destroy']);
+        
+        // Admin testimonial management
+        Route::get('/testimonials', [TestimonialController::class, 'adminIndex']);
+        Route::post('/testimonials', [TestimonialController::class, 'store']);
+        Route::put('/testimonials/{testimonial}', [TestimonialController::class, 'update']);
+        Route::delete('/testimonials/{testimonial}', [TestimonialController::class, 'destroy']);
         
         // Media management
         Route::post('/upload', [MediaController::class, 'upload']);

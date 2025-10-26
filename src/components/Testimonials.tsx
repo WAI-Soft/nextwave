@@ -1,5 +1,7 @@
 import { Star } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useState, useEffect } from "react";
+import { testimonialService, Testimonial as TestimonialType } from "@/services/testimonialService";
 
 const avatarColors = [
   "bg-gradient-to-br from-amber-400 to-amber-600",
@@ -11,14 +13,46 @@ const avatarColors = [
 ];
 
 export const Testimonials = () => {
-  const { t } = useLanguage();
+  const { t, isRTL } = useLanguage();
+  const [apiTestimonials, setApiTestimonials] = useState<TestimonialType[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   
-  const testimonials = t.home.testimonials.clients.map((client, index) => ({
-    ...client,
-    rating: 5,
-    avatar: client.name.split(' ').map(n => n[0]).join(''),
-    bgColor: avatarColors[index]
-  }));
+  // Fetch testimonials from API
+  useEffect(() => {
+    testimonialService.getPublicTestimonials()
+      .then(data => {
+        setApiTestimonials(data);
+        setIsLoading(false);
+      })
+      .catch(error => {
+        console.error('Failed to load testimonials:', error);
+        setIsLoading(false);
+      });
+  }, []);
+
+  // Use API testimonials if available, otherwise fallback to translations
+  const testimonials = apiTestimonials.length > 0 
+    ? apiTestimonials.map((testimonial, index) => {
+        const displayName = isRTL && testimonial.name_ar ? testimonial.name_ar : testimonial.name;
+        const displayRole = isRTL && testimonial.role_ar ? testimonial.role_ar : testimonial.role;
+        const displayText = isRTL && testimonial.text_ar ? testimonial.text_ar : testimonial.text;
+        const displayCompany = isRTL && testimonial.company_ar ? testimonial.company_ar : testimonial.company;
+        
+        return {
+          name: displayName,
+          role: displayCompany ? `${displayRole}, ${displayCompany}` : displayRole,
+          text: displayText,
+          rating: testimonial.rating,
+          avatar: displayName.split(' ').map(n => n[0]).join(''),
+          bgColor: avatarColors[index % avatarColors.length]
+        };
+      })
+    : t.home.testimonials.clients.map((client, index) => ({
+        ...client,
+        rating: 5,
+        avatar: client.name.split(' ').map(n => n[0]).join(''),
+        bgColor: avatarColors[index]
+      }));
   
   return (
     <section id="testimonials" className="py-20 bg-gradient-subtle" dir="ltr">

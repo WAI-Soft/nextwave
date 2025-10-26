@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: http://localhost:3000');
+header('Access-Control-Allow-Origin: http://localhost:3002');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 header('Access-Control-Allow-Credentials: true');
@@ -66,6 +66,31 @@ switch ($route) {
     case '/admin/login':
         if ($requestMethod === 'POST') {
             adminLogin($pdo, $input);
+        }
+        break;
+        
+    case '/testimonials':
+        if ($requestMethod === 'GET') {
+            getPublicTestimonials($pdo);
+        } elseif ($requestMethod === 'POST') {
+            createTestimonial($pdo, $input);
+        }
+        break;
+        
+    case (preg_match('/^\/testimonials\/(\d+)$/', $route, $matches) ? true : false):
+        $testimonialId = $matches[1];
+        if ($requestMethod === 'GET') {
+            getTestimonial($pdo, $testimonialId);
+        } elseif ($requestMethod === 'PUT') {
+            updateTestimonial($pdo, $testimonialId, $input);
+        } elseif ($requestMethod === 'DELETE') {
+            deleteTestimonial($pdo, $testimonialId);
+        }
+        break;
+        
+    case '/admin/testimonials':
+        if ($requestMethod === 'GET') {
+            getAdminTestimonials($pdo);
         }
         break;
         
@@ -231,6 +256,146 @@ function adminLogin($pdo, $data) {
     } else {
         http_response_code(401);
         echo json_encode(['error' => 'Invalid credentials']);
+    }
+}
+
+// Testimonials Functions
+function getPublicTestimonials($pdo) {
+    try {
+        $stmt = $pdo->prepare("SELECT * FROM testimonials ORDER BY is_featured DESC, created_at DESC");
+        $stmt->execute();
+        $testimonials = $stmt->fetchAll();
+        
+        echo json_encode(['data' => $testimonials]);
+    } catch (PDOException $e) {
+        http_response_code(500);
+        echo json_encode(['error' => 'Failed to fetch testimonials: ' . $e->getMessage()]);
+    }
+}
+
+function getAdminTestimonials($pdo) {
+    try {
+        $stmt = $pdo->prepare("SELECT * FROM testimonials ORDER BY created_at DESC");
+        $stmt->execute();
+        $testimonials = $stmt->fetchAll();
+        
+        echo json_encode(['data' => $testimonials]);
+    } catch (PDOException $e) {
+        http_response_code(500);
+        echo json_encode(['error' => 'Failed to fetch testimonials: ' . $e->getMessage()]);
+    }
+}
+
+function getTestimonial($pdo, $id) {
+    try {
+        $stmt = $pdo->prepare("SELECT * FROM testimonials WHERE id = ?");
+        $stmt->execute([$id]);
+        $testimonial = $stmt->fetch();
+        
+        if ($testimonial) {
+            echo json_encode(['data' => $testimonial]);
+        } else {
+            http_response_code(404);
+            echo json_encode(['error' => 'Testimonial not found']);
+        }
+    } catch (PDOException $e) {
+        http_response_code(500);
+        echo json_encode(['error' => 'Failed to fetch testimonial: ' . $e->getMessage()]);
+    }
+}
+
+function createTestimonial($pdo, $data) {
+    try {
+        $stmt = $pdo->prepare("
+            INSERT INTO testimonials (name_en, name_ar, position_en, position_ar, company_en, company_ar, content_en, content_ar, rating, image_url, is_featured, created_at, updated_at) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), datetime('now'))
+        ");
+        
+        $stmt->execute([
+            $data['name_en'] ?? '',
+            $data['name_ar'] ?? '',
+            $data['position_en'] ?? '',
+            $data['position_ar'] ?? '',
+            $data['company_en'] ?? '',
+            $data['company_ar'] ?? '',
+            $data['content_en'] ?? '',
+            $data['content_ar'] ?? '',
+            $data['rating'] ?? 5,
+            $data['image_url'] ?? null,
+            $data['is_featured'] ?? 0
+        ]);
+        
+        $testimonialId = $pdo->lastInsertId();
+        
+        // Fetch the created testimonial
+        $stmt = $pdo->prepare("SELECT * FROM testimonials WHERE id = ?");
+        $stmt->execute([$testimonialId]);
+        $testimonial = $stmt->fetch();
+        
+        http_response_code(201);
+        echo json_encode(['message' => 'Testimonial created successfully', 'data' => $testimonial]);
+    } catch (PDOException $e) {
+        http_response_code(500);
+        echo json_encode(['error' => 'Failed to create testimonial: ' . $e->getMessage()]);
+    }
+}
+
+function updateTestimonial($pdo, $id, $data) {
+    try {
+        $stmt = $pdo->prepare("
+            UPDATE testimonials 
+            SET name_en = ?, name_ar = ?, position_en = ?, position_ar = ?, 
+                company_en = ?, company_ar = ?, content_en = ?, content_ar = ?, 
+                rating = ?, image_url = ?, is_featured = ?, updated_at = datetime('now')
+            WHERE id = ?
+        ");
+        
+        $stmt->execute([
+            $data['name_en'] ?? '',
+            $data['name_ar'] ?? '',
+            $data['position_en'] ?? '',
+            $data['position_ar'] ?? '',
+            $data['company_en'] ?? '',
+            $data['company_ar'] ?? '',
+            $data['content_en'] ?? '',
+            $data['content_ar'] ?? '',
+            $data['rating'] ?? 5,
+            $data['image_url'] ?? null,
+            $data['is_featured'] ?? 0,
+            $id
+        ]);
+        
+        if ($stmt->rowCount() > 0) {
+            // Fetch the updated testimonial
+            $stmt = $pdo->prepare("SELECT * FROM testimonials WHERE id = ?");
+            $stmt->execute([$id]);
+            $testimonial = $stmt->fetch();
+            
+            echo json_encode(['message' => 'Testimonial updated successfully', 'data' => $testimonial]);
+        } else {
+            http_response_code(404);
+            echo json_encode(['error' => 'Testimonial not found']);
+        }
+    } catch (PDOException $e) {
+        http_response_code(500);
+        echo json_encode(['error' => 'Failed to update testimonial: ' . $e->getMessage()]);
+    }
+}
+
+function deleteTestimonial($pdo, $id) {
+    try {
+        $stmt = $pdo->prepare("DELETE FROM testimonials WHERE id = ?");
+        $stmt->execute([$id]);
+        
+        if ($stmt->rowCount() > 0) {
+            echo json_encode(['message' => 'Testimonial deleted successfully']);
+        } else {
+            http_response_code(404);
+            echo json_encode(['error' => 'Testimonial not found']);
+        }
+    } catch (PDOException $e) {
+        http_response_code(500);
+        echo json_encode(['error' => 'Failed to delete testimonial: ' . $e->getMessage()]);
     }
 }
 ?>

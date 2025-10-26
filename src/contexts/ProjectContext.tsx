@@ -5,7 +5,9 @@ import { authService } from '@/services/authService';
 export interface Project {
   id: string;
   name: string;
+  nameAr?: string;
   description: string;
+  descriptionAr?: string;
   purpose: string;
   clientName: string;
   year: number;
