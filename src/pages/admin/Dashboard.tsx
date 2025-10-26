@@ -216,10 +216,10 @@ const TestimonialsTab = () => {
                   
                   {/* Status Badge */}
                   <Badge 
-                    variant={testimonial.is_published ? 'default' : 'secondary'}
-                    className={testimonial.is_published ? 'bg-champagne-gold text-pure-black text-xs' : 'bg-pure-white/20 text-pure-white/70 text-xs'}
+                    variant={testimonial.is_featured ? 'default' : 'secondary'}
+                    className={testimonial.is_featured ? 'bg-champagne-gold text-pure-black text-xs' : 'bg-pure-white/20 text-pure-white/70 text-xs'}
                   >
-                    {testimonial.is_published ? 'Published' : 'Draft'}
+                    {testimonial.is_featured ? 'Featured' : 'Regular'}
                   </Badge>
                 </div>
 
@@ -255,10 +255,10 @@ const TestimonialsTab = () => {
                   </span>
                 </div>
 
-                {/* Order Badge */}
+                {/* ID Badge */}
                 <div className="mb-4">
                   <span className="inline-flex items-center gap-1 px-2 py-1 bg-champagne-gold/10 rounded-full text-xs text-champagne-gold/80">
-                    <span className="font-semibold">Order:</span> {testimonial.order}
+                    <span className="font-semibold">ID:</span> {testimonial.id}
                   </span>
                 </div>
 
@@ -549,7 +549,7 @@ const Dashboard = () => {
               return (
                 <button
                   key={item.id}
-                  onClick={() => setActiveTab(item.id as 'overview' | 'projects' | 'analytics' | 'settings')}
+                  onClick={() => setActiveTab(item.id as 'overview' | 'projects' | 'testimonials' | 'analytics' | 'settings')}
                   className={`w-full flex items-center px-4 py-3 text-left rounded-xl transition-all duration-300 group ${
                     isActive 
                       ? 'bg-champagne-gold text-pure-black shadow-lg' 

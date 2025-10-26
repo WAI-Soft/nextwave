@@ -19,14 +19,14 @@ interface EditTestimonialProps {
 const EditTestimonial: React.FC<EditTestimonialProps> = ({ testimonial, onSuccess, onCancel }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState<UpdateTestimonialData>({
-    name_en: testimonial.name_en,
+    name_en: testimonial.name,
     name_ar: testimonial.name_ar || '',
-    position_en: testimonial.position_en,
-    position_ar: testimonial.position_ar || '',
-    company_en: testimonial.company_en,
+    position_en: testimonial.role,
+    position_ar: testimonial.role_ar || '',
+    company_en: testimonial.company,
     company_ar: testimonial.company_ar || '',
-    content_en: testimonial.content_en,
-    content_ar: testimonial.content_ar || '',
+    content_en: testimonial.text,
+    content_ar: testimonial.text_ar || '',
     rating: testimonial.rating,
     image_url: testimonial.image_url || '',
     is_featured: testimonial.is_featured

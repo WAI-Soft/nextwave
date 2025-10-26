@@ -73,7 +73,7 @@ export const Testimonials = () => {
             {/* First set of testimonials */}
             {testimonials.map((testimonial, index) => (
               <div
-                key={`first-${testimonial.name}`}
+                key={`first-${testimonial.name}-${index}`}
                 className="flex-shrink-0 w-80 group"
               >
                 <div className="bg-card/80 backdrop-blur-sm rounded-xl p-4 shadow-soft hover:shadow-elegant transition-elegant border border-border/50 h-full">
@@ -110,10 +110,50 @@ export const Testimonials = () => {
                 </div>
               </div>
             ))}
-            {/* Duplicate set for seamless loop */}
+            {/* Second set for seamless loop */}
             {testimonials.map((testimonial, index) => (
               <div
-                key={`second-${testimonial.name}`}
+                key={`second-${testimonial.name}-${index}`}
+                className="flex-shrink-0 w-80 group"
+              >
+                <div className="bg-card/80 backdrop-blur-sm rounded-xl p-4 shadow-soft hover:shadow-elegant transition-elegant border border-border/50 h-full">
+                  {/* Avatar and Info */}
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="relative">
+                      <div className={`w-10 h-10 rounded-full shadow-soft ring-2 ring-accent/20 group-hover:scale-110 transition-elegant flex items-center justify-center ${testimonial.bgColor}`}>
+                        <span className="text-white font-din font-bold text-sm">
+                          {testimonial.name.charAt(0)}
+                        </span>
+                      </div>
+                      <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-accent rounded-full border-2 border-card"></div>
+                    </div>
+                    <div>
+                      <h4 className="font-din font-semibold text-foreground text-sm">{testimonial.name}</h4>
+                      <p className="text-xs text-muted-foreground">{testimonial.role}</p>
+                    </div>
+                  </div>
+
+                  {/* Testimonial Text */}
+                  <p className="text-foreground mb-4 leading-relaxed font-din text-sm">
+                    "{testimonial.text}"
+                  </p>
+
+                  {/* Rating */}
+                  <div className="flex gap-1">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className="w-3.5 h-3.5 fill-accent text-accent"
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+            {/* Third set for extra smooth looping */}
+            {testimonials.map((testimonial, index) => (
+              <div
+                key={`third-${testimonial.name}-${index}`}
                 className="flex-shrink-0 w-80 group"
               >
                 <div className="bg-card/80 backdrop-blur-sm rounded-xl p-4 shadow-soft hover:shadow-elegant transition-elegant border border-border/50 h-full">
@@ -171,21 +211,48 @@ export const Testimonials = () => {
             transform: translateX(0);
           }
           100% {
-            transform: translateX(-50%);
+            transform: translateX(calc(-100% / 3));
           }
         }
 
         .animate-scroll-right {
-            animation: scrollRight 30s linear infinite;
-          }
+          animation: scrollRight 25s linear infinite;
+          will-change: transform;
+        }
 
-          .hover-pause-container:hover .testimonials-scroll {
-            animation-play-state: paused;
-          }
+        .hover-pause-container:hover .testimonials-scroll {
+          animation-play-state: paused;
+        }
 
+        .testimonials-scroll {
+          width: max-content;
+          display: flex;
+        }
+
+        /* Smooth hardware acceleration for better performance */
+        .testimonials-scroll {
+          transform: translateZ(0);
+          backface-visibility: hidden;
+          perspective: 1000px;
+        }
+
+        /* Ensure smooth transitions on all devices */
+        @media (prefers-reduced-motion: no-preference) {
+          .animate-scroll-right {
+            animation-timing-function: linear;
+          }
+        }
+
+        /* Pause animation on reduced motion preference */
+        @media (prefers-reduced-motion: reduce) {
+          .animate-scroll-right {
+            animation: none;
+          }
           .testimonials-scroll {
-            width: calc(320px * 12 + 24px * 11);
+            overflow-x: auto;
+            scroll-behavior: smooth;
           }
+        }
       `}</style>
     </section>
   );
