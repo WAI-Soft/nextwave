@@ -14,6 +14,8 @@ export interface BackendTestimonial {
   rating: number;
   image_url?: string;
   is_featured: boolean;
+  is_published: boolean;
+  order: number;
   created_at: string;
   updated_at: string;
 }
@@ -32,6 +34,8 @@ export interface Testimonial {
   rating: number;
   image_url?: string;
   is_featured: boolean;
+  is_published: boolean;
+  order: number;
   created_at: string;
   updated_at: string;
 }
@@ -56,6 +60,8 @@ export interface CreateTestimonialData {
   rating?: number;
   image_url?: string;
   is_featured?: boolean;
+  is_published?: boolean;
+  order?: number;
 }
 
 export interface UpdateTestimonialData extends Partial<CreateTestimonialData> {}
@@ -75,6 +81,8 @@ function mapBackendTestimonialToFrontend(backendTestimonial: BackendTestimonial)
     rating: backendTestimonial.rating,
     image_url: backendTestimonial.image_url,
     is_featured: backendTestimonial.is_featured,
+    is_published: backendTestimonial.is_published,
+    order: backendTestimonial.order,
     created_at: backendTestimonial.created_at,
     updated_at: backendTestimonial.updated_at,
   };
@@ -94,6 +102,8 @@ function mapFrontendTestimonialToBackend(frontendData: CreateTestimonialData | U
     rating: frontendData.rating || 5,
     image_url: frontendData.image_url || null,
     is_featured: frontendData.is_featured || false,
+    is_published: frontendData.is_published !== undefined ? frontendData.is_published : true,
+    order: frontendData.order || 0,
   };
 }
 
@@ -181,6 +191,8 @@ class TestimonialService {
         text_ar: "قدمت نكست ويف موقعاً إلكترونياً استثنائياً فاق توقعاتنا. اهتمامهم بالتفاصيل ونهجهم الإبداعي أحدث فرقاً كبيراً.",
         rating: 5,
         is_featured: true,
+        is_published: true,
+        order: 1,
         created_at: "2024-01-15T10:00:00Z",
         updated_at: "2024-01-15T10:00:00Z",
       },
@@ -196,6 +208,8 @@ class TestimonialService {
         text_ar: "العمل مع نكست ويف كان نقطة تحول لأعمالنا. فريقهم المحترف قدم نتائج متميزة في الوقت المحدد وضمن الميزانية.",
         rating: 5,
         is_featured: true,
+        is_published: true,
+        order: 2,
         created_at: "2024-01-10T14:30:00Z",
         updated_at: "2024-01-10T14:30:00Z",
       },
@@ -211,6 +225,8 @@ class TestimonialService {
         text_ar: "عمل العلامة التجارية الذي قامت به نكست ويف كان رائعاً. لقد فهموا رؤيتنا حقاً وأحيوها بشكل جميل.",
         rating: 5,
         is_featured: true,
+        is_published: true,
+        order: 3,
         created_at: "2024-01-05T09:15:00Z",
         updated_at: "2024-01-05T09:15:00Z",
       },

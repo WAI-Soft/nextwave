@@ -45,13 +45,17 @@ class TestimonialController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
+            'name_en' => 'required|string|max:255',
             'name_ar' => 'nullable|string|max:255',
-            'role' => 'required|string|max:255',
-            'role_ar' => 'nullable|string|max:255',
-            'text' => 'required|string',
-            'text_ar' => 'nullable|string',
+            'position_en' => 'required|string|max:255',
+            'position_ar' => 'nullable|string|max:255',
+            'company_en' => 'required|string|max:255',
+            'company_ar' => 'nullable|string|max:255',
+            'content_en' => 'required|string',
+            'content_ar' => 'nullable|string',
             'rating' => 'nullable|integer|min:1|max:5',
+            'image_url' => 'nullable|string|max:500',
+            'is_featured' => 'boolean',
             'is_published' => 'boolean',
             'order' => 'nullable|integer',
         ]);
@@ -77,13 +81,17 @@ class TestimonialController extends Controller
     public function update(Request $request, Testimonial $testimonial): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'sometimes|required|string|max:255',
+            'name_en' => 'sometimes|required|string|max:255',
             'name_ar' => 'nullable|string|max:255',
-            'role' => 'sometimes|required|string|max:255',
-            'role_ar' => 'nullable|string|max:255',
-            'text' => 'sometimes|required|string',
-            'text_ar' => 'nullable|string',
+            'position_en' => 'sometimes|required|string|max:255',
+            'position_ar' => 'nullable|string|max:255',
+            'company_en' => 'sometimes|required|string|max:255',
+            'company_ar' => 'nullable|string|max:255',
+            'content_en' => 'sometimes|required|string',
+            'content_ar' => 'nullable|string',
             'rating' => 'nullable|integer|min:1|max:5',
+            'image_url' => 'nullable|string|max:500',
+            'is_featured' => 'boolean',
             'is_published' => 'boolean',
             'order' => 'nullable|integer',
         ]);
