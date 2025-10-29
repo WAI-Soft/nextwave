@@ -394,6 +394,7 @@ const Dashboard = () => {
   const [activeTab, setActiveTab] = useState<'overview' | 'projects' | 'testimonials' | 'analytics' | 'settings'>('overview');
   const [showAddProject, setShowAddProject] = useState(false);
   const [editingProject, setEditingProject] = useState<string | null>(null);
+  const [testimonialsCount, setTestimonialsCount] = useState(0);
   const [deleteConfirm, setDeleteConfirm] = useState<{
     isOpen: boolean;
     projectId: string | null;
@@ -405,6 +406,19 @@ const Dashboard = () => {
     projectName: '',
     isLoading: false
   });
+
+  // Load testimonials count
+  React.useEffect(() => {
+    const loadTestimonialsCount = async () => {
+      try {
+        const data = await testimonialService.getAdminTestimonials();
+        setTestimonialsCount(data.length);
+      } catch (error) {
+        console.error('Failed to load testimonials count:', error);
+      }
+    };
+    loadTestimonialsCount();
+  }, []);
 
   // Refresh projects when switching to projects tab
   React.useEffect(() => {
@@ -483,45 +497,36 @@ const Dashboard = () => {
     { id: 'settings', label: 'Settings', icon: Settings },
   ];
 
-  // Sample data for demonstration
+  // Calculate real stats from actual data
   const stats = {
-    totalProjects: 24,
-    publishedProjects: 18,
-    draftProjects: 6,
-    totalTestimonials: 6,
-    totalViews: 12543,
+    totalProjects: projects.length,
+    publishedProjects: projects.filter(p => p.status === 'published').length,
+    draftProjects: projects.filter(p => p.status === 'draft').length,
+    totalTestimonials: testimonialsCount,
+    totalViews: 12543, // This would come from analytics in a real app
     categories: 5
   };
 
-  const recentProjects = [
-    {
-      id: '1',
-      name: 'Luxury Brand Identity',
-      client: 'Luxe Living Co.',
-      type: 'Branding',
-      status: 'published',
-      year: 2024,
-      image: '/src/assets/brand-identity.png'
-    },
-    {
-      id: '2',
-      name: 'E-commerce Platform',
-      client: 'Fashion Forward',
-      type: 'Web Design',
-      status: 'published',
-      year: 2024,
-      image: '/src/assets/e-commerce-platform.png'
-    },
-    {
-      id: '3',
-      name: 'Digital Campaign',
-      client: 'TechStart Inc.',
-      type: 'Advertising',
-      status: 'draft',
-      year: 2023,
-      image: '/src/assets/advertising-campaign.png'
-    }
-  ];
+  // Get 3 most recent projects sorted by year (descending) and creation date
+  const recentProjects = [...projects]
+    .sort((a, b) => {
+      // First sort by year (descending)
+      if (b.year !== a.year) {
+        return b.year - a.year;
+      }
+      // If years are equal, sort by creation date (most recent first)
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    })
+    .slice(0, 3)
+    .map(project => ({
+      id: project.id,
+      name: project.name,
+      client: project.clientName,
+      type: project.projectType,
+      status: project.status,
+      year: project.year,
+      image: project.coverImage
+    }));
 
   return (
     <div className="min-h-screen bg-pure-black text-pure-white" dir="ltr">
