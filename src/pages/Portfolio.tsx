@@ -65,9 +65,14 @@ const tickerItems = [
 
 const Portfolio = () => {
   const { t, isRTL } = useLanguage();
-  const { projects, isLoading } = useProjects();
+  const { projects, isLoading, refreshProjects } = useProjects();
   const [activeCategory, setActiveCategory] = useState("all");
   const [selectedItem, setSelectedItem] = useState<PortfolioItem | null>(null);
+
+  // Refresh projects when component mounts to ensure latest data
+  React.useEffect(() => {
+    refreshProjects();
+  }, []);
 
   // Map project IDs to images
   const projectImages: { [key: number]: string } = {
@@ -102,8 +107,9 @@ const Portfolio = () => {
     purpose: project.purpose
   }));
 
-  // Use API data if available, otherwise fallback to translated data
-  const portfolioItems = projects.length > 0 ? projects : fallbackPortfolioItems;
+  // Filter to only show published projects from API, otherwise fallback to translated data
+  const publishedProjects = projects.filter(project => project.status === 'published');
+  const portfolioItems = publishedProjects.length > 0 ? publishedProjects : fallbackPortfolioItems;
 
   const filteredItems =
     activeCategory === "all"
@@ -117,10 +123,11 @@ const Portfolio = () => {
   // Debug logging to help track changes
   console.log('Portfolio Debug:', {
     totalProjects: projects.length,
-    publishedProjects: projects.filter(project => project.status === 'published').length,
+    publishedProjects: publishedProjects.length,
     portfolioItems: portfolioItems.length,
     activeCategory,
-    filteredItemsCount: filteredItems.length
+    filteredItemsCount: filteredItems.length,
+    isLoading
   });
 
   // ✅ Modal JSX extracted so it can be rendered via React Portal

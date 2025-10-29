@@ -1,0 +1,47 @@
+{
+  "mcpServers": {
+    "chrome-devtools": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "chrome-devtools-mcp@latest"
+      ],
+      "disabled": false,
+      "autoApprove": [
+        "list_pages",
+        "navigate_page",
+        "take_snapshot",
+        "fill_form",
+        "fill",
+        "click",
+        "list_console_messages",
+        "evaluate_script",
+        "list_network_requests",
+        "wait_for",
+        "get_console_message",
+        "new_page",
+        "select_page",
+        "get_network_request"
+      ]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "@playwright/mcp@latest"
+      ],
+      "disabled": false
+    },
+    "Context7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp",
+        "--api-key",
+        "YOUR_API_KEY"
+      ],
+      "env": {},
+      "disabled": true,
+      "autoApprove": []
+    }
+  }
+}

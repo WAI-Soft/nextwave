@@ -129,8 +129,13 @@ class ProjectService {
         is_published: data.status === 'published'
       };
 
-      const response = await apiClient.post<{ project: BackendProject }>('/admin/projects', backendData);
-      return mapBackendProjectToFrontend(response.project);
+      console.log('Creating project with data:', backendData);
+      const response = await apiClient.post<{ message: string; data: BackendProject }>('/admin/projects', backendData);
+      console.log('Create project response:', response);
+      
+      // The response structure is { message: '...', data: BackendProject }
+      const projectData = response.data || response;
+      return mapBackendProjectToFrontend(projectData);
     } catch (error) {
       console.error('Failed to create project:', error);
       throw error;
@@ -167,8 +172,13 @@ class ProjectService {
         backendData.is_published = data.status === 'published';
       }
 
-      const response = await apiClient.put<{ project: BackendProject }>(`/admin/projects/${id}`, backendData);
-      return mapBackendProjectToFrontend(response.project);
+      console.log('Updating project', id, 'with data:', backendData);
+      const response = await apiClient.put<{ message: string; data: BackendProject }>(`/admin/projects/${id}`, backendData);
+      console.log('Update project response:', response);
+      
+      // The response structure is { message: '...', data: BackendProject }
+      const projectData = response.data || response;
+      return mapBackendProjectToFrontend(projectData);
     } catch (error) {
       console.error('Failed to update project:', error);
       throw error;

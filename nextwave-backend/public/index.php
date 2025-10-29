@@ -60,6 +60,17 @@ switch ($route) {
     case '/admin/projects':
         if ($requestMethod === 'GET') {
             getAdminProjects($pdo);
+        } elseif ($requestMethod === 'POST') {
+            createProject($pdo, $input);
+        }
+        break;
+        
+    case (preg_match('/^\/admin\/projects\/(\d+)$/', $route, $matches) ? true : false):
+        $projectId = $matches[1];
+        if ($requestMethod === 'PUT' || $requestMethod === 'PATCH') {
+            updateProject($pdo, $projectId, $input);
+        } elseif ($requestMethod === 'DELETE') {
+            deleteProject($pdo, $projectId);
         }
         break;
         
@@ -91,6 +102,17 @@ switch ($route) {
     case '/admin/testimonials':
         if ($requestMethod === 'GET') {
             getAdminTestimonials($pdo);
+        } elseif ($requestMethod === 'POST') {
+            createTestimonial($pdo, $input);
+        }
+        break;
+        
+    case (preg_match('/^\/admin\/testimonials\/(\d+)$/', $route, $matches) ? true : false):
+        $testimonialId = $matches[1];
+        if ($requestMethod === 'PUT' || $requestMethod === 'PATCH') {
+            updateTestimonial($pdo, $testimonialId, $input);
+        } elseif ($requestMethod === 'DELETE') {
+            deleteTestimonial($pdo, $testimonialId);
         }
         break;
         

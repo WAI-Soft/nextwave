@@ -60,11 +60,13 @@ class ProjectController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
+        \Log::info('Store method called', ['data' => $request->all()]);
+        
         $validator = Validator::make($request->all(), [
             'title_en' => 'required|string|max:255',
-            'title_ar' => 'required|string|max:255',
+            'title_ar' => 'nullable|string|max:255',
             'description_en' => 'required|string',
-            'description_ar' => 'required|string',
+            'description_ar' => 'nullable|string',
             'service_category' => 'required|string|in:branding,websites,advertising,logos,photography',
             'client' => 'nullable|string|max:255',
             'year' => 'nullable|integer|min:1900|max:' . (date('Y') + 10),
@@ -84,7 +86,7 @@ class ProjectController extends Controller
 
         return response()->json([
             'message' => 'Project created successfully',
-            'project' => new ProjectResource($project),
+            'data' => new ProjectResource($project),
         ], 201);
     }
 
@@ -92,17 +94,26 @@ class ProjectController extends Controller
      * Update the specified project (Admin endpoint).
      *
      * @param Request $request
-     * @param Project $project
+     * @param string|int $project
      * @return JsonResponse
      */
-    public function update(Request $request, Project $project): JsonResponse
+    public function update(Request $request, $project): JsonResponse
     {
+        // Find the project by ID
+        $projectModel = Project::find($project);
+        
+        if (!$projectModel) {
+            return response()->json([
+                'message' => 'Project not found',
+            ], 404);
+        }
+        
         $validator = Validator::make($request->all(), [
-            'title_en' => 'sometimes|required|string|max:255',
-            'title_ar' => 'sometimes|required|string|max:255',
-            'description_en' => 'sometimes|required|string',
-            'description_ar' => 'sometimes|required|string',
-            'service_category' => 'sometimes|required|string|in:branding,websites,advertising,logos,photography',
+            'title_en' => 'sometimes|string|max:255',
+            'title_ar' => 'nullable|string|max:255',
+            'description_en' => 'sometimes|string',
+            'description_ar' => 'nullable|string',
+            'service_category' => 'sometimes|string|in:branding,websites,advertising,logos,photography',
             'client' => 'nullable|string|max:255',
             'year' => 'nullable|integer|min:1900|max:' . (date('Y') + 10),
             'image_path' => 'nullable|string',
@@ -117,32 +128,41 @@ class ProjectController extends Controller
             ], 422);
         }
 
-        $project->update($validator->validated());
+        $projectModel->update($validator->validated());
 
         return response()->json([
             'message' => 'Project updated successfully',
-            'project' => new ProjectResource($project),
+            'data' => new ProjectResource($projectModel),
         ], 200);
     }
 
     /**
      * Remove the specified project (Admin endpoint).
      *
-     * @param Project $project
+     * @param string|int $project
      * @return JsonResponse
      */
-    public function destroy(Project $project): JsonResponse
+    public function destroy($project): JsonResponse
     {
+        // Find the project by ID
+        $projectModel = Project::find($project);
+        
+        if (!$projectModel) {
+            return response()->json([
+                'message' => 'Project not found',
+            ], 404);
+        }
+        
         // Delete associated media files
-        if ($project->image_path && Storage::disk('public')->exists($project->image_path)) {
-            Storage::disk('public')->delete($project->image_path);
+        if ($projectModel->image_path && Storage::disk('public')->exists($projectModel->image_path)) {
+            Storage::disk('public')->delete($projectModel->image_path);
         }
 
-        if ($project->video_path && Storage::disk('public')->exists($project->video_path)) {
-            Storage::disk('public')->delete($project->video_path);
+        if ($projectModel->video_path && Storage::disk('public')->exists($projectModel->video_path)) {
+            Storage::disk('public')->delete($projectModel->video_path);
         }
 
-        $project->delete();
+        $projectModel->delete();
 
         return response()->json([
             'message' => 'Project deleted successfully',

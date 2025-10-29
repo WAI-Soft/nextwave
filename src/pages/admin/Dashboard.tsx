@@ -390,7 +390,7 @@ const TestimonialsTab = () => {
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { projects, deleteProject } = useProjects();
+  const { projects, deleteProject, refreshProjects } = useProjects();
   const [activeTab, setActiveTab] = useState<'overview' | 'projects' | 'testimonials' | 'analytics' | 'settings'>('overview');
   const [showAddProject, setShowAddProject] = useState(false);
   const [editingProject, setEditingProject] = useState<string | null>(null);
@@ -405,6 +405,13 @@ const Dashboard = () => {
     projectName: '',
     isLoading: false
   });
+
+  // Refresh projects when switching to projects tab
+  React.useEffect(() => {
+    if (activeTab === 'projects') {
+      refreshProjects();
+    }
+  }, [activeTab]);
 
   const handleLogout = () => {
     toast.success('Logged out successfully');
@@ -458,10 +465,14 @@ const Dashboard = () => {
 
   const handleCloseEdit = () => {
     setEditingProject(null);
+    // Refresh projects after edit
+    refreshProjects();
   };
 
   const handleCloseAdd = () => {
     setShowAddProject(false);
+    // Refresh projects after add
+    refreshProjects();
   };
 
   const sidebarItems = [

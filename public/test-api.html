@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        button { padding: 10px 20px; margin: 10px; font-size: 16px; }
+        pre { background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Testimonials API Test</h1>
+    
+    <button onclick="testAdminTestimonials()">Test Admin Testimonials</button>
+    <button onclick="testPublicTestimonials()">Test Public Testimonials</button>
+    <button onclick="clearResults()">Clear</button>
+    
+    <div id="results"></div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000/api/v1';
+        
+        function log(message, type = 'info') {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = type;
+            div.innerHTML = `<strong>[${new Date().toLocaleTimeString()}]</strong> ${message}`;
+            results.appendChild(div);
+        }
+        
+        function clearResults() {
+            document.getElementById('results').innerHTML = '';
+        }
+        
+        async function testAdminTestimonials() {
+            log('Testing /admin/testimonials endpoint...');
+            
+            try {
+                const url = `${API_BASE}/admin/testimonials`;
+                log(`Fetching: ${url}`);
+                
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    credentials: 'include'
+                });
+                
+                log(`Response status: ${response.status} ${response.statusText}`);
+                log(`Response ok: ${response.ok}`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                log(`✓ Success! Received ${data.data.length} testimonials`, 'success');
+                log(`<pre>${JSON.stringify(data, null, 2)}</pre>`);
+                
+            } catch (error) {
+                log(`✗ Error: ${error.message}`, 'error');
+                console.error('Full error:', error);
+            }
+        }
+        
+        async function testPublicTestimonials() {
+            log('Testing /testimonials endpoint...');
+            
+            try {
+                const url = `${API_BASE}/testimonials`;
+                log(`Fetching: ${url}`);
+                
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                log(`Response status: ${response.status} ${response.statusText}`);
+                
+                const data = await response.json();
+                log(`✓ Success! Received ${data.data.length} testimonials`, 'success');
+                log(`<pre>${JSON.stringify(data, null, 2)}</pre>`);
+                
+            } catch (error) {
+                log(`✗ Error: ${error.message}`, 'error');
+                console.error('Full error:', error);
+            }
+        }
+    </script>
+</body>
+</html>
